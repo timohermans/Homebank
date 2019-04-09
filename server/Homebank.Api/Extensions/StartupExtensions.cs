@@ -1,4 +1,5 @@
-﻿using Homebank.Core.Repositories;
+﻿using Homebank.Api.Models;
+using Homebank.Core.Repositories;
 using Homebank.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -19,6 +20,14 @@ namespace Homebank.Api.Extensions
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        }
+
+        public static void ConfigureModelStateValidation(this IServiceCollection services)
+        {
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = ctx => new ValidationProblemDetailsResult();
+            });
         }
 
         public static void SetupExceptionHandling(this IApplicationBuilder app)

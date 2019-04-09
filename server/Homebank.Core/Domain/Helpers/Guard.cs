@@ -13,6 +13,15 @@ namespace Homebank.Core.Domain.Helpers
                 throw new ArgumentNullException(argumentName);
             }
         }
+
+        public static void AgainstNotNull(object argument, string argumentName)
+        {
+            if (argument != null)
+            {
+                throw new ArgumentException($"{argumentName} already exists");
+            }
+        }
+
         public static void AgainstLength(int value, int minLength, int maxLength, string argumentName)
         {
             if (value < minLength || value > maxLength)

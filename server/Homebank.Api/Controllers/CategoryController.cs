@@ -23,11 +23,6 @@ namespace Homebank.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(NewCategoryRequest request)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var response = await _mediator.Send(request);
 
             return Created($"category/{response.Id}", response);

@@ -29,6 +29,7 @@ namespace Homebank.Api
         {
             services.AddMediatR(typeof(CreateNewCategoryUseCase).Assembly);
             services.ConfigureDependencyInjection();
+            services.ConfigureModelStateValidation();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
