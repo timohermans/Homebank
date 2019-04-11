@@ -1,5 +1,7 @@
 ﻿using Homebank.Api.Models;
+using Homebank.Core;
 using Homebank.Core.Repositories;
+using Homebank.Infrastructure;
 using Homebank.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -20,6 +22,7 @@ namespace Homebank.Api.Extensions
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         public static void ConfigureModelStateValidation(this IServiceCollection services)
