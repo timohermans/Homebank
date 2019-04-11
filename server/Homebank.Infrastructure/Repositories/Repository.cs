@@ -3,6 +3,7 @@ using Homebank.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,16 +18,11 @@ namespace Homebank.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        private DbSet<TEntity> Entities => _context.Set<TEntity>();
+        protected DbSet<TEntity> Entities => _context.Set<TEntity>();
 
         public async Task<TEntity> GetBy(int id)
         {
             return await Entities.FindAsync(id);
-        }
-
-        public async Task<TEntity> GetBy(Expression<Func<TEntity, bool>> expression)
-        {
-            return await Entities.FirstOrDefaultAsync(expression);
         }
 
         public async Task Create(TEntity entity)
@@ -37,11 +33,6 @@ namespace Homebank.Infrastructure.Repositories
         public Task CreateMultiple(IList<TEntity> entity)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task SaveChanges()
-        {
-            await _context.SaveChangesAsync();
         }
     }
 }

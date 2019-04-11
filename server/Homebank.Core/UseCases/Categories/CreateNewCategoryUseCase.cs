@@ -3,8 +3,6 @@ using Homebank.Core.Dto.Categories;
 using Homebank.Core.Repositories;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,25 +10,23 @@ namespace Homebank.Core.UseCases.Categories
 {
     public class CreateNewCategoryUseCase : IRequestHandler<NewCategoryRequest, CategoryResponse>
     {
-        private readonly IRepository<Category> _categoryRepository;
-        private readonly IRepository<CategoryGroup> _categoryGroupRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateNewCategoryUseCase(IRepository<Category> categoryRepository, IRepository<CategoryGroup> categoryGroupRepository)
+        public CreateNewCategoryUseCase(IUnitOfWork unitOfWork)
         {
-            _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-            _categoryGroupRepository = categoryGroupRepository ?? throw new ArgumentNullException(nameof(categoryGroupRepository));
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CategoryResponse> Handle(NewCategoryRequest request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetBy(categoryToFind => categoryToFind.Name.Equals(request.CategoryName, StringComparison.OrdinalIgnoreCase));
+            var category = await _unitOfWork.Categories.GetBy(request.CategoryName);
 
             if (category != null)
             {
                 throw new ArgumentException("Category already exists", nameof(request.CategoryName));
             }
 
-            var categoryGroup = await _categoryGroupRepository.GetBy(groupToFind => groupToFind.Name.Equals(request.CategoryGroupName, StringComparison.OrdinalIgnoreCase));
+            var categoryGroup = await _unitOfWork.CategoryGroups.GetBy(request.CategoryGroupName);
 
             if (categoryGroup == null)
             {
@@ -39,8 +35,8 @@ namespace Homebank.Core.UseCases.Categories
 
             category = new Category(request.CategoryName, categoryGroup);
 
-            await _categoryRepository.Create(category);
-            await _categoryRepository.SaveChanges();
+            await _unitOfWork.Categories.Create(category);
+            await _unitOfWork.Complete();
 
             return new CategoryResponse(category.Id, category.Name, category.CategoryGroup.Name);
         }

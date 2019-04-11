@@ -13,22 +13,22 @@ namespace Homebank.Core.UseCases.CategoryGroups
 {
     public class CreateCategoryGroupUseCase : IRequestHandler<CreateCategoryGroupRequest, CategoryGroupResponse>
     {
-        private readonly IRepository<CategoryGroup> _categoryGroupRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateCategoryGroupUseCase(IRepository<CategoryGroup> categoryGroupRepository)
+        public CreateCategoryGroupUseCase(IUnitOfWork unitOfWork)
         {
-            _categoryGroupRepository = categoryGroupRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CategoryGroupResponse> Handle(CreateCategoryGroupRequest request, CancellationToken cancellationToken)
         {
-            var categoryGroup = await _categoryGroupRepository.GetBy(group => group.Name.Equals(request.Name, StringComparison.OrdinalIgnoreCase));
+            var categoryGroup = await _unitOfWork.CategoryGroups.GetBy(request.Name);
 
             Guard.AgainstNotNull(categoryGroup, nameof(categoryGroup));
 
             categoryGroup = new CategoryGroup(request.Name);
-            await _categoryGroupRepository.Create(categoryGroup);
-            await _categoryGroupRepository.SaveChanges();
+            await _unitOfWork.CategoryGroups.Create(categoryGroup);
+            await _unitOfWork.Complete();
 
             return new CategoryGroupResponse
             {
