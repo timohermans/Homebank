@@ -11,11 +11,11 @@
       <Code Language="CSharp">
     <![CDATA[public class $UseCaseName$UseCase : IRequestHandler<$RequestClass$, $ResponseClass$>
     {
-        private readonly IRepository<$EntityName$> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public $UseCaseName$UseCase(IRepository<$EntityName$> repository)
+        public $UseCaseName$UseCase(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<$ResponseClass$> Handle($RequestClass$ request, CancellationToken cancellationToken)
@@ -39,11 +39,6 @@
           <ID>ResponseClass</ID>
           <ToolTip>Name of the Response class</ToolTip>
           <Default>Response</Default>
-        </Literal>
-        <Literal>
-          <ID>EntityName</ID>
-          <ToolTip>Name of the Entity class</ToolTip>
-          <Default>Entity</Default>
         </Literal>
       </Declarations>
       <Imports>
