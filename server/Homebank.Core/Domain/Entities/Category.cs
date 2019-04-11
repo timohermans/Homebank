@@ -11,11 +11,11 @@ namespace Homebank.Core.Domain.Entities
         private Category() { }
         public Category(string name, CategoryGroup categoryGroup)
         {
-            UpdateNameWith(name);
+            ChangeNameWith(name);
             CategoryGroup = categoryGroup ?? throw new ArgumentNullException(nameof(categoryGroup));
         }
 
-        public void UpdateNameWith(string name)
+        public void ChangeNameWith(string name)
         {
             var minLength = 1;
             var maxLength = 50;

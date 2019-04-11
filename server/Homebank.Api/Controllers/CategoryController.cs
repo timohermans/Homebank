@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Homebank.Core.Dto.Categories;
+﻿using Homebank.Core.Dto.Categories;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Homebank.Api.Controllers
 {
@@ -26,6 +23,12 @@ namespace Homebank.Api.Controllers
             var response = await _mediator.Send(request);
 
             return Created($"category/{response.Id}", response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Create(UpdateCategoryRequest request)
+        {
+            return Ok(await _mediator.Send(request));
         }
     }
 }
