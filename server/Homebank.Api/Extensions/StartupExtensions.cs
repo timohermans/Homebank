@@ -21,7 +21,6 @@ namespace Homebank.Api.Extensions
     {
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
