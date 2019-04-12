@@ -14,11 +14,11 @@ namespace Homebank.Core.Domain.Entities
         private CategoryGroup() { }
         public CategoryGroup(string name)
         {
-            UpdateNameWith(name);
+            ChangeNameWith(name);
             _categories = new HashSet<Category>();
         }
 
-        public void UpdateNameWith(string name)
+        public void ChangeNameWith(string name)
         {
             var minLength = 1;
             var maxLength = 50;

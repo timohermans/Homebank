@@ -25,5 +25,11 @@ namespace Homebank.Api.Controllers
         {
             return Ok(await _mediator.Send(request));
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateCategoryGroupRequest request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
     }
 }
