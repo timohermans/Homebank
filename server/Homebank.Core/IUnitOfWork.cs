@@ -1,7 +1,4 @@
 ﻿using Homebank.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Homebank.Core
@@ -10,6 +7,8 @@ namespace Homebank.Core
     {
         ICategoryRepository Categories { get; }
         ICategoryGroupRepository CategoryGroups { get; }
+        ITransactionRepository Transactions { get; }
+
         Task Complete();
     }
 }

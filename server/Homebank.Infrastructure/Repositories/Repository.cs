@@ -3,8 +3,6 @@ using Homebank.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Homebank.Infrastructure.Repositories
@@ -33,6 +31,11 @@ namespace Homebank.Infrastructure.Repositories
         public Task CreateMultiple(IList<TEntity> entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAll()
+        {
+            return await Entities.ToListAsync();
         }
     }
 }

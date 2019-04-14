@@ -12,12 +12,14 @@ namespace Homebank.Infrastructure
 
         public ICategoryRepository Categories { get; private set; }
         public ICategoryGroupRepository CategoryGroups { get; private set; }
+        public ITransactionRepository Transactions { get; private set; }
 
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
             Categories = new CategoryRepository(context);
             CategoryGroups = new CategoryGroupRepository(context);
+            Transactions = new TransactionRepository(context);
         }
 
         public async Task Complete()

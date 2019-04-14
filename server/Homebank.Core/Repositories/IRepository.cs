@@ -8,5 +8,6 @@ namespace Homebank.Core.Repositories
         Task<TEntity> GetBy(int id);
         Task CreateMultiple(IList<TEntity> entity);
         Task Create(TEntity entity);
+        Task<IEnumerable<TEntity>> GetAll();
     }
 }
