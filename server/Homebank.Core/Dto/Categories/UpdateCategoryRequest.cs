@@ -6,5 +6,6 @@ namespace Homebank.Core.Dto.Categories
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int CategoryGroupId { get; set; }
     }
 }

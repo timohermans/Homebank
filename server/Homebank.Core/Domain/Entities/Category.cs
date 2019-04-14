@@ -1,5 +1,6 @@
 ﻿using Homebank.Core.Domain.Helpers;
 using System;
+using System.Threading.Tasks;
 
 namespace Homebank.Core.Domain.Entities
 {
@@ -23,6 +24,13 @@ namespace Homebank.Core.Domain.Entities
             Guard.AgainstLength(name.Length, minLength, maxLength, nameof(name));
            
             Name = name;
+        }
+
+        public void AssignTo(CategoryGroup groupToAssignTo)
+        {
+            Guard.AgainstNull(groupToAssignTo, nameof(CategoryGroup));
+            Guard.AgainstDefaultValue(groupToAssignTo.Id, "Category group must be created before assigning the category to it");
+            CategoryGroup = groupToAssignTo;
         }
     }
 }

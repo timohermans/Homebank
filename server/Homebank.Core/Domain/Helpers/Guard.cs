@@ -29,5 +29,14 @@ namespace Homebank.Core.Domain.Helpers
                 throw new ArgumentOutOfRangeException(argumentName, $"{argumentName} must be between {minLength} and {maxLength}");
             }
         }
+
+        public static void AgainstDefaultValue<T>(T value, string errorMessage)
+        {
+            var defaultValue = default(T);
+            if (value.Equals(defaultValue))
+            {
+                throw new ArgumentException(errorMessage);
+            }
+        }
     }
 }

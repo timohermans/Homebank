@@ -26,10 +26,21 @@ namespace Homebank.Core.UseCases.Categories
             Guard.AgainstNull(category, nameof(Category));
 
             category.ChangeNameWith(request.Name);
+            await ChangeGroup(category, request.CategoryGroupId);
 
             await _unitOfWork.Complete();
-
             return new CategoryResponse(category.Id, category.Name, category.CategoryGroup.Name);
+        }
+
+        private async Task ChangeGroup(Category category, int newGroupId)
+        {
+            if (category.CategoryGroup.Id == newGroupId)
+            {
+                return;
+            }
+
+            var groupToAssignTo = await _unitOfWork.CategoryGroups.GetBy(newGroupId);
+            category.AssignTo(groupToAssignTo);
         }
     }
 }
