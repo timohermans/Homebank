@@ -1,8 +1,6 @@
 ﻿using Homebank.Api.Models;
 using Homebank.Core;
-using Homebank.Core.Repositories;
 using Homebank.Infrastructure;
-using Homebank.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +8,8 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Homebank.Api.Extensions
 {
