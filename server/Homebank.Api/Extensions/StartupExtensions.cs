@@ -1,6 +1,8 @@
 ﻿using Homebank.Api.Models;
 using Homebank.Core;
+using Homebank.Core.Converters;
 using Homebank.Infrastructure;
+using Homebank.Infrastructure.Converters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,7 @@ namespace Homebank.Api.Extensions
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRabobankCsvConverter, RabobankCsvConverter>();
         }
 
         public static void ConfigureModelStateValidation(this IServiceCollection services)
