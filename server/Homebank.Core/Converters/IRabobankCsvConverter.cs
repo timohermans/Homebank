@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Homebank.Core.Domain.Entities;
 using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
 
 namespace Homebank.Core.Converters
 {
