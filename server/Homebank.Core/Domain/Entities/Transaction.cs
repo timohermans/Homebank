@@ -1,9 +1,10 @@
 ﻿using Homebank.Core.Domain.Helpers;
 using System;
+using System.Threading.Tasks;
 
 namespace Homebank.Core.Domain.Entities
 {
-    public class Transaction: BaseEntity
+    public class Transaction : BaseEntity
     {
         public DateTime Date { get; private set; }
         public string Payee { get; private set; }
@@ -26,6 +27,32 @@ namespace Homebank.Core.Domain.Entities
             OutFlow = outFlow;
             Inflow = inflow;
             IsBankTransaction = isBankTransaction;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            var transaction = obj as Transaction;
+
+            return transaction != null
+                    && transaction.Date == Date
+                    && transaction.Payee == Payee
+                    && transaction.Inflow == Inflow
+                    && transaction.OutFlow == OutFlow;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hash = 17;
+                hash = hash * 23 + Date.GetHashCode();
+                hash = hash * 23 + Payee.GetHashCode();
+                hash = hash * 23 + Inflow.GetHashCode();
+                hash = hash * 23 + OutFlow.GetHashCode();
+                return hash;
+            }
         }
     }
 }
