@@ -3,6 +3,7 @@ using Homebank.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 
 namespace Homebank.Infrastructure.Converters
 {
@@ -14,34 +15,36 @@ namespace Homebank.Infrastructure.Converters
         private readonly int MemoIndex = 19;
         private readonly char PositiveAmount = '+';
 
-        public RabobankCsvConverter(string filePath)
-          : base(filePath)
+        public RabobankCsvConverter()
         {
         }
 
-        public override IEnumerable<Transaction> Convert()
+        public override IEnumerable<Transaction> Convert(byte[] fileBytes)
         {
-            var isTransactionFromBank = true;
-
-            reader.ReadLine();
-            string row;
-
-            while ((row = reader.ReadLine()) != null)
+            using (var reader = new StreamReader(new MemoryStream(fileBytes)))
             {
-                string[] stringColumns = StripQuotes(row).Split(Seperator, StringSplitOptions.None);
-                string amountString = stringColumns[AmountIndex];
-                decimal amount = System.Convert.ToDecimal(amountString.Substring(1, amountString.Length - 1), new CultureInfo("nl-NL"));
-                bool isPositiveAmount = amountString[0] == PositiveAmount;
+                var isTransactionFromBank = true;
 
-                yield return new Transaction(
-                    ConvertItemToDate(stringColumns[DateIndex]),
-                    stringColumns[PayeeIndex],
-                    null,
-                    stringColumns[MemoIndex],
-                    (!isPositiveAmount ? amount : decimal.Zero),
-                    (isPositiveAmount ? amount : decimal.Zero),
-                    isTransactionFromBank
-                    );
+                reader.ReadLine();
+                string row;
+
+                while ((row = reader.ReadLine()) != null)
+                {
+                    string[] stringColumns = StripQuotes(row).Split(Seperator, StringSplitOptions.None);
+                    string amountString = stringColumns[AmountIndex];
+                    decimal amount = System.Convert.ToDecimal(amountString.Substring(1, amountString.Length - 1), new CultureInfo("nl-NL"));
+                    bool isPositiveAmount = amountString[0] == PositiveAmount;
+
+                    yield return new Transaction(
+                        ConvertItemToDate(stringColumns[DateIndex]),
+                        stringColumns[PayeeIndex],
+                        null,
+                        stringColumns[MemoIndex],
+                        !isPositiveAmount ? amount : decimal.Zero,
+                        isPositiveAmount ? amount : decimal.Zero,
+                        isTransactionFromBank
+                        );
+                }
             }
         }
 

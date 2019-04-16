@@ -5,6 +5,6 @@ namespace Homebank.Core.Converters
 {
     public interface IRabobankCsvConverter
     {
-        IEnumerable<Transaction> Convert();
+        IEnumerable<Transaction> Convert(byte[] fileBytes);
     }
 }

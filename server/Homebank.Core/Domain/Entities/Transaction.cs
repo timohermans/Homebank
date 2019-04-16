@@ -21,7 +21,7 @@ namespace Homebank.Core.Domain.Entities
 
             Date = date;
             Payee = payee ?? throw new ArgumentNullException(nameof(payee));
-            Category = category ?? throw new ArgumentNullException(nameof(category));
+            Category = category;
             Memo = memo ?? throw new ArgumentNullException(nameof(memo));
             OutFlow = outFlow;
             Inflow = inflow;

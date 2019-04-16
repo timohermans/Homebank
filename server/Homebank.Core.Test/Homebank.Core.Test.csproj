@@ -15,6 +15,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Homebank.Core\Homebank.Core.csproj" />
+    <ProjectReference Include="..\Homebank.Infrastructure\Homebank.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\CSV_A_20190406_172126_single.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\CSV_A_20190406_172126.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
