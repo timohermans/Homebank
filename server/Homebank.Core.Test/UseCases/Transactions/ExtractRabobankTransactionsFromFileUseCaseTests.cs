@@ -63,6 +63,7 @@ namespace Homebank.Core.Test.UseCases.Transactions
             A.CallTo(
                 () => _unitOfWork.Transactions.CreateMultiple(A<IList<Transaction>>.That.Matches(assertionCheck, "first transaction check"))
                     ).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _unitOfWork.Complete()).MustHaveHappenedOnceExactly();
         }
 
         [Fact]

@@ -28,9 +28,9 @@ namespace Homebank.Infrastructure.Repositories
             await Entities.AddAsync(entity);
         }
 
-        public Task CreateMultiple(IList<TEntity> entity)
+        public async Task CreateMultiple(IList<TEntity> entities)
         {
-            throw new NotImplementedException();
+            await Entities.AddRangeAsync(entities);
         }
 
         public async Task<IEnumerable<TEntity>> GetAll()

@@ -32,6 +32,7 @@ namespace Homebank.Core.UseCases.Transactions
             SplitTransactionsInto(transactionsToCreate, transactionsThatAlreadyExist, transactionsFromFile, transactionsFromDatabase);
 
             await _unitOfWork.Transactions.CreateMultiple(transactionsToCreate);
+            await _unitOfWork.Complete();
 
             return new TransactionExtractionResponse
             {
