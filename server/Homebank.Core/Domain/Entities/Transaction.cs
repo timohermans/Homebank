@@ -30,6 +30,12 @@ namespace Homebank.Core.Domain.Entities
             IsBankTransaction = isBankTransaction;
         }
 
+        public void AssignCategory(Category category)
+        {
+            Guard.AgainstNull(category, nameof(category));
+            Category = category;
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;

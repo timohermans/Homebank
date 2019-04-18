@@ -1,7 +1,7 @@
 ﻿using Homebank.Core.Domain.Entities;
 using System;
 
-namespace Homebank.Api.Controllers
+namespace Homebank.Core.Dto.Transactions
 {
     public class TransactionResponse
     {
@@ -17,7 +17,7 @@ namespace Homebank.Api.Controllers
         {
             return new TransactionResponse
             {
-                Category = $"{transaction.Category.CategoryGroup.Name} - {transaction.Category.Name}",
+                Category = transaction.Category != null ? $"{transaction.Category.CategoryGroup.Name} - {transaction.Category.Name}": "",
                 Date = transaction.Date,
                 Inflow = transaction.Inflow,
                 OutFlow = transaction.OutFlow,

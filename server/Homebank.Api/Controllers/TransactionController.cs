@@ -30,6 +30,13 @@ namespace Homebank.Api.Controllers
             return Ok(transactions.Select(transaction => TransactionResponse.MapFrom(transaction)));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateTransactionRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadFrom([FromForm]IFormFile file)
         {
