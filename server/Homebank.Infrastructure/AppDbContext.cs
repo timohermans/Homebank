@@ -19,6 +19,5 @@ namespace Homebank.Infrastructure
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
-
     }
 }

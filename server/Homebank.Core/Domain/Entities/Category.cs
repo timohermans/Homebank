@@ -1,6 +1,5 @@
 ﻿using Homebank.Core.Domain.Helpers;
 using System;
-using System.Threading.Tasks;
 
 namespace Homebank.Core.Domain.Entities
 {
@@ -9,7 +8,10 @@ namespace Homebank.Core.Domain.Entities
         public string Name { get; private set; }
         public CategoryGroup CategoryGroup { get; private set; }
 
-        private Category() { }
+        private Category()
+        {
+        }
+
         public Category(string name, CategoryGroup categoryGroup)
         {
             ChangeNameWith(name);
@@ -22,7 +24,7 @@ namespace Homebank.Core.Domain.Entities
             var maxLength = 50;
             Guard.AgainstNull(name, nameof(name));
             Guard.AgainstLength(name.Length, minLength, maxLength, nameof(name));
-           
+
             Name = name;
         }
 

@@ -1,7 +1,4 @@
 ﻿using Homebank.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Homebank.Core.Test.Extensions
 {

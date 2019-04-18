@@ -17,6 +17,7 @@ namespace Homebank.Core.Test.UseCases.Categories
         public async Task Handle_ValidRequestWithNewGroup_ReturnsResponse()
         {
             #region arrange
+
             int categoryId = 1;
             var newCategoryName = "Category 2";
             var newGroupId = 2;
@@ -25,18 +26,23 @@ namespace Homebank.Core.Test.UseCases.Categories
             var categoryFromDb = CreateCategory(categoryId);
             var newGroup = CreateCategoryGroup(newGroupId);
             var usecase = new UpdateCategoryUseCase(_unitOfWorkFake);
-            #endregion
+
+            #endregion arrange
 
             #region act
+
             var response = await usecase.Handle(new UpdateCategoryRequest { Id = categoryId, Name = newCategoryName, CategoryGroupId = newGroupId },
                                                 new CancellationToken());
-            #endregion
+
+            #endregion act
 
             #region assert
+
             A.CallTo(() => _unitOfWorkFake.Complete()).MustHaveHappenedOnceExactly();
             Assert.Equal(newCategoryName, response.Name);
             Assert.Equal(newGroup.Name, response.GroupName);
-            #endregion
+
+            #endregion assert
         }
 
         private Category CreateCategory(int categoryId)

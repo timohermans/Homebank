@@ -11,7 +11,10 @@ namespace Homebank.Core.Domain.Entities
         private HashSet<Category> _categories;
         public IEnumerable<Category> Categories => _categories?.ToList();
 
-        private CategoryGroup() { }
+        private CategoryGroup()
+        {
+        }
+
         public CategoryGroup(string name)
         {
             ChangeNameWith(name);

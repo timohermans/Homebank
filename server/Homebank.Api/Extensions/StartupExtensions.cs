@@ -83,7 +83,7 @@ namespace Homebank.Api.Extensions
                     context.Response.StatusCode = problemDetails.Status.GetValueOrDefault((int)HttpStatusCode.InternalServerError);
                     context.Response.WriteJson(problemDetails);
                     // log the exception etc..
-                    // flush problemDetails to the caller   
+                    // flush problemDetails to the caller
                 });
             });
         }

@@ -3,11 +3,9 @@ using Homebank.Core.Domain.Entities;
 using Homebank.Core.Dto.Transactions;
 using Homebank.Core.UseCases.Transactions;
 using Homebank.Infrastructure.Converters;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -73,7 +71,6 @@ namespace Homebank.Core.Test.UseCases.Transactions
             await ArrangeWith("Data/CSV_A_20190406_172126_double.csv", databaseTransactions);
 
             var result = await _usecase.Handle(_request, CancellationToken.None);
-
 
             Assert.Equal(1, result.NewTransactions);
             Assert.Equal(1, result.DuplicateTransactions);

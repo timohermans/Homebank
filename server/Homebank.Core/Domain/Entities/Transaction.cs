@@ -1,6 +1,5 @@
 ﻿using Homebank.Core.Domain.Helpers;
 using System;
-using System.Threading.Tasks;
 
 namespace Homebank.Core.Domain.Entities
 {
@@ -14,7 +13,9 @@ namespace Homebank.Core.Domain.Entities
         public decimal Inflow { get; private set; }
         public bool IsBankTransaction { get; private set; }
 
-        private Transaction() { }
+        private Transaction()
+        {
+        }
 
         public Transaction(DateTime date, string payee, Category category, string memo, decimal outFlow, decimal inflow, bool isBankTransaction)
         {

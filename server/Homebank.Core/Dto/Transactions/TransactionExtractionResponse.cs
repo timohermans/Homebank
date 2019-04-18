@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Homebank.Core.Dto.Transactions
+﻿namespace Homebank.Core.Dto.Transactions
 {
     public class TransactionExtractionResponse
     {

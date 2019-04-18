@@ -7,6 +7,7 @@ namespace Homebank.Core.Dto.Categories
     {
         [Required]
         public string CategoryName { get; set; }
+
         [Required]
         public string CategoryGroupName { get; set; }
     }

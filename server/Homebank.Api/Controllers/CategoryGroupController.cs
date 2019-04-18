@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Homebank.Core.Dto.CategoryGroups;
+﻿using Homebank.Core.Dto.CategoryGroups;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Homebank.Api.Controllers
 {

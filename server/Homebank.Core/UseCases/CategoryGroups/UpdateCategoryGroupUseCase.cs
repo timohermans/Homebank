@@ -2,9 +2,6 @@
 using Homebank.Core.Domain.Helpers;
 using Homebank.Core.Dto.CategoryGroups;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

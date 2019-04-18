@@ -1,7 +1,6 @@
 ﻿using Homebank.Core;
 using Homebank.Core.Repositories;
 using Homebank.Infrastructure.Repositories;
-using System;
 using System.Threading.Tasks;
 
 namespace Homebank.Infrastructure

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Homebank.Api.Models
+﻿namespace Homebank.Api.Models
 {
     public class ValidationError
     {
