@@ -2,15 +2,11 @@
 using Homebank.Core.Domain.Helpers;
 using Homebank.Core.Dto.Transactions;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Homebank.Core.UseCases.Transactions
 {
-
     public class UpdateTransactionUseCase : IRequestHandler<UpdateTransactionRequest, TransactionResponse>
     {
         private readonly IUnitOfWork _unitOfWork;

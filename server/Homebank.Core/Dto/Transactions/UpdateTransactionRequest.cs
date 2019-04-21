@@ -1,4 +1,5 @@
 ﻿using MediatR;
+
 namespace Homebank.Core.Dto.Transactions
 {
     public class UpdateTransactionRequest : IRequest<TransactionResponse>
