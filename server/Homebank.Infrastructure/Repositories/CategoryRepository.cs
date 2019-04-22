@@ -27,6 +27,20 @@ namespace Homebank.Infrastructure.Repositories
                             .SingleOrDefaultAsync(category => category.Id == id);
         }
 
+        public async Task<Category> GetWithoutBudgetByAsync(int categoryId, DateTime month)
+        {
+            var categoryFound = await Entities
+                   .Include(category => category.Transactions)
+                   .Include(category => category.CategoryGroup)
+                   .Where(category => category.Budgets == null
+                                       || !category.Budgets.Any(budget => budget.MonthForBudget.IsSameMonthAndYear(month)))
+                   .FirstOrDefaultAsync(category => category.Id == categoryId);
+
+            categoryFound?.EnsureTransactionsAreFrom(month);
+
+            return categoryFound;
+        }
+
         public async Task<IEnumerable<Category>> GetWithoutBudgetsByAsync(DateTime month)
         {
             var categories = await Entities

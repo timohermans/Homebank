@@ -5,6 +5,7 @@ namespace Homebank.Core.Dto.Budgets
 {
     public class BudgetResponse
     {
+        public int Id { get; set; }
         public DateTime MonthForBudget { get; set; }
         public decimal Budgeted { get; set; }
         public int CategoryId { get; set; }
@@ -18,6 +19,7 @@ namespace Homebank.Core.Dto.Budgets
         {
             return new BudgetResponse
             {
+                Id = budget.Id,
                 Activity = budget.Activity.GetValueOrDefault(),
                 Available = budget.Available.GetValueOrDefault(),
                 Budgeted = budget.Budgeted,

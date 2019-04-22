@@ -27,17 +27,11 @@ namespace Homebank.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(NewCategoryRequest request)
+        public async Task<IActionResult> SetBudget(AssignBudgetRequest request)
         {
             var response = await _mediator.Send(request);
 
-            return Created($"category/{response.Id}", response);
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Create(UpdateCategoryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
+            return Ok(response);
         }
     }
 }

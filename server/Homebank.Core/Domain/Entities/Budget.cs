@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Homebank.Core.Domain.Helpers;
+using System;
 using System.Linq;
 
 namespace Homebank.Core.Domain.Entities
@@ -26,6 +27,12 @@ namespace Homebank.Core.Domain.Entities
             MonthForBudget = monthForBudget;
             Budgeted = budgeted;
             Category = category ?? throw new ArgumentNullException(nameof(category));
-        }        
+        }
+
+        public void Assign(decimal budgeted)
+        {
+            Guard.AgainstNull(budgeted, nameof(budgeted));
+            Budgeted = budgeted;
+        }
     }
 }

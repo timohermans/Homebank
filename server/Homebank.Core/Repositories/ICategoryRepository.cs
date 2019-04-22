@@ -12,5 +12,6 @@ namespace Homebank.Core.Repositories
 
         Task<Category> GetWithGroupByAsync(int id);
         Task<IEnumerable<Category>> GetWithoutBudgetsByAsync(DateTime month);
+        Task<Category> GetWithoutBudgetByAsync(int categoryId, DateTime month);
     }
 }
