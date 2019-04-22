@@ -8,6 +8,13 @@ namespace Homebank.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
+            builder.Metadata
+                .FindNavigation(nameof(Category.Transactions))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            builder.Metadata
+                .FindNavigation(nameof(Category.Budgets))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

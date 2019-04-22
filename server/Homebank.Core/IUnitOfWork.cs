@@ -8,6 +8,7 @@ namespace Homebank.Core
         ICategoryRepository Categories { get; }
         ICategoryGroupRepository CategoryGroups { get; }
         ITransactionRepository Transactions { get; }
+        IBudgetRepository Budgets { get; }
 
         Task Complete();
     }

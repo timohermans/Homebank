@@ -12,6 +12,7 @@ namespace Homebank.Infrastructure
         public ICategoryRepository Categories { get; private set; }
         public ICategoryGroupRepository CategoryGroups { get; private set; }
         public ITransactionRepository Transactions { get; private set; }
+        public IBudgetRepository Budgets { get; private set; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -19,6 +20,7 @@ namespace Homebank.Infrastructure
             Categories = new CategoryRepository(context);
             CategoryGroups = new CategoryGroupRepository(context);
             Transactions = new TransactionRepository(context);
+            Budgets = new BudgetRepository(context);
         }
 
         public async Task Complete()

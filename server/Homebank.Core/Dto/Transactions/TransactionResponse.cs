@@ -17,7 +17,7 @@ namespace Homebank.Core.Dto.Transactions
         {
             return new TransactionResponse
             {
-                Category = transaction.Category != null ? $"{transaction.Category.CategoryGroup.Name} - {transaction.Category.Name}" : "",
+                Category = transaction.Category != null ? $"{transaction?.Category.CategoryGroup.Name} - {transaction?.Category.Name}" : "Uncategorized",
                 Date = transaction.Date,
                 Inflow = transaction.Inflow,
                 OutFlow = transaction.OutFlow,
