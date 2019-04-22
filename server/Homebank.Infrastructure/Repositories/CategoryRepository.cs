@@ -1,7 +1,10 @@
 ﻿using Homebank.Core.Domain.Entities;
+using Homebank.Core.Extensions;
 using Homebank.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Homebank.Infrastructure.Repositories
@@ -22,6 +25,20 @@ namespace Homebank.Infrastructure.Repositories
             return await Entities
                             .Include(category => category.CategoryGroup)
                             .SingleOrDefaultAsync(category => category.Id == id);
+        }
+
+        public async Task<IEnumerable<Category>> GetWithoutBudgetsByAsync(DateTime month)
+        {
+            var categories = await Entities
+                    .Include(category => category.Transactions)
+                    .Include(category => category.CategoryGroup)
+                    .Where(category => category.Budgets == null
+                                        || !category.Budgets.Any(budget => budget.MonthForBudget.IsSameMonthAndYear(month)))
+                    .ToListAsync();
+
+            categories.ForEach(category => category.EnsureTransactionsAreFrom(month));
+
+            return categories;
         }
     }
 }
