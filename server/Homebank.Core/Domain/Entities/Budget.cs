@@ -18,7 +18,7 @@ namespace Homebank.Core.Domain.Entities
                     .Sum(transaction => transaction.Inflow != default(decimal) ? transaction.Inflow : transaction.OutFlow * -1);
             }
         }
-        public decimal? Available => Activity - Budgeted;
+        public decimal? Available => Budgeted + Activity;
 
         private Budget() { }
 
