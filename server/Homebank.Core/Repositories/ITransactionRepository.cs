@@ -7,6 +7,7 @@ namespace Homebank.Core.Repositories
 {
     public interface ITransactionRepository : IRepository<Transaction>
     {
+        Task<decimal> GetAllInflowForBudgetingFor(DateTime month);
         Task<IEnumerable<Transaction>> GetUncategorizedBy(DateTime month);
     }
 }

@@ -49,5 +49,40 @@ namespace Homebank.Infrastructure.Repositories
                 budget.Category.EnsureTransactionsAreFrom(month);
             }
         }
+
+        public async Task<decimal> GetAllBudgetedUntil(DateTime month)
+        {
+            return await Entities
+                .Where(budget => budget.MonthForBudget <= month.ToEndOfMonthDate())
+                .SumAsync(budget => budget.Budgeted);
+        }
+
+        public decimal GetOverspentBy(DateTime dateTime)
+        {
+            return Entities
+                    .Include(budget => budget.Category)
+                    .ThenInclude(category => category.Transactions)
+                    .Where(budget => budget.MonthForBudget.IsSameMonthAndYear(dateTime))
+                    // computed properties aren't evaluated before ToList
+                    // yes this sucks, no there's no good alternative
+                    // perhaps this: https://daveaglick.com/posts/computed-properties-and-entity-framework-revisited
+                    .ToList()
+                    .Where(budget => budget.Available < 0)
+                    .Sum(budget => budget.Available.GetValueOrDefault());
+        }
+
+        public async Task<decimal> GetBudgetedForAsync(DateTime month)
+        {
+            return await Entities
+                    .Where(budget => budget.MonthForBudget.IsSameMonthAndYear(month))
+                    .SumAsync(budget => budget.Budgeted);
+        }
+
+        public async Task<decimal> GetBudgetedStartingFromAsync(DateTime month)
+        {
+            return await Entities
+                    .Where(budget => budget.MonthForBudget >= month.ToMonthDate())
+                    .SumAsync(budget => budget.Budgeted);
+        }
     }
 }

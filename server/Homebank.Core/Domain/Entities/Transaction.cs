@@ -5,13 +5,28 @@ namespace Homebank.Core.Domain.Entities
 {
     public class Transaction : BaseEntity
     {
+        private Category _category;
+
         public DateTime Date { get; private set; }
         public string Payee { get; private set; }
-        public Category Category { get; private set; }
         public string Memo { get; private set; }
         public decimal OutFlow { get; private set; }
         public decimal Inflow { get; private set; }
         public bool IsBankTransaction { get; private set; }
+        public bool IsInflowForBudgeting { get; private set; }
+        public Category Category {
+            get {
+                if (IsInflowForBudgeting)
+                {
+                    return new Category("To be budgeted", new CategoryGroup("Inflow"));
+                }
+
+                return _category;
+            }
+            private set {
+                _category = value;
+            }
+        }
 
         private Transaction()
         {
@@ -33,7 +48,19 @@ namespace Homebank.Core.Domain.Entities
         public void AssignCategory(Category category)
         {
             Guard.AgainstNull(category, nameof(category));
+
+            IsInflowForBudgeting = false;
             Category = category;
+        }
+
+        public void MarkAsTransactionForInflow(bool isInflowForBudgeting)
+        {
+            if (isInflowForBudgeting)
+            {
+                Category = null;
+            }
+
+            IsInflowForBudgeting = isInflowForBudgeting;
         }
 
         public override bool Equals(object obj)

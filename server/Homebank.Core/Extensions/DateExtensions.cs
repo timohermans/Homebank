@@ -10,5 +10,15 @@ namespace Homebank.Core.Extensions
         {
             return date.Year == dateToCheck.Year && date.Month == dateToCheck.Month;
         }
+
+        public static DateTime ToMonthDate(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1);
+        }
+
+        public static DateTime ToEndOfMonthDate(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1).AddMonths(1).AddDays(-1);
+        }
     }
 }

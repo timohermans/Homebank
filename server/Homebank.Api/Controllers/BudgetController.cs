@@ -26,6 +26,14 @@ namespace Homebank.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("total-balance/{month:datetime}")]
+        public async Task<IActionResult> GetBalanceOfMonth([FromRoute]TotalBudgetBalanceRequest request)
+        {
+            var response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SetBudget(AssignBudgetRequest request)
         {

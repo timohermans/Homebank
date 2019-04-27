@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Homebank.Core.Dto.Budgets
 {
-    public class AssignBudgetRequest : IRequest<BudgetResponse>
+    public class AssignBudgetRequest : BaseMonthRequest, IRequest<BudgetResponse>
     {
-        [Required]
-        public DateTime Month { get; set; }
         [Required]
         public int CategoryId { get; set; }
         [Required]

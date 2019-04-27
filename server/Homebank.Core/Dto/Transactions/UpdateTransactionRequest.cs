@@ -6,5 +6,6 @@ namespace Homebank.Core.Dto.Transactions
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
+        public bool IsInflowForBudgeting { get; set; }
     }
 }

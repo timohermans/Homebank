@@ -25,6 +25,8 @@ namespace Homebank.Core.UseCases.Transactions
             Guard.AgainstNull(category, nameof(request.CategoryId));
 
             transaction.AssignCategory(category);
+            transaction.MarkAsTransactionForInflow(request.IsInflowForBudgeting);
+            
             await _unitOfWork.Complete();
 
             return TransactionResponse.MapFrom(transaction);

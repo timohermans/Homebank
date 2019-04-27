@@ -1,4 +1,5 @@
 ﻿using Homebank.Core.Domain.Entities;
+using Homebank.Core.Extensions;
 using Homebank.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,6 +30,13 @@ namespace Homebank.Infrastructure.Repositories
                     .Where(transaction => transaction.Date.Year == month.Year && transaction.Date.Month == month.Month
                         && transaction.Category == null)
                     .ToListAsync();
+        }
+
+        public async Task<decimal> GetAllInflowForBudgetingFor(DateTime month)
+        {
+            return await Transactions
+                .Where(transaction => transaction.Date <= month.ToMonthDate().AddMonths(1).AddDays(-1) && transaction.IsInflowForBudgeting)
+                .SumAsync(transaction => transaction.Inflow);
         }
     }
 }
