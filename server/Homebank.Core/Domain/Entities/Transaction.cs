@@ -72,6 +72,7 @@ namespace Homebank.Core.Domain.Entities
             return transaction != null
                     && transaction.Date == Date
                     && transaction.Payee == Payee
+                    && transaction.Memo == Memo
                     && transaction.Inflow == Inflow
                     && transaction.OutFlow == OutFlow;
         }
@@ -83,6 +84,7 @@ namespace Homebank.Core.Domain.Entities
                 var hash = 17;
                 hash = hash * 23 + Date.GetHashCode();
                 hash = hash * 23 + Payee.GetHashCode();
+                hash = hash * 23 + Memo.GetHashCode();
                 hash = hash * 23 + Inflow.GetHashCode();
                 hash = hash * 23 + OutFlow.GetHashCode();
                 return hash;
