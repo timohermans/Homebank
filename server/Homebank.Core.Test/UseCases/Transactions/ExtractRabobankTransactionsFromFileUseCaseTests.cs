@@ -84,5 +84,29 @@ namespace Homebank.Core.Test.UseCases.Transactions
                         A<IList<Transaction>>.That.Matches(assertionCheck, "only one transaction should be inserted"))
                     ).MustHaveHappenedOnceExactly();
         }
+
+        [Fact]
+        public async Task Handle_ValidNewTransactionWithSimilarExistingTransaction_AssignsCategoryToNew()
+        {
+            var categoryNameThatShouldBeAssigned = "Verzekeringen";
+
+            var databaseTransactions = new List<Transaction> {
+                new Transaction(new DateTime(2019, 04, 01), "J.M.G. Kerkhoffs eo", null, "Spotify", 0, 2.5M, true),
+                new Transaction(new DateTime(2019, 04, 01), "Verzekering", new Category(categoryNameThatShouldBeAssigned, new CategoryGroup("Vaste lasten")), "Spotify", 0, 2.5M, true)
+            };
+            await ArrangeWith("Data/CSV_A_20190406_172126_double.csv", databaseTransactions);
+
+            var result = await _usecase.Handle(_request, CancellationToken.None);
+
+            Func<IList<Transaction>, bool> assertionCheck = transactions =>
+            {
+                var transaction = transactions.FirstOrDefault();
+                return transaction.Category?.Name == categoryNameThatShouldBeAssigned && transactions.Count == 1;
+            };
+            A.CallTo(
+                () => _unitOfWork.Transactions.CreateMultiple(
+                        A<IList<Transaction>>.That.Matches(assertionCheck, "only one transaction should be inserted"))
+                    ).MustHaveHappenedOnceExactly();
+        }
     }
 }

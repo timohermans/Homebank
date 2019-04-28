@@ -1,7 +1,9 @@
 ﻿using Homebank.Core.Converters;
 using Homebank.Core.Domain.Entities;
 using Homebank.Core.Dto.Transactions;
+using Homebank.Core.Extensions;
 using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -29,6 +31,8 @@ namespace Homebank.Core.UseCases.Transactions
 
             SplitTransactionsInto(transactionsToCreate, transactionsThatAlreadyExist, transactionsFromFile, transactionsFromDatabase);
 
+            TryAssignCategoryTo(transactionsToCreate, transactionsFromDatabase);
+
             await _unitOfWork.Transactions.CreateMultiple(transactionsToCreate);
             await _unitOfWork.Complete();
 
@@ -43,13 +47,28 @@ namespace Homebank.Core.UseCases.Transactions
         {
             foreach (var transactionFromFile in transactionsFromFile)
             {
-                if (transactionsFromDatabase.Any(transactionFromDatabase => transactionFromDatabase.Equals(transactionFromFile)))
+                if (transactionsFromDatabase.Any(transactionFromDatabase => transactionFromDatabase.Equals(transactionFromFile)) 
+                        || transactionsToCreate.Any(transactionToCreate => transactionToCreate.Equals(transactionFromFile)))
                 {
                     transactionsThatAlreadyExist.Add(transactionFromFile);
                 }
                 else
                 {
                     transactionsToCreate.Add(transactionFromFile);
+                }
+            }
+        }
+
+        private void TryAssignCategoryTo(List<Transaction> transactionsToCreate, IEnumerable<Transaction> transactionsFromDatabase)
+        {
+            foreach (var transaction in transactionsToCreate)
+            {
+                var similarityThreshold = transaction.Payee.Length * 0.6;
+                var transactionThatIsSimilar = transactionsFromDatabase.FirstOrDefault(transactionFromDb => transaction.Payee.GetSimilarityOf(transactionFromDb.Payee) < similarityThreshold);
+
+                if (transactionThatIsSimilar != null)
+                {
+                    transaction.AssignCategory(transactionThatIsSimilar.Category);                    
                 }
             }
         }
