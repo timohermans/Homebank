@@ -38,6 +38,13 @@ namespace Homebank.Api.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Create(CreateTransactionRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return Created(response.Id.ToString(), response);
+        }
+
+        [HttpPost("upload")]
         public async Task<IActionResult> UploadFrom([FromForm]IFormFile file)
         {
             using (var fileStream = new MemoryStream())

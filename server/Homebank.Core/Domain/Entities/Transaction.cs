@@ -36,13 +36,26 @@ namespace Homebank.Core.Domain.Entities
         {
             Guard.AgainstDefaultValue(date, "Must supply a valid date");
 
+            if (inflow == default(decimal) && outFlow == default(decimal))
+            {
+                throw new ArgumentException("Must have at least an inflow or an outflow");
+            }
+
             Date = date;
             Payee = payee ?? throw new ArgumentNullException(nameof(payee));
-            Category = category;
             Memo = memo ?? throw new ArgumentNullException(nameof(memo));
             OutFlow = outFlow;
             Inflow = inflow;
             IsBankTransaction = isBankTransaction;
+
+            if (category?.Name.ToLower() == "inflow")
+            {
+                MarkAsTransactionForInflow(true);
+            }
+            else if (category != null)
+            {
+                AssignCategory(category);
+            }
         }
 
         public void AssignCategory(Category category)

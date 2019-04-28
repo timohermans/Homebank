@@ -1,6 +1,10 @@
 ﻿using Homebank.Core;
 using Homebank.Core.Repositories;
+using Homebank.Infrastructure.Extensions;
 using Homebank.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Homebank.Infrastructure
@@ -25,7 +29,15 @@ namespace Homebank.Infrastructure
 
         public async Task Complete()
         {
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                var validationErrors = ex.ToValidationErrors();
+                throw new ArgumentException(string.Join(", ", validationErrors.Select(err => err.ErrorMessage)));
+            }
         }
     }
 }

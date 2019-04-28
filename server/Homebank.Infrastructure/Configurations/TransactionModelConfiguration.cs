@@ -1,9 +1,6 @@
 ﻿using Homebank.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Homebank.Infrastructure.Configurations
 {
@@ -14,6 +11,10 @@ namespace Homebank.Infrastructure.Configurations
             builder.Metadata
                 .FindNavigation(nameof(Transaction.Category))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            builder
+                .HasIndex(transaction => new { transaction.Date, transaction.Payee, transaction.Memo, transaction.Inflow, transaction.OutFlow })
+                .IsUnique();
         }
     }
 }

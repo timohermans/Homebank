@@ -5,6 +5,7 @@ namespace Homebank.Core.Dto.Transactions
 {
     public class TransactionResponse
     {
+        public int Id { get; private set; }
         public DateTime Date { get; private set; }
         public string Payee { get; private set; }
         public string Category { get; private set; }
@@ -17,6 +18,7 @@ namespace Homebank.Core.Dto.Transactions
         {
             return new TransactionResponse
             {
+                Id = transaction.Id,    
                 Category = transaction.Category != null ? $"{transaction?.Category.CategoryGroup.Name} - {transaction?.Category.Name}" : "Uncategorized",
                 Date = transaction.Date,
                 Inflow = transaction.Inflow,
