@@ -1,4 +1,5 @@
-﻿using Homebank.Core.Dto.Categories;
+﻿using Homebank.Api.UseCases.Categories;
+using Homebank.Core.Dto.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,15 +19,15 @@ namespace Homebank.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(NewCategoryRequest request)
+        public async Task<IActionResult> Create(Create.Command request)
         {
             var response = await _mediator.Send(request);
 
-            return Created($"category/{response.Id}", response);
+            return CreatedAtRoute("api/category", response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Create(UpdateCategoryRequest request)
+        public async Task<IActionResult> Create(Update.Command request)
         {
             return Ok(await _mediator.Send(request));
         }
