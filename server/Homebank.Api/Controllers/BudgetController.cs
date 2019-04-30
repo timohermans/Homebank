@@ -1,5 +1,7 @@
-﻿using Homebank.Core.Dto.Budgets;
+﻿using Homebank.Api.UseCases.Budgets;
+using Homebank.Core.Dto.Budgets;
 using Homebank.Core.Dto.Categories;
+using Homebank.Core.UseCases.Budgets;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +21,7 @@ namespace Homebank.Api.Controllers
         }
 
         [HttpGet("{month:datetime}")]
-        public async Task<IActionResult> GetMonth([FromRoute]BudgetOfMonthRequest request)
+        public async Task<IActionResult> GetMonth([FromRoute]MonthDetails.Query request)
         {
             var response = await _mediator.Send(request);
 
@@ -27,7 +29,7 @@ namespace Homebank.Api.Controllers
         }
 
         [HttpGet("total-balance/{month:datetime}")]
-        public async Task<IActionResult> GetBalanceOfMonth([FromRoute]TotalBudgetBalanceRequest request)
+        public async Task<IActionResult> GetBalanceOfMonth([FromRoute]MonthSummary.Query request)
         {
             var response = await _mediator.Send(request);
 
@@ -35,7 +37,7 @@ namespace Homebank.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SetBudget(AssignBudgetRequest request)
+        public async Task<IActionResult> SetBudget(Create.Command request)
         {
             var response = await _mediator.Send(request);
 

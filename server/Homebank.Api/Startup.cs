@@ -1,6 +1,6 @@
-﻿using Homebank.Api.Extensions;
+﻿using Homebank.Api.Infrastructure;
+using Homebank.Api.Infrastructure.Extensions;
 using Homebank.Core.UseCases.Categories;
-using Homebank.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

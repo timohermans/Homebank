@@ -1,8 +1,8 @@
-﻿using Homebank.Api.Models;
+﻿using Homebank.Api.Converters;
+using Homebank.Api.Infrastructure.Extensions;
+using Homebank.Api.Models;
 using Homebank.Core;
-using Homebank.Core.Converters;
 using Homebank.Infrastructure;
-using Homebank.Infrastructure.Converters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +13,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 
-namespace Homebank.Api.Extensions
+namespace Homebank.Api.Infrastructure.Extensions
 {
     public static class StartupExtensions
     {
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRabobankCsvConverter, RabobankCsvConverter>();
         }
 

@@ -1,5 +1,4 @@
 ﻿using Homebank.Core.Domain.Entities;
-using Homebank.Core.Dto.Budgets;
 using Homebank.Core.Extensions;
 using Homebank.Core.Repositories;
 using Microsoft.EntityFrameworkCore;

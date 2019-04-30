@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Homebank.Api.Extensions
+namespace Homebank.Api.Infrastructure.Extensions
 {
     public static class HttpExtensions
     {

@@ -1,4 +1,4 @@
-﻿using Homebank.Api.Extensions;
+﻿using Homebank.Api.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

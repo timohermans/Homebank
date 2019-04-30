@@ -1,4 +1,4 @@
-﻿using Homebank.Api.Attributes;
+﻿using Homebank.Api.Infrastructure.Attributes;
 using Microsoft.AspNetCore.Http;
 
 namespace Homebank.Api.Models

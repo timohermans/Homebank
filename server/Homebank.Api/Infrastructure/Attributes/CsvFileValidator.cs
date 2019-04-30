@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Homebank.Api.Attributes
+namespace Homebank.Api.Infrastructure.Attributes
 {
     public class CsvFileValidator : ValidationAttribute
     {
