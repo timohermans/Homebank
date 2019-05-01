@@ -1,8 +1,6 @@
 ﻿using Homebank.Api.Domain.Entities;
 using Homebank.Api.Infrastructure;
 using Homebank.Api.Infrastructure.Extensions;
-using Homebank.Core;
-using Homebank.Core.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -39,16 +37,11 @@ namespace Homebank.Api.UseCases.Budgets
 
             public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
             {
-                var budget = await GetBudgetFor(request);
-
-                if (budget == null)
-                {
-                    budget = await CreateBudgetBy(request);
-                }
+                var budget = await GetBudgetFor(request) ?? await CreateBudgetBy(request);
 
                 budget.Assign(request.Budgeted);
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
 
                 return new Response { Id = budget.Id };
             }

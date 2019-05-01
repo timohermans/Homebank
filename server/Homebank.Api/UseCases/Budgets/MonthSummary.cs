@@ -1,14 +1,13 @@
-﻿using Homebank.Api.Infrastructure;
-using Homebank.Api.Infrastructure.Extensions;
-using Homebank.Api.UseCases;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Homebank.Api.Infrastructure;
+using Homebank.Api.Infrastructure.Extensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace Homebank.Core.UseCases.Budgets
+namespace Homebank.Api.UseCases.Budgets
 {
     public static class MonthSummary
     {

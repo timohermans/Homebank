@@ -45,14 +45,15 @@ namespace Homebank.Api.UseCases.Categories
             {
                 var category = await _context.Categories
                     .Include(categoryInDb => categoryInDb.CategoryGroup)
-                    .FirstOrDefaultAsync(categoryInDb => categoryInDb.Id == request.Id);
+                    .FirstOrDefaultAsync(categoryInDb => categoryInDb.Id == request.Id,
+                        cancellationToken: cancellationToken);
 
                 Guard.AgainstNull(category, nameof(Category));
 
                 category.ChangeNameWith(request.Name);
                 await ChangeGroup(category, request.CategoryGroupId);
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
                 return new Response(category.Id, category.Name, category.CategoryGroup.Name);
             }
 
@@ -67,7 +68,5 @@ namespace Homebank.Api.UseCases.Categories
                 category.AssignTo(groupToAssignTo);
             }
         }
-
     }
-
 }
