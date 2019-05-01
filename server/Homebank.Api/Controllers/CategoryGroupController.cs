@@ -1,7 +1,7 @@
-﻿using Homebank.Core.Dto.CategoryGroups;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Homebank.Api.UseCases.CategoryGroups;
 
 namespace Homebank.Api.Controllers
 {
@@ -17,13 +17,13 @@ namespace Homebank.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryGroupRequest request)
+        public async Task<IActionResult> Create(Create.Command request)
         {
             return Ok(await _mediator.Send(request));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateCategoryGroupRequest request)
+        public async Task<IActionResult> Update(Update.Command request)
         {
             return Ok(await _mediator.Send(request));
         }
