@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Request DTO Class snippet</Title>
+      <Author>Timo Hermans</Author>
+      <Description>Creates a Request class for clean architecture usage</Description>
+      <Shortcut>arequest</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public class $UseCaseName$Request : IRequest<$ResponseClass$>
+    {
+$end$
+    }]]>
+      </Code>
+      <Declarations>
+        <Literal>
+          <ID>UseCaseName</ID>
+          <ToolTip>Name of the class</ToolTip>
+          <Default>New</Default>
+        </Literal>
+        <Literal>
+          <ID>ResponseClass</ID>
+          <ToolTip>Name of the Response class</ToolTip>
+          <Default>Response</Default>
+        </Literal>
+      </Declarations>
+      <Imports>
+        <Import>
+          <Namespace>MediatR</Namespace>
+        </Import>
+      </Imports>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

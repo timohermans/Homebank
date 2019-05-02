@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>UseCase Class snippet</Title>
+      <Author>Timo Hermans</Author>
+      <Description>Creates a UseCase class for clean architecture usage</Description>
+      <Shortcut>ausecase</Shortcut>
+    </Header>    
+    <Snippet>
+      <Code Language="CSharp">
+    <![CDATA[public class $UseCaseName$UseCase : IRequestHandler<$RequestClass$, $ResponseClass$>
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public $UseCaseName$UseCase(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<$ResponseClass$> Handle($RequestClass$ request, CancellationToken cancellationToken)
+        {
+            return new $ResponseClass$();
+        }
+    }]]>
+      </Code>
+      <Declarations>
+        <Literal>
+          <ID>UseCaseName</ID>
+          <ToolTip>Name of the class</ToolTip>
+          <Default>New</Default>
+        </Literal>
+        <Literal>
+          <ID>RequestClass</ID>
+          <ToolTip>Name of the Request class</ToolTip>
+          <Default>Request</Default>
+        </Literal>
+        <Literal>
+          <ID>ResponseClass</ID>
+          <ToolTip>Name of the Response class</ToolTip>
+          <Default>Response</Default>
+        </Literal>
+      </Declarations>
+      <Imports>
+        <Import>
+          <Namespace>System.Threading</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Threading.Tasks</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MediatR</Namespace>
+        </Import>
+      </Imports>
+    </Snippet>      
+  </CodeSnippet>
+</CodeSnippets>
