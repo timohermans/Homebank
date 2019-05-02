@@ -1,6 +1,5 @@
 ﻿using Homebank.Api.Infrastructure;
 using Homebank.Api.Infrastructure.Extensions;
-using Homebank.Core.UseCases.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +22,7 @@ namespace Homebank.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMediatR(typeof(CreateNewCategoryUseCase).Assembly);
+            services.AddMediatR();
             services.ConfigureDependencyInjection();
             services.ConfigureModelStateValidation();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

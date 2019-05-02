@@ -1,11 +1,12 @@
-﻿using Homebank.Core;
-using Homebank.Core.Dto.Transactions;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Homebank.Api.Infrastructure;
+using Homebank.Api.UseCases.Transactions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Homebank.Api.Controllers
 {
@@ -13,32 +14,32 @@ namespace Homebank.Api.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly AppDbContext _context;
         private readonly IMediator _mediator;
 
-        public TransactionController(IUnitOfWork unitOfWork, IMediator mediator)
+        public TransactionController(AppDbContext context, IMediator mediator)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
             _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var transactions = await _unitOfWork.Transactions.GetAll();
+            var transactions = await _context.Transactions.ToListAsync();
 
-            return Ok(transactions.Select(transaction => TransactionResponse.MapFrom(transaction)));
+            return Ok(transactions.Select(UseCases.Transactions.Get.Response.MapFrom));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateTransactionRequest request)
+        public async Task<IActionResult> Update(Update.Command request)
         {
             var response = await _mediator.Send(request);
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateTransactionRequest request)
+        public async Task<IActionResult> Create(Create.Command request)
         {
             var response = await _mediator.Send(request);
             return Created(response.Id.ToString(), response);
@@ -51,7 +52,7 @@ namespace Homebank.Api.Controllers
             {
                 await file.CopyToAsync(fileStream);
 
-                var request = new RabobankTransactionFileRequest
+                var request = new UploadFromFile.Command
                 {
                     TransactionFile = fileStream.ToArray()
                 };

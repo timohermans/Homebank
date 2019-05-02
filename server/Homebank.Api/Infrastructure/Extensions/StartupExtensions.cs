@@ -1,9 +1,4 @@
-﻿using Homebank.Api.Converters;
-using Homebank.Api.Infrastructure.Extensions;
-using Homebank.Api.Models;
-using Homebank.Core;
-using Homebank.Infrastructure;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -12,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
+using Homebank.Api.Infrastructure.Converters;
+using Homebank.Api.Infrastructure.Models;
 
 namespace Homebank.Api.Infrastructure.Extensions
 {

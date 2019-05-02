@@ -1,6 +1,4 @@
 ﻿using Homebank.Api.UseCases.Budgets;
-using Homebank.Core.Dto.Budgets;
-using Homebank.Core.Dto.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;

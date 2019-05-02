@@ -1,5 +1,4 @@
 ﻿using Homebank.Api.UseCases.Categories;
-using Homebank.Core.Dto.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
