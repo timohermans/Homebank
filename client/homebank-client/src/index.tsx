@@ -4,6 +4,9 @@ import './custom.scss';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { addFontAwesomeToProject } from './utils/font-awesome-service';
+
+addFontAwesomeToProject();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

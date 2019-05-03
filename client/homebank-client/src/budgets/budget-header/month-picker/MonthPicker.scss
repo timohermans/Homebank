@@ -1,0 +1,34 @@
+$modal-width: 240px;
+$month-width: 45px;
+$month-height: 40px;
+
+$icon-size: 24px;
+$icon-color: #23b2ce;
+
+.year-row {
+  height: 54px;
+  border-bottom: 1px solid #dfe4e9;
+
+  .year {
+    font-size: 1.1em;
+    font-weight: 700;
+  }
+}
+
+.month-picker {
+  position:absolute;
+  top: 10px;
+  left: 10px;
+  width: $modal-width;
+  border-radius: 5px;
+}
+
+.icon {
+  font-size: $icon-size;
+  color: $icon-color;
+}
+
+.month {
+  height: $month-height;
+  width: $month-width;
+}
