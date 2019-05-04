@@ -1,17 +1,17 @@
 import React from 'react';
 import './MonthPicker.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {format} from 'date-fns';
+import {format, isSameMonth} from 'date-fns';
 import ReactDOM from 'react-dom';
 
 export interface MonthPickerProps {
-  year: number;
-  month: number;
+  month: Date;
 }
 
 interface MonthPickerState {
   style: React.CSSProperties;
   isVisible: boolean;
+  yearToShow: number;
 }
 
 export class MonthPicker extends React.Component<MonthPickerProps, MonthPickerState> {
@@ -29,7 +29,7 @@ export class MonthPicker extends React.Component<MonthPickerProps, MonthPickerSt
   constructor(props: MonthPickerProps) {
     super(props);
 
-    this.state = {style: {}, isVisible: false};
+    this.state = {style: {}, isVisible: false, yearToShow: props.month.getFullYear()};
     this.modalRef = React.createRef();
   }
 
@@ -50,7 +50,14 @@ export class MonthPicker extends React.Component<MonthPickerProps, MonthPickerSt
         }
 
         this.setState(statePreviously => {
-          return {isVisible: !statePreviously.isVisible};
+          const isVisible = !statePreviously.isVisible;
+          let yearToShow = statePreviously.yearToShow;
+
+          if (!statePreviously.isVisible) {
+            yearToShow = new Date().getFullYear();
+          }
+
+          return {isVisible, yearToShow};
         });
       });
     }
@@ -78,6 +85,14 @@ export class MonthPicker extends React.Component<MonthPickerProps, MonthPickerSt
     }
   }
 
+  private goToPreviousYear = () => {
+    this.setState(previousState => ({yearToShow: previousState.yearToShow - 1}));
+  };
+
+  private goToNextYear = () => {
+    this.setState(previousState => ({yearToShow: previousState.yearToShow + 1}));
+  };
+
   render() {
     const months = this.createMonthsToSelect();
 
@@ -91,11 +106,11 @@ export class MonthPicker extends React.Component<MonthPickerProps, MonthPickerSt
             style={this.state.style}
           >
             <div className="year-row d-flex justify-content-between align-items-center mx-2">
-              <div className="icon">
+              <div className="icon" onClick={this.goToPreviousYear}>
                 <FontAwesomeIcon icon="arrow-alt-circle-left" />
               </div>
-              <div className="year">2019</div>
-              <div className="icon">
+              <div className="year">{this.state.yearToShow}</div>
+              <div className="icon" onClick={this.goToNextYear}>
                 <FontAwesomeIcon icon="arrow-alt-circle-right" />
               </div>
             </div>
@@ -114,18 +129,24 @@ export class MonthPicker extends React.Component<MonthPickerProps, MonthPickerSt
   private createMonthsToSelect(): JSX.Element[] {
     const months = [];
     for (let i = 0; i < 12; i++) {
-      const month = new Date(this.props.year, i);
+      const month = new Date(this.state.yearToShow, i);
       const monthDisplay = format(month, 'MMM');
-      const selectedClass = i === this.props.month ? 'is-selected' : '';
+      const selectedClass = isSameMonth(this.props.month, month) ? 'is-selected' : '';
+      let iconIndicatingSameMonth = (null);
+
+      if (isSameMonth(new Date(), month)) {
+        iconIndicatingSameMonth = <FontAwesomeIcon className='is-current-month' icon="circle" />;
+      }
 
       months.push(
         // i can safely use i here because the months and order are static
         // https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js/43892905#43892905
         <div
           key={i}
-          className={`month-picker-month m-1 d-flex align-items-center justify-content-center ${selectedClass}`}
+          className={`month-picker-month m-1 d-flex flex-column align-items-center justify-content-center ${selectedClass}`}
         >
-          {monthDisplay}
+          <div>{monthDisplay}</div>
+          {iconIndicatingSameMonth}
         </div>
       );
     }

@@ -43,9 +43,19 @@ $icon-size: 24px;
   border-radius: $border-radius;
   font-weight: $font-weight;
 
+  .is-current-month {
+    width: $border-radius;
+    height: $border-radius;
+    color: $primary;
+  }
+
   &.is-selected {
     background-color: $primary;
     color: $white;
+
+    .is-current-month {
+      color: $dark;
+    }
   }
 }
 
