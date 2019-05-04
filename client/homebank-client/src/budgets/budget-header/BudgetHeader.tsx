@@ -13,7 +13,7 @@ export class BudgetHeader extends React.Component {
                 <div className="px-2 icon"><FontAwesomeIcon icon="arrow-alt-circle-right"></FontAwesomeIcon></div>
             </div>
 
-            <MonthPicker year={2019}></MonthPicker>
+            <MonthPicker year={2019} month={4}></MonthPicker>
 
             <div className="flex-grow-1">2</div>
 

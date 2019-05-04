@@ -1,17 +1,19 @@
-$modal-width: 240px;
+@import '../../../custom.scss';
+
+
+$modal-width: 230px;
 $month-width: 45px;
 $month-height: 40px;
 
 $icon-size: 24px;
-$icon-color: #23b2ce;
 
 .year-row {
   height: 54px;
-  border-bottom: 1px solid #dfe4e9;
+  border-bottom: 1px solid $border-color;
 
   .year {
     font-size: 1.1em;
-    font-weight: 700;
+    font-weight: $font-weight;
   }
 }
 
@@ -20,7 +22,7 @@ $icon-color: #23b2ce;
   top: 10px;
   left: 10px;
   width: $modal-width;
-  border-radius: 5px;
+  border-radius: $border-radius;
 }
 
 .icon {
@@ -28,7 +30,20 @@ $icon-color: #23b2ce;
   color: $icon-color;
 }
 
-.month {
+.month-picker-month {
+  cursor: pointer;
   height: $month-height;
   width: $month-width;
+  border-radius: $border-radius;
+  font-weight: $font-weight;
+
+  &.is-selected {
+    background-color: $primary;
+    color: $white;
+  }
+}
+
+.month-picker-month:not(.is-selected):hover {
+  background-color: $hover-color;
+  color: $dark;
 }
