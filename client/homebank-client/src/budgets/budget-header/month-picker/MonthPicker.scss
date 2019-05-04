@@ -1,11 +1,17 @@
 @import '../../../custom.scss';
 
-
 $modal-width: 230px;
 $month-width: 45px;
 $month-height: 40px;
-
 $icon-size: 24px;
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 
 .year-row {
   height: 54px;
@@ -18,7 +24,7 @@ $icon-size: 24px;
 }
 
 .month-picker {
-  position:absolute;
+  position: absolute;
   top: 10px;
   left: 10px;
   width: $modal-width;
