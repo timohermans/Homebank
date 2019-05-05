@@ -1,65 +1,14 @@
-@import '../../../custom.scss';
-
-$modal-width: 230px;
-$month-width: 45px;
-$month-height: 40px;
-$icon-size: 24px;
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.year-row {
-  height: 54px;
-  border-bottom: 1px solid $border-color;
-
-  .year {
-    font-size: 1.1em;
-    font-weight: $font-weight;
-  }
-}
-
-.month-picker {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: $modal-width;
-  border-radius: $border-radius;
-}
+$secondary-color: #23b2ce;
+$date-size: 1.25em;
+$icon-size: 32px;
 
 .icon {
   font-size: $icon-size;
-  color: $icon-color;
-}
-
-.month-picker-month {
+  color: $secondary-color;
   cursor: pointer;
-  height: $month-height;
-  width: $month-width;
-  border-radius: $border-radius;
-  font-weight: $font-weight;
-
-  .is-current-month {
-    width: $border-radius;
-    height: $border-radius;
-    color: $primary;
-  }
-
-  &.is-selected {
-    background-color: $primary;
-    color: $white;
-
-    .is-current-month {
-      color: $dark;
-    }
-  }
 }
 
-.month-picker-month:not(.is-selected):hover {
-  background-color: $hover-color;
-  color: $dark;
+.selected-month {
+  font-size: $date-size;
+  cursor: pointer;
 }

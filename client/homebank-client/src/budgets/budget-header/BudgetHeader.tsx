@@ -1,24 +1,23 @@
 import * as React from 'react';
 import './BudgetHeader.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {MonthPicker} from './month-picker/MonthPicker';
+import {MonthPickerModal} from './month-picker/month-picker-modal/MonthPickerModal';
+import {format} from 'date-fns';
+import MonthPicker from './month-picker/MonthPicker';
 
-export class BudgetHeader extends React.Component {
+export interface BudgetHeaderProps {
+  onMonthSelected: (month: Date) => void;
+  monthSelected: Date;
+}
+
+export class BudgetHeader extends React.Component<BudgetHeaderProps> {
   render() {
     return (
       <nav className="navbar bg-header navbar-dark">
-        <div className="form-inline flex-grow-1 d-flex justify-content-center">
-          <div className="px-2 icon">
-            <FontAwesomeIcon icon="arrow-alt-circle-left" />
-          </div>
-          <div className="selected-month">
-            APR 2019 <FontAwesomeIcon icon="caret-down" />
-            <MonthPicker month={new Date()} />
-          </div>
-          <div className="px-2 icon">
-            <FontAwesomeIcon icon="arrow-alt-circle-right" />
-          </div>
-        </div>
+        <MonthPicker
+          monthSelected={this.props.monthSelected}
+          onMonthSelected={this.props.onMonthSelected}
+        />
 
         <div className="flex-grow-1">2</div>
 

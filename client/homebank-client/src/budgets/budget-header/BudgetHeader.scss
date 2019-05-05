@@ -1,21 +1,8 @@
 $navbar-height: 90px;
 $font-color: #FFF;
-$secondary-color: #23b2ce;
-$date-size: 1.25em;
-$icon-size: 32px;
+
 
 nav {
   height: $navbar-height;
   color: $font-color;
-}
-
-.icon {
-  font-size: $icon-size;
-  color: $secondary-color;
-  cursor: pointer;
-}
-
-.selected-month {
-  font-size: $date-size;
-  cursor: pointer;
 }
