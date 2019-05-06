@@ -38,7 +38,10 @@ namespace Homebank.Api.UseCases.Transactions
             public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
             {
                 var transactionsFromFile = _csvConverter.Convert(request.TransactionFile).ToList();
-                var transactionsFromDatabase = await _context.Transactions.ToListAsync(cancellationToken: cancellationToken);
+                var transactionsFromDatabase = await _context.Transactions
+                    .Include(transaction => transaction.Category)
+                        .ThenInclude(category => category.CategoryGroup)
+                    .ToListAsync(cancellationToken: cancellationToken);
                 var transactionsToCreate = new List<Transaction>();
                 var transactionsThatAlreadyExist = new List<Transaction>();
 
@@ -79,7 +82,7 @@ namespace Homebank.Api.UseCases.Transactions
                     var similarityThreshold = transaction.Payee.Length * 0.6;
                     var transactionThatIsSimilar = transactionsFromDatabase.FirstOrDefault(transactionFromDb => transaction.Payee.GetSimilarityOf(transactionFromDb.Payee) < similarityThreshold);
 
-                    if (transactionThatIsSimilar != null)
+                    if (transactionThatIsSimilar != null && transactionThatIsSimilar.Category != null)
                     {
                         transaction.AssignCategory(transactionThatIsSimilar.Category);
                     }

@@ -78,26 +78,27 @@ namespace Homebank.Core.Test.UseCases.Transactions
             Assert.Equal("OHRA Zorgverzekeringen", transactions.FirstOrDefault(transaction => transaction.Payee != transactionThatAlreadyExists.Payee).Payee);           
         }
 
-        //[Fact]
-        //public async Task Handle_ValidNewTransactionWithSimilarExistingTransaction_AssignsCategoryToNew()
-        //{
-        //    var categoryNameThatShouldBeAssigned = "Verzekeringen";
+        [Fact]
+        public async Task Handle_ValidNewTransactionWithSimilarExistingTransaction_AssignsCategoryToNew()
+        {
+            var categoryNameThatShouldBeAssigned = "Verzekeringen";
 
-        //    var databaseTransactions = new List<Transaction> {
-        //        new Transaction(new DateTime(2019, 04, 01), "J.M.G. Kerkhoffs eo", null, "Spotify", 0, 2.5M, true),
-        //        new Transaction(new DateTime(2019, 04, 01), "Verzekering", new Category(categoryNameThatShouldBeAssigned, new CategoryGroup("Vaste lasten")), "Spotify", 0, 2.5M, true)
-        //    };
-        //    await ArrangeWith("Data/CSV_A_20190406_172126_double.csv", databaseTransactions);
+            var databaseTransactions = new List<Transaction> {
+                new Transaction(new DateTime(2019, 04, 01), "J.M.G. Kerkhoffs eo", null, "Spotify", 0, 2.5M, true),
+                new Transaction(new DateTime(2019, 04, 01), "Verzekering", new Category(categoryNameThatShouldBeAssigned, new CategoryGroup("Vaste lasten")), "Spotify", 0, 2.5M, true)
+            };
+            await ArrangeWith("Data/CSV_A_20190406_172126_double.csv", databaseTransactions);
 
-        //    var result = await SendAsync(_request);
+            var result = await SendAsync(_request);
 
-        //    var transaction = await ExecuteDbContextAsync(context => context
-        //            .Transactions
-        //            .Include(transInDb => transInDb.Category)
-        //            .FirstOrDefaultAsync(
-        //                transactionInDb => transactionInDb.Payee == "J.M.G. Kerkhoffs eo" && transactionInDb.Memo == "Spotify"));
+            var transaction = await ExecuteDbContextAsync(context => context
+                    .Transactions
+                    .Include(transInDb => transInDb.Category)
+                        .ThenInclude(categoryInDb => categoryInDb.CategoryGroup)
+                    .FirstOrDefaultAsync(
+                        transactionInDb => transactionInDb.Payee == "OHRA Zorgverzekeringen" && transactionInDb.Category.Name == categoryNameThatShouldBeAssigned));
 
-        //    Assert.Equal(categoryNameThatShouldBeAssigned, transaction.Category.Name);
-        //}
+            Assert.NotNull(transaction);
+        }
     }
 }
