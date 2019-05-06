@@ -3,6 +3,7 @@ import './MonthPickerModal.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {format, isSameMonth} from 'date-fns';
 import ReactDOM from 'react-dom';
+const Popper = require('popper.js').default;
 
 export interface MonthPickerProps {
   month: Date;
@@ -17,6 +18,7 @@ interface MonthPickerState {
 
 export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPickerState> {
   private modalRef: React.RefObject<HTMLDivElement>;
+  private arrowRef: React.RefObject<HTMLDivElement>;
 
   private get pickerParent(): HTMLElement | null {
     const pickerNode = ReactDOM.findDOMNode(this);
@@ -32,6 +34,7 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
 
     this.state = {style: {}, isVisible: false, yearToShow: props.month.getFullYear()};
     this.modalRef = React.createRef();
+    this.arrowRef = React.createRef();
   }
 
   componentDidMount() {
@@ -67,22 +70,17 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
   private determineModalPosition() {
     // TODO: when window resizes, recalculate the position
     if (this.modalRef.current && this.pickerParent) {
-      const someMargin = 10;
-      const parentPosition = this.pickerParent.getBoundingClientRect();
-      const pickerElement = this.modalRef.current as HTMLDivElement;
-
-      const topToBe = parentPosition.top + this.pickerParent.clientHeight + someMargin;
-      const leftToBe =
-        parentPosition.left + this.pickerParent.clientWidth / 2 - pickerElement.clientWidth / 2;
-
-      if (this.state.style.top !== topToBe || this.state.style.left !== leftToBe) {
-        this.setState({
-          style: {
-            top: topToBe,
-            left: leftToBe,
+      const popperInstance = new Popper(this.pickerParent, this.modalRef.current, {
+        modifiers: {
+          offset: {
+            enabled: true,
+            offset: '0, 10',
           },
-        });
-      }
+          arrow: {
+            element: this.arrowRef.current
+          }
+        },
+      });
     }
   }
 
@@ -96,8 +94,8 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
 
   private selectMonth = (month: Date) => {
     this.props.onMonthSelected(month);
-    this.setState({ isVisible: false });
-  }
+    this.setState({isVisible: false});
+  };
 
   render() {
     const months = this.createMonthsToSelect();
@@ -108,9 +106,10 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
           <div className="modal-overlay" onClick={() => this.setState({isVisible: false})} />
           <div
             ref={this.modalRef}
-            className="month-picker bg-light text-dark"
+            className="month-picker popper bg-light text-dark"
             style={this.state.style}
           >
+            <div ref={this.arrowRef} className="popper__arrow text-light" x-arrow="" />
             <div className="year-row d-flex justify-content-between align-items-center mx-2">
               <div className="month-picker-icon" onClick={this.goToPreviousYear}>
                 <FontAwesomeIcon icon="arrow-alt-circle-left" />
@@ -138,10 +137,10 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
       const month = new Date(this.state.yearToShow, i);
       const monthDisplay = format(month, 'MMM');
       const selectedClass = isSameMonth(this.props.month, month) ? 'is-selected' : '';
-      let iconIndicatingSameMonth = (null);
+      let iconIndicatingSameMonth = null;
 
       if (isSameMonth(new Date(), month)) {
-        iconIndicatingSameMonth = <FontAwesomeIcon className='is-current-month' icon="circle" />;
+        iconIndicatingSameMonth = <FontAwesomeIcon className="is-current-month" icon="circle" />;
       }
 
       months.push(
