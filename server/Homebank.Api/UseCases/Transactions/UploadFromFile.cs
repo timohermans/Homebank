@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Homebank.Api.UseCases.Transactions
 {
-    public class UploadFromFile
+    public static class UploadFromFile
     {
         public class Command : IRequest<Response>
         {
