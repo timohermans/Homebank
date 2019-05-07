@@ -1,18 +1,13 @@
 ﻿using FakeItEasy;
-using Homebank.Api;
 using Homebank.Api.Domain.Entities;
 using Homebank.Api.Infrastructure;
 using Homebank.Api.Infrastructure.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Homebank.Core.Test

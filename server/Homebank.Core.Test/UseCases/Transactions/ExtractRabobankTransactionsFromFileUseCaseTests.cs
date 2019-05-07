@@ -55,11 +55,12 @@ namespace Homebank.Core.Test.UseCases.Transactions
 
             var result = await SendAsync(_request);
 
-            var transaction = await ExecuteDbContextAsync((context) => context.Transactions.FirstOrDefaultAsync());
-            Assert.True(transaction.Payee == "J.M.G. Kerkhoffs eo"
+            var transactionFound = await ExecuteDbContextAsync((context) => context.Transactions.FirstOrDefaultAsync(transaction => transaction.Payee == "J.M.G. Kerkhoffs eo"
                 && transaction.Date == new DateTime(2019, 04, 01)
                 && transaction.Inflow == 2.5M
-                && transaction.Memo == "Spotify");
+                && transaction.Memo == "Spotify"));
+
+            Assert.NotNull(transactionFound);
         }
 
         [Fact]
