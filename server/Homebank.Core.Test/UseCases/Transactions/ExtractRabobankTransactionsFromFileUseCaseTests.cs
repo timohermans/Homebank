@@ -55,7 +55,7 @@ namespace Homebank.Core.Test.UseCases.Transactions
 
             var result = await SendAsync(_request);
 
-            var transactionFound = await ExecuteDbContextAsync((context) => context.Transactions.FirstOrDefaultAsync(transaction => transaction.Payee == "J.M.G. Kerkhoffs eo"
+            var transactionFound = await ExecuteDbContextAsync(async (context) => await context.Transactions.FirstOrDefaultAsync(transaction => transaction.Payee == "J.M.G. Kerkhoffs eo"
                 && transaction.Date == new DateTime(2019, 04, 01)
                 && transaction.Inflow == 2.5M
                 && transaction.Memo == "Spotify"));
@@ -75,7 +75,7 @@ namespace Homebank.Core.Test.UseCases.Transactions
             Assert.Equal(1, result.NewTransactions);
             Assert.Equal(1, result.DuplicateTransactions);
 
-            var transactions = await ExecuteDbContextAsync((context) => context.Transactions.ToListAsync());
+            var transactions = await ExecuteDbContextAsync(async (context) => await context.Transactions.ToListAsync());
             Assert.Equal("OHRA Zorgverzekeringen", transactions.FirstOrDefault(transaction => transaction.Payee != transactionThatAlreadyExists.Payee).Payee);           
         }
 
@@ -92,7 +92,7 @@ namespace Homebank.Core.Test.UseCases.Transactions
 
             var result = await SendAsync(_request);
 
-            var transaction = await ExecuteDbContextAsync(context => context
+            var transaction = await ExecuteDbContextAsync(async context => await context
                     .Transactions
                     .Include(transInDb => transInDb.Category)
                         .ThenInclude(categoryInDb => categoryInDb.CategoryGroup)

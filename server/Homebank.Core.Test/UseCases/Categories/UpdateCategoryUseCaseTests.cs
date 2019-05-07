@@ -1,65 +1,60 @@
-﻿//using FakeItEasy;
-//using Homebank.Core.Domain.Entities;
-//using Homebank.Core.Dto.Categories;
-//using Homebank.Core.Test.Extensions;
-//using Homebank.Core.UseCases.Categories;
-//using System.Threading;
-//using System.Threading.Tasks;
-//using Xunit;
+﻿using Homebank.Api.Domain.Entities;
+using Homebank.Api.UseCases.Categories;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Xunit;
 
-//namespace Homebank.Core.Test.UseCases.Categories
-//{
-//    public class UpdateCategoryUseCaseTests
-//    {
-//        private IUnitOfWork _unitOfWorkFake;
+using static Homebank.Core.Test.SliceFixture;
 
-//        [Fact]
-//        public async Task Handle_ValidRequestWithNewGroup_ReturnsResponse()
-//        {
-//            #region arrange
+namespace Homebank.Core.Test.UseCases.Categories
+{
+    public class UpdateCategoryUseCaseTests
+    {
+        [Fact]
+        public async Task Handle_ValidRequestWithNewGroup_ReturnsResponse()
+        {
+            #region arrange
+            await ClearDatabaseAsync();
 
-//            int categoryId = 1;
-//            var newCategoryName = "Category 2";
-//            var newGroupId = 2;
+            var categoryId = 1;
+            var newCategoryName = "Category 2";
+            var newGroupId = 2;
 
-//            _unitOfWorkFake = A.Fake<IUnitOfWork>();
-//            var categoryFromDb = CreateCategory(categoryId);
-//            var newGroup = CreateCategoryGroup(newGroupId);
-//            var usecase = new UpdateCategoryUseCase(_unitOfWorkFake);
+            var categoryFromDb = await CreateCategory(categoryId);
+            var newGroup = await CreateCategoryGroup(newGroupId);
 
-//            #endregion arrange
+            #endregion arrange
 
-//            #region act
+            #region act
 
-//            var response = await usecase.Handle(new UpdateCategoryRequest { Id = categoryId, Name = newCategoryName, CategoryGroupId = newGroupId },
-//                                                new CancellationToken());
+            var response = await SendAsync(new Update.Command { Id = categoryFromDb.Id, Name = newCategoryName, CategoryGroupId = newGroupId });
+            var categoryUpdated = await ExecuteDbContextAsync(async context =>
+                                    await context.Categories
+                                        .Include(category => category.CategoryGroup)
+                                        .FirstOrDefaultAsync(category => category.Name == newCategoryName));
 
-//            #endregion act
+            #endregion act
 
-//            #region assert
+            #region assert
 
-//            A.CallTo(() => _unitOfWorkFake.Complete()).MustHaveHappenedOnceExactly();
-//            Assert.Equal(newCategoryName, response.Name);
-//            Assert.Equal(newGroup.Name, response.GroupName);
+            Assert.Equal(newCategoryName, categoryUpdated.Name);
 
-//            #endregion assert
-//        }
+            #endregion assert
+        }
 
-//        private Category CreateCategory(int categoryId)
-//        {
-//            var categoryGroupFromDb = new CategoryGroup($"Group for {categoryId}");
-//            var categoryFromDb = new Category($"Category {categoryId}", categoryGroupFromDb);
-//            categoryFromDb.SetTestId(categoryId);
-//            A.CallTo(() => _unitOfWorkFake.Categories.GetWithGroupByAsync(categoryId)).Returns(Task.FromResult(categoryFromDb));
-//            return categoryFromDb;
-//        }
+        private async Task<Category> CreateCategory(int categoryId)
+        {
+            var categoryGroupFromDb = new CategoryGroup($"Group for {categoryId}");
+            var categoryFromDb = new Category($"Category {categoryId}", categoryGroupFromDb);
+            await InsertAsync(categoryFromDb);
+            return categoryFromDb;
+        }
 
-//        private CategoryGroup CreateCategoryGroup(int id)
-//        {
-//            var newGroup = new CategoryGroup($"Group {id}");
-//            newGroup.SetTestId(id);
-//            A.CallTo(() => _unitOfWorkFake.CategoryGroups.GetBy(id)).Returns(Task.FromResult(newGroup));
-//            return newGroup;
-//        }
-//    }
-//}
+        private async Task<CategoryGroup> CreateCategoryGroup(int id)
+        {
+            var newGroup = new CategoryGroup($"Group {id}");
+            await InsertAsync(newGroup);
+            return newGroup;
+        }
+    }
+}

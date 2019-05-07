@@ -11,7 +11,8 @@ namespace Homebank.Core.Test.UseCases.Transactions
     {
         private async Task ArrangeWith(Transaction transactionInDatabase = null)
         {
-            await ExecuteDbContextAsync(context => context.Database.EnsureDeletedAsync());
+            await ClearDatabaseAsync();
+            await ExecuteDbContextAsync(async context => await context.Database.EnsureDeletedAsync());
 
             if (transactionInDatabase != null)
             {

@@ -37,9 +37,7 @@ namespace Homebank.Api.UseCases.CategoryGroups
             public async Task<Response> Handle(Command request,
                 CancellationToken cancellationToken)
             {
-                var group = await _context.CategoryGroups.FirstOrDefaultAsync(
-                    groupInDb => groupInDb.Name.Equals(request.Name, StringComparison.OrdinalIgnoreCase),
-                    cancellationToken: cancellationToken);
+                var group = await _context.CategoryGroups.FindAsync(request.Id);
 
                 Guard.AgainstNull(group, nameof(CategoryGroup));
 

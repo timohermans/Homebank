@@ -1,52 +1,48 @@
-﻿//using FakeItEasy;
-//using Homebank.Core.Domain.Entities;
-//using Homebank.Core.Repositories;
-//using Homebank.Core.UseCases.CategoryGroups;
-//using System;
-//using System.Threading;
-//using System.Threading.Tasks;
-//using Xunit;
+﻿using FakeItEasy;
+using Homebank.Api.Domain.Entities;
+using Homebank.Api.UseCases.CategoryGroups;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
-//namespace Homebank.Core.Test.UseCases.CategoryGroups
-//{
-//    public class UpdateCategoryGroupUseCaseTests
-//    {
-//        private IUnitOfWork _unitOfWorkFake;
+using static Homebank.Core.Test.SliceFixture;
 
-//        private void SetupUnitOfWorkFake(int groupId, CategoryGroup groupToReturnFromGet)
-//        {
-//            var categoryGroupRepo = A.Fake<ICategoryGroupRepository>();
-//            A.CallTo(() => categoryGroupRepo.GetBy(groupId)).Returns(Task.FromResult(groupToReturnFromGet));
+namespace Homebank.Core.Test.UseCases.CategoryGroups
+{
+    public class UpdateCategoryGroupUseCaseTests
+    {
+        private async Task SetupUnitOfWorkFakeAsync(CategoryGroup groupToReturnFromGet)
+        {
+            await ClearDatabaseAsync();
+            await InsertAsync(groupToReturnFromGet);
+        }
 
-//            _unitOfWorkFake = A.Fake<IUnitOfWork>();
-//            A.CallTo(() => _unitOfWorkFake.CategoryGroups).Returns(categoryGroupRepo);
-//        }
+        [Fact]
+        public async Task Handle_ValidRequest_ReturnsResponse()
+        {
+            var groupName = "Group 1";
+            await SetupUnitOfWorkFakeAsync(new CategoryGroup(groupName));
+            var groupInDb = await ExecuteDbContextAsync(async context => await context.CategoryGroups.FirstOrDefaultAsync(group => group.Name == groupName));
 
-//        [Fact]
-//        public async Task Handle_ValidRequest_ReturnsResponse()
-//        {
-//            var groupId = 1;
-//            var groupName = "Group 1";
-//            SetupUnitOfWorkFake(groupId, new CategoryGroup(groupName));
-//            var usecase = new UpdateCategoryGroupUseCase(_unitOfWorkFake);
-//            var response = await usecase.Handle(new Dto.CategoryGroups.UpdateCategoryGroupRequest { Id = groupId, Name = groupName },
-//                                                new CancellationToken());
+            var newGroupName = "Group 1 updated";
 
-//            A.CallTo(() => _unitOfWorkFake.Complete()).MustHaveHappenedOnceExactly();
-//            Assert.Equal(groupName, response.Name);
-//        }
+            var response = await SendAsync(new Update.Command { Id = groupInDb.Id, Name = newGroupName });
 
-//        [Fact]
-//        public async Task Handle_NonExistingGroup_ThrowsException()
-//        {
-//            var groupId = 999;
-//            SetupUnitOfWorkFake(groupId, null);
+            var updatedGroup = await FindAsync<CategoryGroup>(groupInDb.Id);
+            Assert.Equal(newGroupName, response.Name);
+        }
 
-//            var usecase = new UpdateCategoryGroupUseCase(_unitOfWorkFake);
-//            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-//             {
-//                 await usecase.Handle(new Dto.CategoryGroups.UpdateCategoryGroupRequest { Id = groupId, Name = "hoho" }, new CancellationToken());
-//             });
-//        }
-//    }
-//}
+        [Fact]
+        public async Task Handle_NonExistingGroup_ThrowsException()
+        {
+            var groupId = 999;
+
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+             {
+                 await SendAsync(new Update.Command { Id = groupId, Name = "hoho" });
+             });
+        }
+    }
+}

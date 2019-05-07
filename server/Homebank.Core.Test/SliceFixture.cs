@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Respawn;
 using System;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace Homebank.Core.Test
     {
         private static readonly IConfiguration _configuration;
         private static readonly IServiceScopeFactory _scopeFactory;
+        private static readonly Checkpoint _checkpoint;
 
         static SliceFixture()
         {
@@ -38,6 +40,7 @@ namespace Homebank.Core.Test
 
             provider = services.BuildServiceProvider();
             _scopeFactory = provider.GetService<IServiceScopeFactory>();
+            _checkpoint = new Checkpoint();
         }
 
         public static async Task ExecuteScopeAsync(Func<IServiceProvider, Task> action)
@@ -60,62 +63,65 @@ namespace Homebank.Core.Test
             }
         }
 
-        public static Task ExecuteDbContextAsync(Func<AppDbContext, Task> action)
+        public static void ExecuteScope(Action<IServiceProvider> action)
         {
-            return ExecuteScopeAsync(sp => action(sp.GetService<AppDbContext>()));
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                action.Invoke(scope.ServiceProvider);
+            }
         }
 
-        public static Task<T> ExecuteDbContextAsync<T>(Func<AppDbContext, Task<T>> action)
+        public static async Task ExecuteDbContextAsync(Func<AppDbContext, Task> action)
         {
-            return ExecuteScopeAsync(sp => action(sp.GetService<AppDbContext>()));
+            await ExecuteScopeAsync(sp => action(sp.GetService<AppDbContext>()));
         }
 
-        public static Task InsertAsync<T>(params T[] entities) where T : class
+        public static async Task<T> ExecuteDbContextAsync<T>(Func<AppDbContext, Task<T>> action)
         {
-            return ExecuteDbContextAsync(db =>
+            return await ExecuteScopeAsync(sp => action(sp.GetService<AppDbContext>()));
+        }
+
+        public static async Task InsertAsync<T>(params T[] entities) where T : class
+        {
+            await ExecuteDbContextAsync(async db =>
             {
                 foreach (var entity in entities)
                 {
-                    db.Set<T>().Add(entity);
+                    await db.Set<T>().AddAsync(entity);
                 }
-                return db.SaveChangesAsync();
+                return await db.SaveChangesAsync();
             });
         }
 
-        public static Task<T> FindAsync<T>(int id)
+        public static async Task<T> FindAsync<T>(int id)
             where T : BaseEntity
         {
-            return ExecuteDbContextAsync(db => db.Set<T>().FindAsync(id));
+            return await ExecuteDbContextAsync(async db => await db.Set<T>().FindAsync(id));
         }
 
-        public static Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
+        public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
         {
-            return ExecuteScopeAsync(sp =>
+            return await ExecuteScopeAsync(async sp =>
             {
                 var mediator = sp.GetService<IMediator>();
 
-                return mediator.Send(request);
+                return await mediator.Send(request);
             });
         }
 
-        public static Task SendAsync(IRequest request)
+        public static async Task SendAsync(IRequest request)
         {
-            return ExecuteScopeAsync(sp =>
+            await ExecuteScopeAsync(async sp =>
             {
                 var mediator = sp.GetService<IMediator>();
 
-                return mediator.Send(request);
+                return await mediator.Send(request);
             });
         }
 
-        public static Task ClearDatabaseAsync()
+        public static async Task ClearDatabaseAsync()
         {
-            return ExecuteScopeAsync(sp =>
-            {
-                var dbContext = sp.GetService<AppDbContext>();
-
-                return Task.FromResult(dbContext.Database.EnsureDeleted());
-            });
+            await ExecuteDbContextAsync(async context => await context.Database.EnsureDeletedAsync());
         }
     }
 }

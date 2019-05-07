@@ -13,6 +13,7 @@ namespace Homebank.Core.Test.UseCases.CategoryGroups
     {
         private async Task ArrangeWith(CategoryGroup groupToReturnFromGet)
         {
+            await ClearDatabaseAsync();
             if (groupToReturnFromGet != null)
             {
                 await InsertAsync(groupToReturnFromGet);
@@ -22,10 +23,11 @@ namespace Homebank.Core.Test.UseCases.CategoryGroups
         [Fact]
         public async Task Handle_ValidRequest_ReturnsResponse()
         {
+            await ArrangeWith(null);
             var groupName = "Group 1";
             var response = await SendAsync(new Create.Command { Name = groupName });
 
-            var categoryGroup = await ExecuteDbContextAsync(context => context.CategoryGroups.FirstOrDefaultAsync(group => group.Name == groupName));
+            var categoryGroup = await ExecuteDbContextAsync(async context => await context.CategoryGroups.FirstOrDefaultAsync(group => group.Name == groupName));
             Assert.NotNull(categoryGroup);
         }
 
