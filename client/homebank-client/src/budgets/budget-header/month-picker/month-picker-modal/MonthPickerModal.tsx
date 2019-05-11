@@ -1,8 +1,9 @@
-import React from 'react';
-import './MonthPickerModal.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {format, isSameMonth} from 'date-fns';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import './MonthPickerModal.scss';
+// tslint:disable-next-line: no-var-requires
 const Popper = require('popper.js').default;
 
 export interface MonthPickerProps {
@@ -37,12 +38,12 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
     this.arrowRef = React.createRef();
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.listenToParentClick();
     this.determineModalPosition();
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     this.determineModalPosition();
   }
 
@@ -68,42 +69,28 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
   }
 
   private determineModalPosition() {
-    // TODO: when window resizes, recalculate the position
     if (this.modalRef.current && this.pickerParent) {
       const popperInstance = new Popper(this.pickerParent, this.modalRef.current, {
         modifiers: {
+          arrow: {
+            element: this.arrowRef.current,
+          },
           offset: {
             enabled: true,
             offset: '0, 10',
           },
-          arrow: {
-            element: this.arrowRef.current
-          }
         },
       });
     }
   }
 
-  private goToPreviousYear = () => {
-    this.setState(previousState => ({yearToShow: previousState.yearToShow - 1}));
-  };
-
-  private goToNextYear = () => {
-    this.setState(previousState => ({yearToShow: previousState.yearToShow + 1}));
-  };
-
-  private selectMonth = (month: Date) => {
-    this.props.onMonthSelected(month);
-    this.setState({isVisible: false});
-  };
-
-  render() {
+  public render() {
     const months = this.createMonthsToSelect();
 
     if (this.state.isVisible) {
       return (
         <div>
-          <div className="modal-overlay" onClick={() => this.setState({isVisible: false})} />
+          <div className="modal-overlay" onClick={this.hideModalOverlay} />
           <div
             ref={this.modalRef}
             className="month-picker popper bg-light text-dark"
@@ -158,4 +145,22 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
     }
     return months;
   }
+
+  private hideModalOverlay = () => {
+    this.setState({isVisible: false});
+  };
+
+  private goToPreviousYear = () => {
+    this.setState(previousState => ({yearToShow: previousState.yearToShow - 1}));
+  };
+
+  private goToNextYear = () => {
+    this.setState(previousState => ({yearToShow: previousState.yearToShow + 1}));
+  };
+
+  private selectMonth = (month: Date) => {
+    this.props.onMonthSelected(month);
+    this.setState({isVisible: false});
+  };
+
 }

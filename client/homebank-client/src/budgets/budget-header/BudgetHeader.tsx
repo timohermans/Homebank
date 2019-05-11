@@ -1,8 +1,5 @@
 import * as React from 'react';
 import './BudgetHeader.scss';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {MonthPickerModal} from './month-picker/month-picker-modal/MonthPickerModal';
-import {format} from 'date-fns';
 import MonthPicker from './month-picker/MonthPicker';
 
 export interface BudgetHeaderProps {
@@ -11,7 +8,7 @@ export interface BudgetHeaderProps {
 }
 
 export class BudgetHeader extends React.Component<BudgetHeaderProps> {
-  render() {
+  public render() {
     return (
       <nav className="navbar bg-header navbar-dark">
         <MonthPicker

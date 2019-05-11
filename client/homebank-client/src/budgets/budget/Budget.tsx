@@ -1,6 +1,6 @@
+import {isSameMonth} from 'date-fns';
 import * as React from 'react';
 import {BudgetHeader} from '../budget-header/BudgetHeader';
-import {isSameMonth} from 'date-fns';
 
 interface BudgetState {
   monthSelected: Date;
@@ -13,17 +13,7 @@ export class Budget extends React.Component<{}, BudgetState> {
     this.state = {monthSelected: new Date()};
   }
 
-  private monthChangedBy = (monthSelected: Date) => {
-    this.setState((previousState: BudgetState) => {
-      if (isSameMonth(previousState.monthSelected, monthSelected)) {
-        return;
-      }
-
-      return {monthSelected: monthSelected};
-    });
-  };
-
-  render() {
+  public render() {
     return (
       <div>
         <BudgetHeader
@@ -34,4 +24,14 @@ export class Budget extends React.Component<{}, BudgetState> {
       </div>
     );
   }
+
+  private monthChangedBy = (monthSelected: Date) => {
+    this.setState((previousState: BudgetState) => {
+      if (isSameMonth(previousState.monthSelected, monthSelected)) {
+        return;
+      }
+
+      return {monthSelected};
+    });
+  };
 }
