@@ -70,7 +70,7 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
 
   private determineModalPosition() {
     if (this.modalRef.current && this.pickerParent) {
-      const popperInstance = new Popper(this.pickerParent, this.modalRef.current, {
+      new Popper(this.pickerParent, this.modalRef.current, {
         modifiers: {
           arrow: {
             element: this.arrowRef.current,

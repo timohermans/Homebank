@@ -24,6 +24,7 @@ namespace Homebank.Api.Domain.Entities
         {
             ChangeNameWith(name);
             CategoryGroup = categoryGroup ?? throw new ArgumentNullException(nameof(categoryGroup));
+            _budgets = new HashSet<Budget>();
         }
 
         public Category(string name, CategoryGroup categoryGroup, IEnumerable<Transaction> transactionsToAssignTo) : this(name, categoryGroup)

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './BudgetHeader.scss';
 import MonthPicker from './month-picker/MonthPicker';
+import BudgetStatus from './budget-status/BudgetStatus';
 
 export interface BudgetHeaderProps {
   onMonthSelected: (month: Date) => void;
@@ -16,9 +17,7 @@ export class BudgetHeader extends React.Component<BudgetHeaderProps> {
           onMonthSelected={this.props.onMonthSelected}
         />
 
-        <div className="flex-grow-1">2</div>
-
-        <div className="flex-grow-1">3</div>
+        <BudgetStatus />
       </nav>
     );
   }

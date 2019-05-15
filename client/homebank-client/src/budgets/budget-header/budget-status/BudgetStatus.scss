@@ -1,0 +1,17 @@
+nav {
+  height: inherit;
+}
+
+.budget-status {
+  display: flex;
+  flex: 4 0;
+}
+
+.budget-status__details {
+  display: flex;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
