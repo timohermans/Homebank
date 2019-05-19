@@ -93,16 +93,16 @@ export class MonthPickerModal extends React.Component<MonthPickerProps, MonthPic
           <div className="modal-overlay" onClick={this.hideModalOverlay} />
           <div
             ref={this.modalRef}
-            className="month-picker popper bg-light text-dark"
+            className="month-picker__modal popper bg-light text-dark"
             style={this.state.style}
           >
             <div ref={this.arrowRef} className="popper__arrow text-light" x-arrow="" />
             <div className="year-row d-flex justify-content-between align-items-center mx-2">
-              <div className="month-picker-icon" onClick={this.goToPreviousYear}>
+              <div className="month-picker__icon" onClick={this.goToPreviousYear}>
                 <FontAwesomeIcon icon="arrow-alt-circle-left" />
               </div>
               <div className="year">{this.state.yearToShow}</div>
-              <div className="month-picker-icon" onClick={this.goToNextYear}>
+              <div className="month-picker__icon" onClick={this.goToNextYear}>
                 <FontAwesomeIcon icon="arrow-alt-circle-right" />
               </div>
             </div>

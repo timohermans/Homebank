@@ -2,14 +2,22 @@ $secondary-color: #23b2ce;
 $date-size: 1.25em;
 $icon-size: 32px;
 
+.month-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.month-picker__selected-month {
+  display: flex;
+  justify-content: space-between;
+  font-size: $date-size;
+  cursor: pointer;
+  flex-basis: 110px;
+}
+
 .icon {
   font-size: $icon-size;
   color: $secondary-color;
   cursor: pointer;
-}
-
-.selected-month {
-  font-size: $date-size;
-  cursor: pointer;
-  flex-basis: 110px;
 }

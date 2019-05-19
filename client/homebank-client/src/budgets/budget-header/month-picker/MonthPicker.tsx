@@ -12,20 +12,24 @@ export interface MonthPickerProps {
 export class MonthPicker extends Component<MonthPickerProps> {
   public render() {
     return (
-      <div className="d-flex justify-content-center form-inline">
+      <div className="month-picker">
         <div
           className="px-2 icon"
           onClick={() => this.props.onMonthSelected(addMonths(this.props.monthSelected, -1))}
         >
           <FontAwesomeIcon icon="arrow-alt-circle-left" />
         </div>
-        <div className="selected-month">
-          {format(this.props.monthSelected, 'MMM YYYY')}{' '}
-          <FontAwesomeIcon className="text-primary" icon="caret-down" />
-          <MonthPickerModal
-            month={this.props.monthSelected}
-            onMonthSelected={this.props.onMonthSelected}
-          />
+        <div className="month-picker__selected-month">
+          <div>
+            {format(this.props.monthSelected, 'MMM YYYY')}
+            <MonthPickerModal
+              month={this.props.monthSelected}
+              onMonthSelected={this.props.onMonthSelected}
+            />
+          </div>
+          <div>
+            <FontAwesomeIcon className="text-primary" icon="caret-down" />
+          </div>
         </div>
         <div
           className="px-2 icon"
