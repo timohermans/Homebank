@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { format } from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import './BudgetStatus.scss';
 
@@ -10,7 +11,13 @@ interface MonthSummary {
   overspentLastMonth: number;
 }
 
-export const BudgetStatus: React.FunctionComponent = () => {
+interface BudgetStatusProps {
+  monthSelected: Date;
+}
+
+export const BudgetStatus: React.FunctionComponent<BudgetStatusProps> = (
+  props: BudgetStatusProps
+) => {
   const [status, setStatus] = useState({
     balance: 0,
     budgetedInTheFuture: 0,
@@ -20,17 +27,19 @@ export const BudgetStatus: React.FunctionComponent = () => {
   });
 
   useEffect(() => {
+    const monthRouteParam = format(props.monthSelected, 'YYYY-MM-01');
+
     axios
       .request<MonthSummary>({
-        url: 'https://localhost:44344/api/budget/total-balance/2019-04-01',
+        url: `${process.env.REACT_APP_API_URL}/api/budget/total-balance/${monthRouteParam}`,
       })
       .then(response => {
         setStatus(response.data);
       })
       .catch(error => {
         console.log(error);
-       });
-  }, []);
+      });
+  }, [props.monthSelected]);
 
   const formatToCurrency = (value: number) => {
     const formatter = new Intl.NumberFormat('nl-NL', {
@@ -40,7 +49,7 @@ export const BudgetStatus: React.FunctionComponent = () => {
     });
 
     return formatter.format(value);
-  }
+  };
 
   return (
     <div className="budget-status">

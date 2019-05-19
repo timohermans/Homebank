@@ -20,7 +20,7 @@ export class BudgetHeader extends React.Component<BudgetHeaderProps> {
         </div>
 
         <div className="navbar__budget-status">
-          <BudgetStatus />
+          <BudgetStatus monthSelected={this.props.monthSelected} />
         </div>
       </nav>
     );
