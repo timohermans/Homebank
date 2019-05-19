@@ -1,4 +1,6 @@
-@import '../../../../custom.scss';
+@import '../../../../theme/variables';
+@import '../../../../../node_modules/bootstrap/scss/functions';
+@import '../../../../../node_modules/bootstrap/scss/variables';
 
 $modal-width: 230px;
 $month-width: 45px;
@@ -19,7 +21,7 @@ $icon-size: 24px;
 
   .year {
     font-size: 1.1em;
-    font-weight: $font-weight;
+    font-weight: $font-weight-bold;
   }
 }
 
@@ -45,7 +47,7 @@ $icon-size: 24px;
   height: $month-height;
   width: $month-width;
   border-radius: $border-radius;
-  font-weight: $font-weight;
+  font-weight: $font-weight-bold;
 
   .is-current-month {
     width: $border-radius;

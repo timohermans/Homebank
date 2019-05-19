@@ -1,17 +1,63 @@
+@import '../../../theme/variables';
+
 nav {
   height: inherit;
 }
 
 .budget-status {
   display: flex;
-  flex: 4 0;
+}
+
+.budget-status__summary-container {
+  display: flex;
+}
+
+.budget-status__summary {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: map-get($spacers, 2);
+  background-color: $primary;
+  border-radius: $border-radius;
+}
+
+.budget-status__amount {
+  align-self: center;
+  font-size: $h3-font-size;
+}
+
+.budget-status__amount-description {
+  font-size: $font-size-sm;
+  font-style: italic;
+}
+
+.budget-status__arrow {
+  align-self: center;
+  width: 32px;
+  height: 32px;
+}
+
+.arrow {
+  border: 16px solid rgba(0,0,0,0);
+  border-left-color: $primary;
 }
 
 .budget-status__details {
   display: flex;
 }
 
-.column {
+.budget-status__column {
   display: flex;
   flex-direction: column;
+  font-size: $font-size-xs;
+}
+
+.budget-status__column--align_right {
+  text-align: right;
+  margin-right: map-get($spacers, 2);
+  font-weight: $font-weight-bold;
+}
+
+.budget-status__column--italic {
+  font-style: italic;
 }

@@ -12,12 +12,16 @@ export class BudgetHeader extends React.Component<BudgetHeaderProps> {
   public render() {
     return (
       <nav className="navbar bg-header navbar-dark">
-        <MonthPicker
-          monthSelected={this.props.monthSelected}
-          onMonthSelected={this.props.onMonthSelected}
-        />
+        <div className="navbar__month-picker">
+          <MonthPicker
+            monthSelected={this.props.monthSelected}
+            onMonthSelected={this.props.onMonthSelected}
+          />
+        </div>
 
-        <BudgetStatus />
+        <div className="navbar__budget-status">
+          <BudgetStatus />
+        </div>
       </nav>
     );
   }

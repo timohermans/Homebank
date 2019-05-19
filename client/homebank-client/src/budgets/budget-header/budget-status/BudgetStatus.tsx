@@ -4,22 +4,27 @@ import './BudgetStatus.scss';
 export default function BudgetStatus() {
   return (
     <div className="budget-status">
-      <div className="mr-2">
-        <div>$0.00</div>
-        <div>To Be Budgeted</div>
+      <div className="budget-status__summary-container">
+        <div className="budget-status__summary">
+          <div className="budget-status__amount">$0.00</div>
+          <div className="budget-status__amount-description">To Be Budgeted</div>
+        </div>
+        <div className="budget-status__arrow">
+          <div className="arrow" />
+        </div>
       </div>
       <div className="budget-status__details">
-        <div className="column text-right mr-2">
-          <small>$0.00</small>
-          <small>$1500.00</small>
-          <small>-$30.00</small>
-          <small>$0.00</small>
+        <div className="budget-status__column budget-status__column--align_right">
+          <div>$0.00</div>
+          <div>$1500.00</div>
+          <div>-$30.00</div>
+          <div>$0.00</div>
         </div>
-        <div className="column">
-          <small>Fund for May</small>
-          <small>Overspent in Apr</small>
-          <small>Budgeted in May</small>
-          <small>Budgeted in Future</small>
+        <div className="budget-status__column budget-status__column--italic">
+          <div>Fund for May</div>
+          <div>Overspent in Apr</div>
+          <div>Budgeted in May</div>
+          <div>Budgeted in Future</div>
         </div>
         <div />
       </div>

@@ -12,7 +12,7 @@ export interface MonthPickerProps {
 export class MonthPicker extends Component<MonthPickerProps> {
   public render() {
     return (
-      <div className="form-inline flex-grow-1 d-flex justify-content-center">
+      <div className="d-flex justify-content-center form-inline">
         <div
           className="px-2 icon"
           onClick={() => this.props.onMonthSelected(addMonths(this.props.monthSelected, -1))}

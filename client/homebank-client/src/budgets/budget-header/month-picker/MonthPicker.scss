@@ -11,4 +11,5 @@ $icon-size: 32px;
 .selected-month {
   font-size: $date-size;
   cursor: pointer;
+  flex-basis: 110px;
 }
