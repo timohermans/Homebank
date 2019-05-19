@@ -27,6 +27,20 @@ namespace Homebank.Api.Infrastructure.Extensions
             });
         }
 
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(Startup.MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+        }
+
         public static void SetupExceptionHandling(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(errorApp =>

@@ -12,6 +12,8 @@ namespace Homebank.Api
 {
     public class Startup
     {
+        public static readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +27,7 @@ namespace Homebank.Api
             services.AddMediatR();
             services.ConfigureDependencyInjection();
             services.ConfigureModelStateValidation();
+            services.ConfigureCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -41,6 +44,8 @@ namespace Homebank.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
             app.UseMvc();
