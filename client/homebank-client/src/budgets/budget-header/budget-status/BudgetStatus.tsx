@@ -22,20 +22,31 @@ export const BudgetStatus: React.FunctionComponent = () => {
   useEffect(() => {
     axios
       .request<MonthSummary>({
-        url: 'https://localhost:44344/api/total-balance/2019-04-01',
+        url: 'https://localhost:44344/api/budget/total-balance/2019-04-01',
       })
       .then(response => {
-        console.log(response.data);
         setStatus(response.data);
       })
-      .catch(error => {  });
-  });
+      .catch(error => {
+        console.log(error);
+       });
+  }, []);
+
+  const formatToCurrency = (value: number) => {
+    const formatter = new Intl.NumberFormat('nl-NL', {
+      currency: 'EUR',
+      minimumFractionDigits: 2,
+      style: 'currency',
+    });
+
+    return formatter.format(value);
+  }
 
   return (
     <div className="budget-status">
       <div className="budget-status__summary-container">
         <div className="budget-status__summary">
-          <div className="budget-status__amount">$0.00</div>
+          <div className="budget-status__amount">{formatToCurrency(status.balance)}</div>
           <div className="budget-status__amount-description">To Be Budgeted</div>
         </div>
         <div className="budget-status__arrow">
@@ -44,13 +55,13 @@ export const BudgetStatus: React.FunctionComponent = () => {
       </div>
       <div className="budget-status__details">
         <div className="budget-status__column budget-status__column--align_right">
-          <div>$0.00</div>
-          <div>$1500.00</div>
-          <div>-$30.00</div>
-          <div>$0.00</div>
+          <div>{formatToCurrency(status.fundsAvailable)}</div>
+          <div>{formatToCurrency(status.overspentLastMonth)}</div>
+          <div>{formatToCurrency(status.budgetedThisMonth)}</div>
+          <div>{formatToCurrency(status.budgetedInTheFuture)}</div>
         </div>
         <div className="budget-status__column budget-status__column--italic">
-          <div>Fund for May</div>
+          <div>Funds for May</div>
           <div>Overspent in Apr</div>
           <div>Budgeted in May</div>
           <div>Budgeted in Future</div>
