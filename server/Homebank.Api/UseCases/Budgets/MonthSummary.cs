@@ -43,11 +43,7 @@ namespace Homebank.Api.UseCases.Budgets
 
             public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
             {
-                var allInflow = await GetAllInflowForBudgetingFor(request.Month);
-                var allBudgeted = await GetAllBudgetedUntil(request.Month);
-
-                var fundsAvailable = allInflow - allBudgeted;
-
+                var fundsAvailable = await GetAllInflowForBudgetingFor(request.Month); ;
                 var overspentLastMonth = GetOverspentBy(request.Month.AddMonths(-1));
                 var budgetedThisMonth = await GetBudgetedForAsync(request.Month);
                 var budgetedInFuture = await GetBudgetedStartingFromAsync(request.Month.AddMonths(1));
@@ -60,13 +56,6 @@ namespace Homebank.Api.UseCases.Budgets
                 return await _context.Transactions
                     .Where(transaction => transaction.Date <= month.ToEndOfMonthDate() && transaction.IsInflowForBudgeting)
                     .SumAsync(transaction => transaction.Inflow);
-            }
-
-            public async Task<decimal> GetAllBudgetedUntil(DateTime month)
-            {
-                return await _context.Budgets
-                    .Where(budget => budget.MonthForBudget <= month.ToEndOfMonthDate())
-                    .SumAsync(budget => budget.Budgeted);
             }
 
             public decimal GetOverspentBy(DateTime dateTime)
