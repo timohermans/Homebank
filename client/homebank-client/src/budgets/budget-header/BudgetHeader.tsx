@@ -1,7 +1,7 @@
 import * as React from 'react';
+import {BudgetStatus} from './budget-status/BudgetStatus';
 import './BudgetHeader.scss';
 import MonthPicker from './month-picker/MonthPicker';
-import BudgetStatus from './budget-status/BudgetStatus';
 
 export interface BudgetHeaderProps {
   onMonthSelected: (month: Date) => void;
