@@ -12,7 +12,8 @@
         "react-hooks-nesting": "error",
         "interface-name": false,
         "member-ordering": false,
-        "jsx-no-lambda": false
+        "jsx-no-lambda": false,
+        "no-floating-promises": false
     },
     "rulesDirectory": []
 }

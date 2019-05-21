@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { format } from 'date-fns';
-import React, {useEffect, useState} from 'react';
+import {format} from 'date-fns';
+import React, {useEffect} from 'react';
+import {useHomebankApi} from '../../../shared/hooks/homebankApi';
 import './BudgetStatus.scss';
 
 interface MonthSummary {
@@ -18,7 +18,7 @@ interface BudgetStatusProps {
 export const BudgetStatus: React.FunctionComponent<BudgetStatusProps> = (
   props: BudgetStatusProps
 ) => {
-  const [status, setStatus] = useState({
+  const {apiResult: status, error, isLoading, doFetch} = useHomebankApi<MonthSummary>({
     balance: 0,
     budgetedInTheFuture: 0,
     budgetedThisMonth: 0,
@@ -28,18 +28,8 @@ export const BudgetStatus: React.FunctionComponent<BudgetStatusProps> = (
 
   useEffect(() => {
     const monthRouteParam = format(props.monthSelected, 'YYYY-MM-01');
-
-    axios
-      .request<MonthSummary>({
-        url: `${process.env.REACT_APP_API_URL}/api/budget/total-balance/${monthRouteParam}`,
-      })
-      .then(response => {
-        setStatus(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [props.monthSelected]);
+    doFetch(`budget/total-balance/${monthRouteParam}`);
+  }, [props.monthSelected, doFetch]);
 
   const formatToCurrency = (value: number) => {
     const formatter = new Intl.NumberFormat('nl-NL', {
