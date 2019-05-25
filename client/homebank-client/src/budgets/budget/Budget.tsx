@@ -1,37 +1,37 @@
 import {isSameMonth} from 'date-fns';
-import * as React from 'react';
+import format from 'date-fns/format';
+import React, {useEffect, useState} from 'react';
+import {useHomebankApi} from '../../shared/hooks/homebankApi';
 import {BudgetHeader} from '../budget-header/BudgetHeader';
+import {BudgetList} from '../budget-list/BudgetList';
+import {BudgetModel, BudgetResponse} from './budget.model';
 
 interface BudgetState {
   monthSelected: Date;
 }
 
-export class Budget extends React.Component<{}, BudgetState> {
-  constructor(props: BudgetState) {
-    super(props);
+export const Budget: React.FunctionComponent = () => {
+  const [monthSelected, setMonthSelected] = useState(new Date());
+  const {apiResult: budgetResponse, error, isLoading, doFetch} = useHomebankApi<BudgetResponse>({
+    budgets: [],
+  }); // TODO: handle the loading and error handling
 
-    this.state = {monthSelected: new Date()};
-  }
+  useEffect(() => {
+    doFetch(`budget/${format(monthSelected, 'YYYY-MM-01')}`);
+  }, [monthSelected, doFetch]);
 
-  public render() {
-    return (
-      <div>
-        <BudgetHeader
-          monthSelected={this.state.monthSelected}
-          onMonthSelected={this.monthChangedBy}
-        />
-        <h1>Budget works!</h1>
-      </div>
-    );
-  }
+  const monthChangedBy = (newMonth: Date) => {
+    if (isSameMonth(monthSelected, newMonth)) {
+      return;
+    }
 
-  private monthChangedBy = (monthSelected: Date) => {
-    this.setState((previousState: BudgetState) => {
-      if (isSameMonth(previousState.monthSelected, monthSelected)) {
-        return;
-      }
-
-      return {monthSelected};
-    });
+    setMonthSelected(newMonth);
   };
-}
+
+  return (
+    <div>
+      <BudgetHeader monthSelected={monthSelected} onMonthSelected={monthChangedBy} />
+      <BudgetList budgets={budgetResponse.budgets} />
+    </div>
+  );
+};

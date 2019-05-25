@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 
-export const useHomebankApi = <S>(initialState: S): {
-  apiResult: S;
+export const useHomebankApi = <T>(initialState: T): {
+  apiResult: T;
   isLoading: boolean;
   error: string;
   doFetch: (routeSegment: string) => void;
@@ -18,7 +18,7 @@ export const useHomebankApi = <S>(initialState: S): {
       setIsLoading(true);
 
       try {
-        const result = await axios.request<S>({url});
+        const result = await axios.request<T>({url});
 
         setApiResult(result.data);
       } catch (error) {
