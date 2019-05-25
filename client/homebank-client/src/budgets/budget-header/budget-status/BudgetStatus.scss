@@ -1,11 +1,13 @@
 @import '../../../theme/variables';
 
-nav {
+.navbar {
   height: inherit;
+  min-width:325px;
 }
 
 .budget-status {
   display: flex;
+  justify-content: center;
 }
 
 .budget-status__summary-container {
