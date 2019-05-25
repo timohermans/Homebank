@@ -17,8 +17,15 @@ nav {
   justify-content: space-between;
   flex-direction: column;
   padding: map-get($spacers, 2);
-  background-color: $primary;
   border-radius: $border-radius;
+
+  &.budget-status--negative {
+    background-color: $red;
+  }
+
+  &.budget-status--positive {
+    background-color: $green;
+  }
 }
 
 .budget-status__amount {
@@ -40,7 +47,14 @@ nav {
 
 .arrow {
   border: 16px solid rgba(0,0,0,0);
-  border-left-color: $primary;
+
+  &.budget-status--negative {
+    border-left-color: $red;
+  }
+
+  &.budget-status--positive {
+    border-left-color: $green;
+  }
 }
 
 .budget-status__details {

@@ -18,7 +18,7 @@ interface BudgetStatusProps {
 export const BudgetStatus: React.FunctionComponent<BudgetStatusProps> = (
   props: BudgetStatusProps
 ) => {
-  const {apiResult: status, error, isLoading, doFetch} = useHomebankApi<MonthSummary>({
+  const {apiResult: status, error, isLoading, doFetch} = useHomebankApi<MonthSummary>({ // TODO: handle the loading and error handling
     balance: 0,
     budgetedInTheFuture: 0,
     budgetedThisMonth: 0,
@@ -41,15 +41,23 @@ export const BudgetStatus: React.FunctionComponent<BudgetStatusProps> = (
     return formatter.format(value);
   };
 
+  const getStatusModifier = () => {
+    if (!status) {
+      return '';
+    }
+
+    return status.balance < 0 ? 'budget-status--negative' : 'budget-status--positive';
+  }
+
   return (
     <div className="budget-status">
       <div className="budget-status__summary-container">
-        <div className="budget-status__summary">
+        <div className={`budget-status__summary  ${getStatusModifier()}`}>
           <div className="budget-status__amount">{formatToCurrency(status.balance)}</div>
           <div className="budget-status__amount-description">To Be Budgeted</div>
         </div>
         <div className="budget-status__arrow">
-          <div className="arrow" />
+          <div className={`arrow ${getStatusModifier()}`} />
         </div>
       </div>
       <div className="budget-status__details">
