@@ -10,9 +10,44 @@ export interface BudgetListProps {
 export const BudgetList: React.FunctionComponent<BudgetListProps> = (props: BudgetListProps) => {
   const categoriesPerGroup = groupBy(props.budgets, budget => budget.categoryGroupName);
 
+
   return (
     <div>
-      {Object.keys(categoriesPerGroup).map((key: string, index: number) => {
+      <div className="budget-table">
+        <div className="budget-table__row">
+          <div className="budget-table__category-column">Category</div>
+          <div className="budget-table__column">Budgeted</div>
+          <div className="budget-table__column">Activity</div>
+          <div className="budget-table__column">Available</div>
+        </div>
+        {Object.keys(categoriesPerGroup).map((key: string) => {
+          const rows = [];
+
+          rows.push(
+            <div key={key} className="budget-table__row budget-table__row--category-group">
+              <div className="budget-table__category-column">{key}</div>
+              <div className="budget-table__column">0</div>
+              <div className="budget-table__column">0</div>
+              <div className="budget-table__column">0</div>
+            </div>
+          );
+
+          categoriesPerGroup[key].forEach((budget: BudgetModel) => {
+            rows.push(
+              <div key={budget.categoryId} className="budget-table__row">
+                <div className="budget-table__category-column">{budget.categoryName}</div>
+                <div className="budget-table__column">{budget.budgeted}</div>
+                <div className="budget-table__column">{budget.activity}</div>
+                <div className="budget-table__column">{budget.available}</div>
+              </div>
+            );
+          });
+
+          return rows;
+        })}
+      </div>
+
+      {/* {Object.keys(categoriesPerGroup).map((key: string, index: number) => {
         return (
           <table className="table budget-table" key={key}>
             <colgroup>
@@ -43,7 +78,7 @@ export const BudgetList: React.FunctionComponent<BudgetListProps> = (props: Budg
             </tbody>
           </table>
         );
-      })}
+      })} */}
     </div>
   );
 };

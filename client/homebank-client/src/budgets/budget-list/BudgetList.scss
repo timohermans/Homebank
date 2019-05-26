@@ -1,11 +1,32 @@
+// .budget-table {
+//   table-layout: fixed;
+// }
+
+// .budget-table__category-column {
+//   width: 40%;
+// }
+
+// .budget-table__column {
+//   width: 20%;
+// }
+
+
 .budget-table {
-  table-layout: fixed;
+}
+
+.budget-table__row {
+  display: flex;
+}
+
+.budget-table__row--category-group {
+  font-weight: bold;
 }
 
 .budget-table__category-column {
-  width: 40%;
+  flex: 2;
 }
 
 .budget-table__column {
-  width: 20%;
+  flex: 1;
+  text-align: right;
 }
