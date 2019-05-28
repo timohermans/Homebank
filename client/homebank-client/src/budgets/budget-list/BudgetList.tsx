@@ -10,7 +10,6 @@ export interface BudgetListProps {
 export const BudgetList: React.FunctionComponent<BudgetListProps> = (props: BudgetListProps) => {
   const categoriesPerGroup = groupBy(props.budgets, budget => budget.categoryGroupName);
 
-
   return (
     <div>
       <div className="budget-table">
@@ -25,20 +24,36 @@ export const BudgetList: React.FunctionComponent<BudgetListProps> = (props: Budg
 
           rows.push(
             <div key={key} className="budget-table__row budget-table__row--category-group">
-              <div className="budget-table__category-column">{key}</div>
-              <div className="budget-table__column">0</div>
-              <div className="budget-table__column">0</div>
-              <div className="budget-table__column">0</div>
+              <div data-label="Category" className="budget-table__category-group-column">
+                {key}
+              </div>
+              <div data-label="Budgeted" className="budget-table__column">
+                <div>0</div>
+              </div>
+              <div data-label="Activity" className="budget-table__column">
+                <div>0</div>
+              </div>
+              <div data-label="Available" className="budget-table__column">
+                <div>0</div>
+              </div>
             </div>
           );
 
           categoriesPerGroup[key].forEach((budget: BudgetModel) => {
             rows.push(
               <div key={budget.categoryId} className="budget-table__row">
-                <div className="budget-table__category-column">{budget.categoryName}</div>
-                <div className="budget-table__column">{budget.budgeted}</div>
-                <div className="budget-table__column">{budget.activity}</div>
-                <div className="budget-table__column">{budget.available}</div>
+                <div data-label="Category" className="budget-table__category-column">
+                  <div>{budget.categoryName}</div>
+                </div>
+                <div data-label="Budgeted" className="budget-table__column">
+                  <div>{budget.budgeted}</div>
+                </div>
+                <div data-label="Activity" className="budget-table__column">
+                  <div>{budget.activity}</div>
+                </div>
+                <div data-label="Available" className="budget-table__column">
+                  <div>{budget.available}</div>
+                </div>
               </div>
             );
           });

@@ -1,32 +1,53 @@
-// .budget-table {
-//   table-layout: fixed;
-// }
-
-// .budget-table__category-column {
-//   width: 40%;
-// }
-
-// .budget-table__column {
-//   width: 20%;
-// }
-
-
-.budget-table {
-}
+@import '../../theme/variables';
+@import '../../../node_modules/bootstrap/scss/mixins/breakpoints';
 
 .budget-table__row {
   display: flex;
+  border-bottom: 1px solid rgb(222, 227, 232);
+  padding: map-get($spacers, 1) map-get($spacers, 2);
+
+  @include media-breakpoint-down(xs) {
+    flex-direction: column;
+  }
+
+  @include media-breakpoint-up(sm) {
+    padding: map-get($spacers, 2);
+  }
 }
 
 .budget-table__row--category-group {
   font-weight: bold;
+  font-size: $font-size-base;
+  background-color: $blue-10;
+}
+
+.budget-table__category-group-column {
+  flex: 2;
+  font-size: $font-size-base;
 }
 
 .budget-table__category-column {
   flex: 2;
+  font-size: $font-size-sm;
 }
 
 .budget-table__column {
   flex: 1;
-  text-align: right;
+
+  @include media-breakpoint-down(sm) {
+    display:flex;
+    justify-content: space-between;
+    font-size: $small-font-size;
+
+    div {
+      margin: 0 map-get($spacers, 3);
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .budget-table__column:before {
+    content: attr(data-label);
+    margin: 0 0 0 map-get($spacers, 3);
+  }
 }
