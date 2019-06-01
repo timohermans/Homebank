@@ -15,6 +15,12 @@
   }
 }
 
+.budget-table__row--header {
+  @include media-breakpoint-down(xs) {
+    display: none;
+  }
+}
+
 .budget-table__row--category-group {
   font-weight: bold;
   font-size: $font-size-base;
@@ -35,7 +41,7 @@
   flex: 1;
 
   @include media-breakpoint-down(sm) {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     font-size: $small-font-size;
 

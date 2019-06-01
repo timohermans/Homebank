@@ -13,7 +13,7 @@ export const BudgetList: React.FunctionComponent<BudgetListProps> = (props: Budg
   return (
     <div>
       <div className="budget-table">
-        <div className="budget-table__row">
+        <div className="budget-table__row budget-table__row--header">
           <div className="budget-table__category-column">Category</div>
           <div className="budget-table__column">Budgeted</div>
           <div className="budget-table__column">Activity</div>
