@@ -2,8 +2,10 @@
 @import '../../../node_modules/bootstrap/scss/mixins/breakpoints';
 
 .budget-table__row {
-  display: flex;
   border-bottom: 1px solid rgb(222, 227, 232);
+  color: #477384;
+  display: flex;
+  font-size: $font-size-xs;
   padding: map-get($spacers, 1) map-get($spacers, 2);
 
   @include media-breakpoint-down(xs) {
@@ -12,18 +14,22 @@
 
   @include media-breakpoint-up(sm) {
     padding: map-get($spacers, 2);
+    align-items: center;
   }
 }
 
 .budget-table__row--header {
+  color: #88979d;
+  font-size: $small-font-size;
+  padding: map-get($spacers, 3) map-get($spacers, 2);
+  text-transform: uppercase;
+
   @include media-breakpoint-down(xs) {
     display: none;
   }
 }
 
 .budget-table__row--category-group {
-  font-weight: bold;
-  font-size: $font-size-base;
   background-color: $blue-10;
 }
 
@@ -37,16 +43,22 @@
   font-size: $font-size-sm;
 }
 
+.budget-table__category-column--small-font {
+  font-size: $font-size-xs;
+}
+
 .budget-table__column {
   flex: 1;
+  text-align: right;
 
   @include media-breakpoint-down(sm) {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     font-size: $small-font-size;
 
     div {
       margin: 0 map-get($spacers, 3);
+      flex: 0 0 60px;
     }
   }
 }
@@ -56,4 +68,10 @@
     content: attr(data-label);
     margin: 0 0 0 map-get($spacers, 3);
   }
+}
+
+.budget-table__available {
+  border-radius: $rounded-pill;
+  background-color: #e9eced;
+  padding: 0.125rem 0.4375rem;
 }

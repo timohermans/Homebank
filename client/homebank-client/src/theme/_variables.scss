@@ -17,6 +17,9 @@ $divider-color: rgba(0, 0, 0, 0.15);
 $theme-colors: (
   'header': #003540,
   'primary': $primary,
+  'zero': #88979d,
+  'positive': #c4ecbb,
+  'negative': #f7c1b5,
 );
 
 $font-size-xs: $font-size-base * 0.795;

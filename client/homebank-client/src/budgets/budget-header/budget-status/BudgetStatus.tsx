@@ -1,5 +1,6 @@
 import {format} from 'date-fns';
 import React, {useEffect} from 'react';
+import {formatToCurrency} from '../../../shared/functions/format-to-currency';
 import {useHomebankApi} from '../../../shared/hooks/homebankApi';
 import './BudgetStatus.scss';
 
@@ -18,7 +19,8 @@ interface BudgetStatusProps {
 export const BudgetStatus: React.FunctionComponent<BudgetStatusProps> = (
   props: BudgetStatusProps
 ) => {
-  const {apiResult: status, error, isLoading, doFetch} = useHomebankApi<MonthSummary>({ // TODO: handle the loading and error handling
+  const {apiResult: status, error, isLoading, doFetch} = useHomebankApi<MonthSummary>({
+    // TODO: handle the loading and error handling
     balance: 0,
     budgetedInTheFuture: 0,
     budgetedThisMonth: 0,
@@ -31,23 +33,13 @@ export const BudgetStatus: React.FunctionComponent<BudgetStatusProps> = (
     doFetch(`budget/total-balance/${monthRouteParam}`);
   }, [props.monthSelected, doFetch]);
 
-  const formatToCurrency = (value: number) => {
-    const formatter = new Intl.NumberFormat('nl-NL', {
-      currency: 'EUR',
-      minimumFractionDigits: 2,
-      style: 'currency',
-    });
-
-    return formatter.format(value);
-  };
-
   const getStatusModifier = () => {
     if (!status) {
       return '';
     }
 
     return status.balance < 0 ? 'budget-status--negative' : 'budget-status--positive';
-  }
+  };
 
   return (
     <div className="budget-status">
