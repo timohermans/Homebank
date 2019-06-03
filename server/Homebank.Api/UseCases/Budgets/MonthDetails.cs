@@ -85,8 +85,9 @@ namespace Homebank.Api.UseCases.Budgets
                 var budgetsForCategoriesWithoutBudget = CreateTemporaryBudgetsFor(categoriesWithoutBudget, request.Month).ToList();
                 var budgetForUncategorized = CreateTemporaryUncategorizedBudgetFrom(transactionsWithoutCategory, request.Month);
 
-                budgets.Add(budgetForUncategorized);
                 budgetsForCategoriesWithoutBudget.ForEach(budget => budgets.Add(budget));
+                budgets = budgets.OrderBy(budget => budget?.Category.Name).ToList();
+                budgets.Insert(0, budgetForUncategorized);
 
                 return new Response(budgets);
             }
@@ -139,7 +140,7 @@ namespace Homebank.Api.UseCases.Budgets
 
             private Budget CreateTemporaryUncategorizedBudgetFrom(IEnumerable<Transaction> transactionsWithoutCategory, DateTime month)
             {
-                var category = new Category("Uncategorized", new CategoryGroup("-"), transactionsWithoutCategory);
+                var category = new Category("Uncategorized", new CategoryGroup("Uncategorized"), transactionsWithoutCategory);
                 return new Budget(month, 0M, category);
             }
         }

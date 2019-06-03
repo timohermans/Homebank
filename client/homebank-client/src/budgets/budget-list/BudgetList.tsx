@@ -22,22 +22,24 @@ export const BudgetList: React.FunctionComponent<BudgetListProps> = (props: Budg
         {Object.keys(categoriesPerGroup).map((key: string) => {
           const rows = [];
 
-          rows.push(
-            <div key={key} className="budget-table__row budget-table__row--category-group">
-              <div data-label="Category" className="budget-table__category-group-column">
-                {key}
+          if (key !== 'Uncategorized') {
+            rows.push(
+              <div key={key} className="budget-table__row budget-table__row--category-group">
+                <div data-label="Category" className="budget-table__category-group-column">
+                  {key}
+                </div>
+                <div data-label="Budgeted" className="budget-table__column">
+                  <div>0</div>
+                </div>
+                <div data-label="Activity" className="budget-table__column">
+                  <div>0</div>
+                </div>
+                <div data-label="Available" className="budget-table__column">
+                  <div>0</div>
+                </div>
               </div>
-              <div data-label="Budgeted" className="budget-table__column">
-                <div>0</div>
-              </div>
-              <div data-label="Activity" className="budget-table__column">
-                <div>0</div>
-              </div>
-              <div data-label="Available" className="budget-table__column">
-                <div>0</div>
-              </div>
-            </div>
-          );
+            );
+          }
 
           categoriesPerGroup[key].forEach((budget: BudgetModel) => {
             rows.push(
