@@ -1,0 +1,16 @@
+@import '../../theme/variables';
+
+
+.budget-actions {
+  border-bottom: 1px solid $divider-color;
+  padding: map-get($spacers, 2);
+}
+
+.budget-actions__create {
+  color: $icon-color;
+  cursor: pointer;
+}
+
+.budget-actions__icon {
+  margin-right: map-get($spacers, 1);
+}

@@ -4,6 +4,7 @@ import {
   faArrowAltCircleRight,
   faCaretDown,
   faCircle,
+  faPlusCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 export function addFontAwesomeToProject() {
@@ -11,4 +12,5 @@ export function addFontAwesomeToProject() {
   library.add(faArrowAltCircleRight);
   library.add(faCaretDown);
   library.add(faCircle);
+  library.add(faPlusCircle);
 }

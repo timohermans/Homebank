@@ -1,5 +1,5 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
 
 $primary: #009cc2;
 $blue-10: #e5f5f9;
@@ -12,11 +12,11 @@ $icon-color: #23b2ce;
 $border-radius: 0.25rem;
 $border-color: #dfe4e9;
 
+$divider-color: rgba(0, 0, 0, 0.15);
+
 $theme-colors: (
   'header': #003540,
   'primary': $primary,
 );
 
-$font-size-xs: $font-size-base * .795;
-
-
+$font-size-xs: $font-size-base * 0.795;

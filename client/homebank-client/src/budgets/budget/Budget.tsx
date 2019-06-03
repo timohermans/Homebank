@@ -2,6 +2,7 @@ import {isSameMonth} from 'date-fns';
 import format from 'date-fns/format';
 import React, {useEffect, useState} from 'react';
 import {useHomebankApi} from '../../shared/hooks/homebankApi';
+import BudgetAction from '../budget-actions/BudgetAction';
 import {BudgetHeader} from '../budget-header/BudgetHeader';
 import {BudgetList} from '../budget-list/BudgetList';
 import {BudgetModel, BudgetResponse} from './budget.model';
@@ -31,6 +32,7 @@ export const Budget: React.FunctionComponent = () => {
   return (
     <div>
       <BudgetHeader monthSelected={monthSelected} onMonthSelected={monthChangedBy} />
+      <BudgetAction />
       <BudgetList budgets={budgetResponse.budgets} />
     </div>
   );
