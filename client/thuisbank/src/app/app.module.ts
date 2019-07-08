@@ -3,20 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { PageNotFoundComponent } from './layout/page-not-found/page-not-found.component';
-import { BudgetsModule } from './features/budgets/budgets.module';
-import { LayoutModule } from './layout/layout.module';
+import { FeaturesModule } from './features/features.module';
+import { CoreModule } from './core/core.module';
+import { RootStoreModule } from './core/root-store/root-store.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PageNotFoundComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    LayoutModule,
-    BudgetsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    FeaturesModule,
+    RootStoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,8 +7,6 @@ import { Moment } from 'moment';
   styleUrls: ['./budget-header.component.css']
 })
 export class BudgetHeaderComponent implements OnInit {
-  @Input() month: Moment;
-
   constructor() { }
 
   ngOnInit() {

@@ -3,12 +3,28 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {BudgetListComponent} from './budget-list.component';
 import {By} from '@angular/platform-browser';
 import {MockComponent} from 'ng-mocks';
-import * as moment from 'moment';
+import {MockStore, provideMockStore} from '@ngrx/store/testing';
+
 import {BudgetHeaderComponent} from '../budget-header/budget-header.component';
+import {Store} from '@ngrx/store';
+import {BudgetModel} from '../shared/budget.model';
 
 class Page {
+  getCategoryGroupBy(name: string) {
+    return this.fixture.nativeElement.querySelector(`[data-test-id="${name}"]`);
+  }
   public get budgetHeader(): BudgetHeaderComponent {
     return this.fixture.debugElement.query(By.css('app-budget-header')).componentInstance;
+  }
+
+  public get categoryGroups(): HTMLDivElement[] {
+    return this.fixture.nativeElement.querySelectorAll('.budget-table__row--category-group');
+  }
+
+  public getColumnBy(categoryGroupName: string, columnTestId: string): HTMLDivElement {
+    return this.fixture.nativeElement.querySelector(
+      `[data-test-id="${categoryGroupName}"] [data-label="${columnTestId}"]`
+    );
   }
 
   constructor(private fixture: ComponentFixture<BudgetListComponent>) {}
@@ -19,10 +35,16 @@ describe('BudgetListComponent', () => {
   let fixture: ComponentFixture<BudgetListComponent>;
   let page: Page;
 
+  let store: MockStore<{budgets: BudgetModel[]}>;
+  const initialState = {budgets: []};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [BudgetListComponent, MockComponent(BudgetHeaderComponent)],
+      providers: [provideMockStore({initialState})],
     }).compileComponents();
+
+    store = TestBed.get(Store);
   }));
 
   beforeEach(() => {
@@ -36,17 +58,82 @@ describe('BudgetListComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe('receiving two category groups', () => {
+    const budgetTestData = [
+      {
+        id: 1,
+        activity: 10,
+        available: 50,
+        budgeted: 50,
+        categoryGroupId: 1,
+        categoryGroupName: 'obligated',
+        categoryId: 1,
+        categoryName: 'internet',
+        monthForBudget: new Date(),
+      },
+      {
+        id: 2,
+        activity: 10,
+        available: 20,
+        budgeted: 50,
+        categoryGroupId: 1,
+        categoryGroupName: 'obligated',
+        categoryId: 2,
+        categoryName: 'electrical bill',
+        monthForBudget: new Date(),
+      },
+      {
+        id: 3,
+        activity: 12,
+        available: 50,
+        budgeted: 50,
+        categoryGroupId: 2,
+        categoryGroupName: 'variable',
+        categoryId: 3,
+        categoryName: 'groceries',
+        monthForBudget: new Date(),
+      },
+    ];
+
+    beforeEach(() => {
+      store.setState({
+        budgets: budgetTestData,
+      });
+
+      fixture.detectChanges();
+    });
+
+    it('has two category groups', () => {
+      expect(page.categoryGroups.length).toBe(2);
+    });
+
+    describe('looking at the obligated row', () => {
+      const columns = [
+        {testId: 'Category', value: 'obligated'},
+        {testId: 'Budgeted', value: '100'},
+        {testId: 'Activity', value: '20'},
+        {testId: 'Available', value: '70'},
+      ];
+
+      columns.forEach(column => {
+        describe(`looking at the ${column.testId} column`, () => {
+          let columnElement: HTMLDivElement;
+
+          beforeEach(() => {
+            columnElement = page.getColumnBy('obligated', column.testId);
+          });
+
+          it(`has cell value ${column.value}`, () => {
+            expect(columnElement.innerText).toBe(column.value);
+          });
+        });
+      });
+    });
+  });
+
   describe('the budget header', () => {
     it('should be there', () => {
       expect(page.budgetHeader).toBeTruthy();
-    });
-
-    it('should be given the current month by default', () => {
-      expect(page.budgetHeader.month).toEqual(moment().startOf('month'));
-    });
-
-    describe('receiving a month change event', () => {
-      it('should dispatch a request to retrieve new budgets', () => {});
     });
   });
 });
