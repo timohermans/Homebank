@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MapPipe } from './pipes/map.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [MapPipe],
   imports: [
     CommonModule
   ]

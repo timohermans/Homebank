@@ -21,13 +21,13 @@
       </div>
       <div data-label="Budgeted" class="budget-table__column">
         <!-- <div>{formatToCurrency(0)}</div> -->
-        <span>0</span>
+        <span>{{ categoryGroup.budgets | map:sum:'budgeted' }}</span>
       </div>
       <div data-label="Activity" class="budget-table__column">
-        <span>0</span>
+        <span>{{ categoryGroup.budgets | map:sum:'activity' }}</span>
       </div>
       <div data-label="Available" class="budget-table__column">
-        <span>0</span>
+        <span>{{ categoryGroup.budgets | map:sum:'available' }}</span>
       </div>
     </div>
   </div>

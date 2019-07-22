@@ -31,4 +31,18 @@ export class BudgetListComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  public sum(budgets: BudgetModel[], propertyToSum: string): string {
+    const propertyValues = budgets.map(budget => {
+      const value = budget[propertyToSum];
+
+      if (!value && isNaN(value)) {
+        throw new Error('property not found or not a number');
+      }
+
+      return value;
+    }) as number[];
+
+    return propertyValues.reduce((previousValue, currentValue) => previousValue + currentValue).toString();
+  }
 }

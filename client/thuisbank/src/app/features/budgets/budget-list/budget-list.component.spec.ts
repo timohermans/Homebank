@@ -2,12 +2,13 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {BudgetListComponent} from './budget-list.component';
 import {By} from '@angular/platform-browser';
-import {MockComponent} from 'ng-mocks';
+import {MockComponent, MockPipe} from 'ng-mocks';
 import {MockStore, provideMockStore} from '@ngrx/store/testing';
 
 import {BudgetHeaderComponent} from '../budget-header/budget-header.component';
 import {Store} from '@ngrx/store';
 import {BudgetModel} from '../shared/budget.model';
+import {MapPipe} from 'src/app/shared/pipes/map.pipe';
 
 class Page {
   getCategoryGroupBy(name: string) {
@@ -40,7 +41,7 @@ describe('BudgetListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BudgetListComponent, MockComponent(BudgetHeaderComponent)],
+      declarations: [BudgetListComponent, MockComponent(BudgetHeaderComponent), MapPipe],
       providers: [provideMockStore({initialState})],
     }).compileComponents();
 
