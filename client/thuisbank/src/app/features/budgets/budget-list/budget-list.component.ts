@@ -32,7 +32,7 @@ export class BudgetListComponent implements OnInit {
 
   ngOnInit() {}
 
-  public sum(budgets: BudgetModel[], propertyToSum: string): string {
+  public sum(budgets: BudgetModel[], propertyToSum: string): number {
     const propertyValues = budgets.map(budget => {
       const value = budget[propertyToSum];
 
@@ -43,6 +43,6 @@ export class BudgetListComponent implements OnInit {
       return value;
     }) as number[];
 
-    return propertyValues.reduce((previousValue, currentValue) => previousValue + currentValue).toString();
+    return propertyValues.reduce((previousValue, currentValue) => previousValue + currentValue);
   }
 }

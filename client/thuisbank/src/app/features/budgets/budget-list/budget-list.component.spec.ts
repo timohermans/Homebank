@@ -9,6 +9,7 @@ import {BudgetHeaderComponent} from '../budget-header/budget-header.component';
 import {Store} from '@ngrx/store';
 import {BudgetModel} from '../shared/budget.model';
 import {MapPipe} from 'src/app/shared/pipes/map.pipe';
+import {ToCurrencyPipe} from 'src/app/shared/pipes/to-currency.pipe';
 
 class Page {
   getCategoryGroupBy(name: string) {
@@ -41,7 +42,12 @@ describe('BudgetListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BudgetListComponent, MockComponent(BudgetHeaderComponent), MapPipe],
+      declarations: [
+        BudgetListComponent,
+        MockComponent(BudgetHeaderComponent),
+        MapPipe,
+        MockPipe(ToCurrencyPipe, (value: number) => `€ ${value}`),
+      ],
       providers: [provideMockStore({initialState})],
     }).compileComponents();
 
@@ -111,9 +117,9 @@ describe('BudgetListComponent', () => {
     describe('looking at the obligated row', () => {
       const columns = [
         {testId: 'Category', value: 'obligated'},
-        {testId: 'Budgeted', value: '100'},
-        {testId: 'Activity', value: '20'},
-        {testId: 'Available', value: '70'},
+        {testId: 'Budgeted', value: '€ 100'},
+        {testId: 'Activity', value: '€ 20'},
+        {testId: 'Available', value: '€ 70'},
       ];
 
       columns.forEach(column => {

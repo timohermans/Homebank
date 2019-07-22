@@ -20,14 +20,13 @@
         {{ categoryGroup.categoryGroupName }}
       </div>
       <div data-label="Budgeted" class="budget-table__column">
-        <!-- <div>{formatToCurrency(0)}</div> -->
-        <span>{{ categoryGroup.budgets | map:sum:'budgeted' }}</span>
+        <span>{{ categoryGroup.budgets | map: sum:'budgeted' | toCurrency }}</span>
       </div>
       <div data-label="Activity" class="budget-table__column">
-        <span>{{ categoryGroup.budgets | map:sum:'activity' }}</span>
+        <span>{{ categoryGroup.budgets | map: sum:'activity' | toCurrency }}</span>
       </div>
       <div data-label="Available" class="budget-table__column">
-        <span>{{ categoryGroup.budgets | map:sum:'available' }}</span>
+        <span>{{ categoryGroup.budgets | map: sum:'available' | toCurrency }}</span>
       </div>
     </div>
   </div>
