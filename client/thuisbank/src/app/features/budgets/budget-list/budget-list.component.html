@@ -11,24 +11,27 @@
       <div class="budget-table__column">Available</div>
     </div>
 
-    <div
-      *ngFor="let categoryGroup of budgetsPerGroup"
-      [attr.data-test-id]="categoryGroup.categoryGroupName"
-      class="budget-table__row budget-table__row--category-group"
-    >
-      <div data-label="Category" class="budget-table__category-group-column">
-        {{ categoryGroup.categoryGroupName }}
+    <ng-container *ngFor="let categoryGroup of budgetsPerGroup">
+      <div
+        class="budget-table__row budget-table__row--category-group"
+        [attr.data-test-id]="categoryGroup.categoryGroupName"
+      >
+        <div data-label="Category" class="budget-table__category-group-column">
+          {{ categoryGroup.categoryGroupName }}
+        </div>
+        <div data-label="Budgeted" class="budget-table__column">
+          <span>{{ categoryGroup.budgets | map: sum:'budgeted' | toCurrency }}</span>
+        </div>
+        <div data-label="Activity" class="budget-table__column">
+          <span>{{ categoryGroup.budgets | map: sum:'activity' | toCurrency }}</span>
+        </div>
+        <div data-label="Available" class="budget-table__column">
+          <span>{{ categoryGroup.budgets | map: sum:'available' | toCurrency }}</span>
+        </div>
       </div>
-      <div data-label="Budgeted" class="budget-table__column">
-        <span>{{ categoryGroup.budgets | map: sum:'budgeted' | toCurrency }}</span>
-      </div>
-      <div data-label="Activity" class="budget-table__column">
-        <span>{{ categoryGroup.budgets | map: sum:'activity' | toCurrency }}</span>
-      </div>
-      <div data-label="Available" class="budget-table__column">
-        <span>{{ categoryGroup.budgets | map: sum:'available' | toCurrency }}</span>
-      </div>
-    </div>
+
+      <div class="budget-table__row" *ngFor="let budget of categoryGroup.budgets"></div>
+    </ng-container>
   </div>
 </div>
 

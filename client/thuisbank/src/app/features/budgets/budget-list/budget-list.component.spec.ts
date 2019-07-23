@@ -11,7 +11,7 @@ import {BudgetModel} from '../shared/budget.model';
 import {MapPipe} from 'src/app/shared/pipes/map.pipe';
 import {ToCurrencyPipe} from 'src/app/shared/pipes/to-currency.pipe';
 
-class Page {
+export class Page {
   getCategoryGroupBy(name: string) {
     return this.fixture.nativeElement.querySelector(`[data-test-id="${name}"]`);
   }
@@ -31,6 +31,42 @@ class Page {
 
   constructor(private fixture: ComponentFixture<BudgetListComponent>) {}
 }
+
+const budgetTestData = [
+  {
+    id: 1,
+    activity: 10,
+    available: 50,
+    budgeted: 50,
+    categoryGroupId: 1,
+    categoryGroupName: 'obligated',
+    categoryId: 1,
+    categoryName: 'internet',
+    monthForBudget: new Date(),
+  },
+  {
+    id: 2,
+    activity: 10,
+    available: 20,
+    budgeted: 50,
+    categoryGroupId: 1,
+    categoryGroupName: 'obligated',
+    categoryId: 2,
+    categoryName: 'electrical bill',
+    monthForBudget: new Date(),
+  },
+  {
+    id: 3,
+    activity: 12,
+    available: 50,
+    budgeted: 50,
+    categoryGroupId: 2,
+    categoryGroupName: 'variable',
+    categoryId: 3,
+    categoryName: 'groceries',
+    monthForBudget: new Date(),
+  },
+];
 
 describe('BudgetListComponent', () => {
   let component: BudgetListComponent;
@@ -65,43 +101,13 @@ describe('BudgetListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('receiving two category groups', () => {
-    const budgetTestData = [
-      {
-        id: 1,
-        activity: 10,
-        available: 50,
-        budgeted: 50,
-        categoryGroupId: 1,
-        categoryGroupName: 'obligated',
-        categoryId: 1,
-        categoryName: 'internet',
-        monthForBudget: new Date(),
-      },
-      {
-        id: 2,
-        activity: 10,
-        available: 20,
-        budgeted: 50,
-        categoryGroupId: 1,
-        categoryGroupName: 'obligated',
-        categoryId: 2,
-        categoryName: 'electrical bill',
-        monthForBudget: new Date(),
-      },
-      {
-        id: 3,
-        activity: 12,
-        available: 50,
-        budgeted: 50,
-        categoryGroupId: 2,
-        categoryGroupName: 'variable',
-        categoryId: 3,
-        categoryName: 'groceries',
-        monthForBudget: new Date(),
-      },
-    ];
+  describe('the budget header', () => {
+    it('should be there', () => {
+      expect(page.budgetHeader).toBeTruthy();
+    });
+  });
 
+  describe('with budget data', () => {
     beforeEach(() => {
       store.setState({
         budgets: budgetTestData,
@@ -110,37 +116,35 @@ describe('BudgetListComponent', () => {
       fixture.detectChanges();
     });
 
-    it('has two category groups', () => {
-      expect(page.categoryGroups.length).toBe(2);
-    });
+    describe('category groups', () => {
+      it('has two category groups', () => {
+        expect(page.categoryGroups.length).toBe(2);
+      });
 
-    describe('looking at the obligated row', () => {
-      const columns = [
-        {testId: 'Category', value: 'obligated'},
-        {testId: 'Budgeted', value: '€ 100'},
-        {testId: 'Activity', value: '€ 20'},
-        {testId: 'Available', value: '€ 70'},
-      ];
+      describe('at the obligated row', () => {
+        const columns = [
+          {testId: 'Category', value: 'obligated'},
+          {testId: 'Budgeted', value: '€ 100'},
+          {testId: 'Activity', value: '€ 20'},
+          {testId: 'Available', value: '€ 70'},
+        ];
 
-      columns.forEach(column => {
-        describe(`looking at the ${column.testId} column`, () => {
-          let columnElement: HTMLDivElement;
+        columns.forEach(column => {
+          describe(`the ${column.testId} column`, () => {
+            let columnElement: HTMLDivElement;
 
-          beforeEach(() => {
-            columnElement = page.getColumnBy('obligated', column.testId);
-          });
+            beforeEach(() => {
+              columnElement = page.getColumnBy('obligated', column.testId);
+            });
 
-          it(`has cell value ${column.value}`, () => {
-            expect(columnElement.innerText).toBe(column.value);
+            it(`has cell value ${column.value}`, () => {
+              expect(columnElement.innerText).toBe(column.value);
+            });
           });
         });
       });
     });
-  });
 
-  describe('the budget header', () => {
-    it('should be there', () => {
-      expect(page.budgetHeader).toBeTruthy();
-    });
+    describe('multiple budget rows', () => {});
   });
 });
