@@ -9,6 +9,7 @@ using System.Net;
 using System.Reflection;
 using Homebank.Api.Infrastructure.Converters;
 using Homebank.Api.Infrastructure.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Homebank.Api.Infrastructure.Extensions
 {
@@ -95,6 +96,15 @@ namespace Homebank.Api.Infrastructure.Extensions
                     // log the exception etc..
                     // flush problemDetails to the caller
                 });
+            });
+        }
+
+        public static void SetupSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.CustomSchemaIds(type => type.FullName);
+                c.SwaggerDoc("v1", new Info { Title = "Homebank API", Version = "v1" });
             });
         }
     }

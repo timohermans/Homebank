@@ -30,6 +30,7 @@ namespace Homebank.Api
             services.ConfigureCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.SetupSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +47,11 @@ namespace Homebank.Api
             }
 
             app.UseCors(MyAllowSpecificOrigins);
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {                
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Homebank API");
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }

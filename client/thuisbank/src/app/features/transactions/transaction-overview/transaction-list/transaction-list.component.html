@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Payee</th>
+      <th>Category</th>
+      <th>Memo</th>
+      <th>Outflow</th>
+      <th>Inflow</th>
+    </tr>
+  </thead>
+  <tbody class="table__rows">
+    <tr class="table__row" *ngFor="let transaction of transactions$ | async">
+      <td class="table__column">{{ transaction.date | date: 'yyyy-MM-dd' }}</td>
+      <td class="table__column">{{ transaction.payee }}</td>
+      <td class="table__column">
+        {{ transaction.category?.categoryGroup?.name }}: {{ transaction.category?.name }}
+      </td>
+      <td class="table__column">{{ transaction.memo }}</td>
+      <td class="table__column">{{ transaction.outFlow | toCurrency }}</td>
+      <td class="table__column">{{ transaction.inFlow | toCurrency }}</td>
+    </tr>
+  </tbody>
+</table>

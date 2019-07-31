@@ -4,7 +4,7 @@ import { PageNotFoundComponent } from './core/layout/page-not-found/page-not-fou
 
 const appRoutes: Routes = [
   { path: '',   redirectTo: '/budgets', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
+  // { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

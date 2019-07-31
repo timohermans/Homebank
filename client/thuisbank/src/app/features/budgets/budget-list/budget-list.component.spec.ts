@@ -23,6 +23,12 @@ export class Page {
     return this.fixture.nativeElement.querySelectorAll('.budget-table__row--category-group');
   }
 
+  public get budgetRows(): HTMLDivElement[] {
+    return this.fixture.nativeElement.querySelectorAll(
+      '.budget-table__row:not(.budget-table__row--category-group):not(.budget-table__row--header)'
+    );
+  }
+
   public getColumnBy(categoryGroupName: string, columnTestId: string): HTMLDivElement {
     return this.fixture.nativeElement.querySelector(
       `[data-test-id="${categoryGroupName}"] [data-label="${columnTestId}"]`
@@ -123,10 +129,10 @@ describe('BudgetListComponent', () => {
 
       describe('at the obligated row', () => {
         const columns = [
-          {testId: 'Category', value: 'obligated'},
-          {testId: 'Budgeted', value: '€ 100'},
-          {testId: 'Activity', value: '€ 20'},
-          {testId: 'Available', value: '€ 70'},
+          {testId: 'GroupCategory', value: 'obligated'},
+          {testId: 'GroupBudgeted', value: '€ 100'},
+          {testId: 'GroupActivity', value: '€ 20'},
+          {testId: 'GroupAvailable', value: '€ 70'},
         ];
 
         columns.forEach(column => {
@@ -145,6 +151,40 @@ describe('BudgetListComponent', () => {
       });
     });
 
-    describe('multiple budget rows', () => {});
+    describe('budget rows', () => {
+      let budgetRows: HTMLDivElement[];
+
+      beforeEach(() => {
+        budgetRows = page.budgetRows;
+      });
+
+      it('lists all of them', () => {
+        expect(budgetRows.length).toBe(budgetTestData.length);
+      });
+
+      describe('in the first row', () => {
+        const rowCategoryName = 'internet';
+        const columns = [
+          { testId: 'Category', value: rowCategoryName },
+          { testId: 'Activity', value: '€ 10' },
+          { testId: 'Available', value: '€ 50' },
+          { testId: 'Budgeted', value: '€ 50' },
+        ];
+
+        columns.forEach(column => {
+          describe(`the ${column.testId} column`, () => {
+            let columnElement: HTMLDivElement;
+
+            beforeEach(() => {
+              columnElement = page.getColumnBy(rowCategoryName, column.testId);
+            });
+
+            it(`has cell value ${column.value}`, () => {
+              expect(columnElement.innerText).toBe(column.value);
+            });
+          });
+        });
+      });
+    });
   });
 });
