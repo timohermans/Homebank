@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="App\Core\Domain\Entities\Transaction" table="transactions">
+
+        <id name="id" type="string" column="id">
+            <generator strategy="UUID"/>
+        </id>
+
+        <field name="date" column="date" type="datetime"/>
+        <field name="memo" column="memo" type="string"/>
+        <field name="outflow" column="outflow" type="decimal"/>
+        <field name="inflow" column="inflow" type="decimal"/>
+        <field name="isBankTransaction" column="isBankTransaction" type="boolean"/>
+        <field name="isInflowForBudgeting" column="isInflowForBudgeting" type="boolean"/>
+
+    </entity>
+</doctrine-mapping>
