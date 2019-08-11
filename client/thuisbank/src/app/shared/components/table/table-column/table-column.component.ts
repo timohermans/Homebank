@@ -10,6 +10,7 @@ export class TableColumnComponent implements OnInit {
   @Input() labelTranslationKey: string;
   @Input() property: string;
   @Input() columnType: ColumnType;
+  @Input() classes: string[];
 
   constructor() {
   }

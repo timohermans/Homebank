@@ -1,8 +1,9 @@
 <h1>This will be my table test!</h1>
 
-<app-table [data]="transactions$ | async">
+<app-table [data]="transactions$ | async" (dataRequest)="tableDataRequest$.next($event)">
   <app-table-column labelTranslationKey="transaction.id" property="id"
-                    [columnType]="columnType.String"></app-table-column>
+                    [columnType]="columnType.String"
+                    [classes]="['column__big']"></app-table-column>
   <app-table-column labelTranslationKey="transaction.date" property="date"
                     [columnType]="columnType.Date"></app-table-column>
   <app-table-column labelTranslationKey="transaction.payee" property="payee"

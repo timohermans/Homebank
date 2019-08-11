@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {Transaction} from './features/transactions/shared/entities/transaction.model';
-import {ColumnType, TableActionEvent, TableActionType} from './shared/components/table/table.model';
+import {ColumnType, TableActionEvent, TableActionType, TableData, TableRequest} from './shared/components/table/table.model';
 import {TranslateService} from '@ngx-translate/core';
+import {map, mergeMap} from 'rxjs/operators';
+import {slice} from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -22,43 +24,18 @@ export class AppComponent implements OnInit {
     translate.use('nl');
   }
 
-  public transactions$: Observable<Transaction[]> = of([
-    {
-      id: 1,
-      date: new Date(2019, 8, 2),
-      inFlow: 102.23,
-      outFlow: 0,
-      isBankTransaction: false,
-      isInflowForBudgeting: true,
-      memo: 'Mini salaris',
-      payee: 'Werk b.v.'
-    } as Transaction,
-    {
-      id: 2,
-      date: new Date(2019, 8, 5),
-      inFlow: 0,
-      outFlow: 55.0,
-      isBankTransaction: false,
-      isInflowForBudgeting: false,
-      memo: 'Pintransactie 1',
-      payee: 'Lidl Sittard'
-    } as Transaction,
-    {
-      id: 3,
-      date: new Date(2019, 8, 5),
-      inFlow: 50.4,
-      outFlow: 0,
-      isBankTransaction: false,
-      isInflowForBudgeting: false,
-      memo: 'Pintransactie 2',
-      payee: 'Jan Linders Sittards'
-    } as Transaction
-  ]);
+  private transactions = [];
+  public transactions$: Observable<TableData>;
+  public tableDataRequest$ = new BehaviorSubject<TableRequest>({pageSize: 10, page: 1});
 
   ngOnInit(): void {
-    const transactions = [];
+    this.setupFakeApi();
+    this.setupTableData();
+  }
+
+  private setupFakeApi(): void {
     for (let i = 0; i < 999; i++) {
-      transactions.push({
+      this.transactions.push({
         id: i + i * 1,
         date: new Date(2019, 8, 2),
         inFlow: 102.23,
@@ -68,7 +45,7 @@ export class AppComponent implements OnInit {
         memo: 'Mini salaris',
         payee: 'Werk b.v.'
       } as Transaction);
-      transactions.push({
+      this.transactions.push({
         id: i + i * 2,
         date: new Date(2019, 8, 5),
         inFlow: 0,
@@ -78,7 +55,7 @@ export class AppComponent implements OnInit {
         memo: 'Pintransactie 1',
         payee: 'Lidl Sittard'
       } as Transaction);
-      transactions.push({
+      this.transactions.push({
         id: i + i * 3,
         date: new Date(2019, 8, 5),
         inFlow: 50.4,
@@ -89,11 +66,35 @@ export class AppComponent implements OnInit {
         payee: 'Jan Linders Sittards'
       } as Transaction);
     }
-    this.transactions$ = of(transactions);
+  }
+
+
+  private setupTableData(): void {
+    this.transactions$ = combineLatest(
+      this.tableDataRequest$
+    ).pipe(
+      mergeMap(([tableRequest]) => {
+        // this normally would be an api call
+        const transactions = slice(this.transactions,
+          (tableRequest.page - 1) * tableRequest.pageSize,
+          (tableRequest.page - 1) * tableRequest.pageSize + tableRequest.pageSize);
+
+        return of(
+          {
+            items: transactions,
+            meta: {
+              totalSize: this.transactions.length,
+              isAsync: true,
+              page: tableRequest.page,
+              pageSize: tableRequest.pageSize
+            }
+          } as TableData
+        );
+      }),
+    );
   }
 
   public deleteTransaction(actionEvent: TableActionEvent): void {
     alert(JSON.stringify(actionEvent));
   }
-
 }

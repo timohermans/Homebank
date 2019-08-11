@@ -1,6 +1,6 @@
 import {Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
 import {TableColumnComponent} from './table-column/table-column.component';
-import {get, slice} from 'lodash';
+import {get, slice, isNil} from 'lodash';
 import {ColumnType, TableActionType, TableData, TableRequest} from './table.model';
 import * as moment from 'moment';
 import {toCurrency} from '../../pipes/to-currency.pipe';
@@ -20,11 +20,12 @@ import {TableActionComponent} from './table-action/table-action.component';
           </thead>
           <tbody class="table__rows">
           <tr class="table__row" *ngFor="let item of items | map:getItemsOnPage: areItemsAsync: page: pageSize">
-              <td *ngFor="let column of columns">
+              <td *ngFor="let column of columns" [ngClass]="column.classes">
                   {{item | map:getValueFrom:column | map:format:column.columnType}}
               </td>
               <td class="table_actions" *ngIf="!(actions | isEmpty)">
                   <button class="btn btn-link" *ngFor="let action of actions"
+                          [attr.title]="action.labelTranslationKey | translate"
                           (click)="handleActionClick(action, item)">
                       <fa-icon [icon]="action.actionType | map: toIcon"></fa-icon>
                   </button>
@@ -42,7 +43,7 @@ export class TableComponent implements OnInit {
   @ContentChildren(TableActionComponent) actions: QueryList<TableActionComponent>;
   public columnConfigs: TableColumnComponent[];
 
-  @Output() requestItems = new EventEmitter<TableRequest>();
+  @Output() dataRequest = new EventEmitter<TableRequest>();
 
   @Input() set data(data: any[] | TableData) {
     this.setTableWith(data);
@@ -71,6 +72,10 @@ export class TableComponent implements OnInit {
       }
       if (data.meta.pageSize) {
         this.pageSize = data.meta.pageSize;
+      }
+
+      if (isNil(this.items)) {
+        this.handlePageChange(this.page, this.pageSize);
       }
     } else if (Array.isArray(data)) {
       this.items = data as any[];
@@ -108,7 +113,7 @@ export class TableComponent implements OnInit {
     this.page = page;
 
     if (this.areItemsAsync) {
-      this.requestItems.emit({
+      this.dataRequest.emit({
         page,
         pageSize
       });

@@ -5,6 +5,8 @@
     "payee": "Betaler",
     "memo": "Memo",
     "inflow": "In bedrag",
-    "outflow": "Uit bedrag"
+    "outflow": "Uit bedrag",
+    "delete": "Verwijderen",
+    "edit": "Bewerken"
   }
 }
