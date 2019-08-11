@@ -1,0 +1,10 @@
+{
+  "transaction": {
+    "id": "ID",
+    "date": "Date",
+    "payee": "Payee",
+    "memo": "Memo",
+    "inflow": "In flow",
+    "outflow": "Out flow"
+  }
+}

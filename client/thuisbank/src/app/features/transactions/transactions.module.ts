@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgbModalModule, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {TransactionsRoutingModule} from './transactions-routing.module';
 import {TransactionListComponent} from './transaction-overview/transaction-list/transaction-list.component';
@@ -11,9 +11,9 @@ import {TransactionActionBarComponent} from './transaction-overview/transaction-
 import {SharedModule} from 'src/app/shared/shared.module';
 import {ImportFileModalComponent} from './transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { FileItemComponent } from './transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import {FileItemComponent} from './transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +35,9 @@ import { FileItemComponent } from './transaction-overview/transaction-action-bar
     NgbModalModule,
     FontAwesomeModule,
   ],
+  exports: [
+    TransactionListComponent
+  ]
 })
 export class TransactionsModule {
   constructor() {

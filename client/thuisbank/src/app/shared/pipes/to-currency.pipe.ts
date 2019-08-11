@@ -5,12 +5,16 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class ToCurrencyPipe implements PipeTransform {
   transform(value: number): string {
-    const formatter = new Intl.NumberFormat('nl-NL', {
-      currency: 'EUR',
-      minimumFractionDigits: 2,
-      style: 'currency'
-    });
-
-    return formatter.format(value);
+    return toCurrency(value);
   }
 }
+
+export const toCurrency = (value: number): string => {
+  const formatter = new Intl.NumberFormat('nl-NL', {
+    currency: 'EUR',
+    minimumFractionDigits: 2,
+    style: 'currency'
+  });
+
+  return formatter.format(value);
+};

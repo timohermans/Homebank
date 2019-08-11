@@ -1,13 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
-import { transactionReducer } from './transaction-store.reducer';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {StoreModule} from '@ngrx/store';
+import {transactionReducer} from './transaction-store.reducer';
+
+export const transactionFeatureKey = 'transaction';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature('transaction', transactionReducer)
+    StoreModule.forFeature(transactionFeatureKey, transactionReducer)
   ]
 })
-export class TransactionStoreModule { }
+export class TransactionStoreModule {
+}

@@ -1,1 +1,22 @@
+<h1>This will be my table test!</h1>
+
+<app-table [data]="transactions$ | async">
+  <app-table-column labelTranslationKey="transaction.id" property="id"
+                    [columnType]="columnType.String"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.date" property="date"
+                    [columnType]="columnType.Date"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.payee" property="payee"
+                    [columnType]="columnType.String"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.memo" property="memo"
+                    [columnType]="columnType.String"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.inflow" property="inFlow"
+                    [columnType]="columnType.Money"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.outflow" property="outFlow"
+                    [columnType]="columnType.Money"></app-table-column>
+  <app-table-action [actionType]="actionType.Delete" labelTranslationKey="transaction.delete"
+                    (actionClick)="deleteTransaction($event)"></app-table-action>
+  <app-table-action [actionType]="actionType.Edit" labelTranslationKey="transaction.edit"></app-table-action>
+</app-table>
+
+
 <router-outlet></router-outlet>

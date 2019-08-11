@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {
   TransactionStoreActions,
   TransactionStoreSelectors,
@@ -14,12 +14,13 @@ export class TransactionFacade {
   // It's pretty dirty to have them all over our components
   // Our components just want to get streams of data, no matter where they come from
   transactions$ = this.store.select(TransactionStoreSelectors.selectAllTransactionItems);
-  isUploading$ = this.store.select(TransactionStoreSelectors.selectIsUploading);
+  isUploading$ = this.store.pipe(select(TransactionStoreSelectors.selectTransaction), select(state => state.isUploading));
 
   constructor(
     private store: Store<RootStoreState.State>,
     private transactionService: TransactionService
-  ) {}
+  ) {
+  }
 
   loadTransactions(): void {
     this.transactionService.fetchAll().subscribe((transactions: Array<Transaction>) => {

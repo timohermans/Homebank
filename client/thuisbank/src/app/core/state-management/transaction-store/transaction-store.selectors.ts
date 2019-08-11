@@ -1,12 +1,13 @@
 import {createFeatureSelector, createSelector, MemoizedSelector} from '@ngrx/store';
 import {State as TransactionState, transactionAdapter} from './transaction-store.state';
 import {Transaction} from 'src/app/features/transactions/shared/entities/transaction.model';
+import {transactionFeatureKey} from './transaction-store.module';
 
 export const getError = (state: TransactionState): any => state.error;
 export const getIsLoading = (state: TransactionState): boolean => state.isLoading;
 
 export const selectTransaction: MemoizedSelector<object, TransactionState> = createFeatureSelector<TransactionState>(
-  'transaction'
+  transactionFeatureKey
 );
 
 export const selectAllTransactionItems: (
