@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   private transactions = [];
   public transactions$: Observable<TableData>;
-  public tableDataRequest$ = new BehaviorSubject<TableRequest>({pageSize: 10, page: 1});
+  public tableDataRequest$ = new BehaviorSubject<TableRequest>({pageSize: 5, page: 1});
 
   ngOnInit(): void {
     this.setupFakeApi();

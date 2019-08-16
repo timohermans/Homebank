@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ColumnType} from '../table.model';
 
 @Component({
   selector: 'app-table-column',
-  templateUrl: './table-column.component.html',
+  template: `
+      <ng-template #innerTemplate let-column>hello, {{column.columnType}}</ng-template>`,
   styleUrls: ['./table-column.component.scss']
 })
 export class TableColumnComponent implements OnInit {
@@ -11,6 +12,10 @@ export class TableColumnComponent implements OnInit {
   @Input() property: string;
   @Input() columnType: ColumnType;
   @Input() classes: string[];
+  public value: string;
+
+  @ViewChild('innerTemplate', {static: false})
+  public innerTemplate: TemplateRef<any>;
 
   constructor() {
   }

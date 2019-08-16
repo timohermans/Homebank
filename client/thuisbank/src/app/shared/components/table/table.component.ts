@@ -21,7 +21,8 @@ import {TableActionComponent} from './table-action/table-action.component';
           <tbody class="table__rows">
           <tr class="table__row" *ngFor="let item of items | map:getItemsOnPage: areItemsAsync: page: pageSize">
               <td *ngFor="let column of columns" [ngClass]="column.classes">
-                  {{item | map:getValueFrom:column | map:format:column.columnType}}
+                  <ng-container *ngTemplateOutlet="column.innerTemplate; context: {$implicit: column}"></ng-container>
+                  <!--                  {{item | map:getValueFrom:column | map:format:column.columnType}}-->
               </td>
               <td class="table_actions" *ngIf="!(actions | isEmpty)">
                   <button class="btn btn-link" *ngFor="let action of actions"

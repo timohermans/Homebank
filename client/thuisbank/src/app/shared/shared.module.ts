@@ -9,12 +9,14 @@ import {TranslateModule} from '@ngx-translate/core';
 import {TableActionComponent} from './components/table/table-action/table-action.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {IsEmptyPipe} from './pipes/is-empty.pipe';
+import { TableDateColumnComponent } from './components/table/table-date-column/table-date-column.component';
 
 const pipes = [MapPipe, ToCurrencyPipe, IsEmptyPipe];
-const components = [TableComponent, TableColumnComponent, TableActionComponent];
+const components = [TableComponent, TableActionComponent];
+const entryComponents = [TableColumnComponent, TableDateColumnComponent];
 
 @NgModule({
-  declarations: [...pipes, ...components],
+  declarations: [...pipes, ...components, ...entryComponents],
   imports: [
     CommonModule,
     NgbPaginationModule,
@@ -22,8 +24,9 @@ const components = [TableComponent, TableColumnComponent, TableActionComponent];
     FontAwesomeModule
   ],
   exports: [
-    ...pipes, ...components
-  ]
+    ...pipes, ...components, ...entryComponents
+  ],
+  entryComponents: [...entryComponents]
 })
 
 export class SharedModule {
