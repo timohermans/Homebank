@@ -4,7 +4,7 @@ import {ColumnType} from '../table.model';
 @Component({
   selector: 'app-table-column',
   template: `
-      <ng-template #innerTemplate let-column>hello, {{column.columnType}}</ng-template>`,
+      <ng-template #innerTemplate let-value>{{value}}</ng-template>`,
   styleUrls: ['./table-column.component.scss']
 })
 export class TableColumnComponent implements OnInit {

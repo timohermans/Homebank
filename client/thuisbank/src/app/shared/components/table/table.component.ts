@@ -1,4 +1,4 @@
-import {Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList} from '@angular/core';
 import {TableColumnComponent} from './table-column/table-column.component';
 import {get, slice, isNil} from 'lodash';
 import {ColumnType, TableActionType, TableData, TableRequest} from './table.model';
@@ -21,8 +21,8 @@ import {TableActionComponent} from './table-action/table-action.component';
           <tbody class="table__rows">
           <tr class="table__row" *ngFor="let item of items | map:getItemsOnPage: areItemsAsync: page: pageSize">
               <td *ngFor="let column of columns" [ngClass]="column.classes">
-                  <ng-container *ngTemplateOutlet="column.innerTemplate; context: {$implicit: column}"></ng-container>
-                  <!--                  {{item | map:getValueFrom:column | map:format:column.columnType}}-->
+                  <ng-container
+                          *ngTemplateOutlet="column.innerTemplate; context: {$implicit: item | map: getValueFor: column}"></ng-container>
               </td>
               <td class="table_actions" *ngIf="!(actions | isEmpty)">
                   <button class="btn btn-link" *ngFor="let action of actions"
@@ -34,12 +34,14 @@ import {TableActionComponent} from './table-action/table-action.component';
           </tr>
           </tbody>
       </table>
-      <ngb-pagination (pageChange)="handlePageChange($event, pageSize)" [page]="page" [pageSize]="pageSize" [collectionSize]="totalSize"
+      <ngb-pagination (pageChange)="handlePageChange($event, pageSize)" [page]="page" [pageSize]="pageSize"
+                      [collectionSize]="totalSize"
                       [ellipses]="true" [maxSize]="10"></ngb-pagination>
   `,
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements AfterViewInit {
+  private _data: any;
   @ContentChildren(TableColumnComponent) columns: QueryList<TableColumnComponent>;
   @ContentChildren(TableActionComponent) actions: QueryList<TableActionComponent>;
   public columnConfigs: TableColumnComponent[];
@@ -47,7 +49,7 @@ export class TableComponent implements OnInit {
   @Output() dataRequest = new EventEmitter<TableRequest>();
 
   @Input() set data(data: any[] | TableData) {
-    this.setTableWith(data);
+    this._data = data;
   }
 
   public areItemsAsync = false;
@@ -59,8 +61,8 @@ export class TableComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {
-
+  ngAfterViewInit(): void {
+    this.setTableWith(this._data);
   }
 
   private setTableWith(data: any[] | TableData): void {
@@ -86,20 +88,8 @@ export class TableComponent implements OnInit {
     }
   }
 
-  public getValueFrom(item: any, column: TableColumnComponent): any {
+  public getValueFor(item: any, column: TableColumnComponent): any {
     return get(item, column.property);
-  }
-
-  public format(value: any, columnType: ColumnType): string {
-    switch (columnType) {
-      case ColumnType.Date:
-        return moment(value).format('YYYY-MM-DD');
-      case ColumnType.Money:
-        return toCurrency(value);
-      case ColumnType.String:
-      default:
-        return value;
-    }
   }
 
   public getItemsOnPage(items: any[], areItemsAsync: boolean, page: number, pageSize: number): any[] {

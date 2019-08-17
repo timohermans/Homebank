@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Transaction} from '../../shared/entities/transaction.model';
-import {Store} from '@ngrx/store';
-import {ColumnType, TableActionType, TableData, TableRequest} from '../../../../shared/components/table/table.model';
-import {mergeMap, tap} from 'rxjs/operators';
+import {ColumnType, TableActionType} from '../../../../shared/components/table/table.model';
 import {TransactionFacade} from '../../shared/transaction.facade';
 
 @Component({
@@ -13,7 +11,7 @@ import {TransactionFacade} from '../../shared/transaction.facade';
           <app-table-column labelTranslationKey="transaction.id" property="id"
                             [columnType]="columnType.String"
                             [classes]="['column__big']"></app-table-column>
-<!--          <app-table-date-column labelTranslationKey="transaction.date" property="date"></app-table-date-column>-->
+          <app-table-date-column labelTranslationKey="transaction.date" property="date"></app-table-date-column>
           <app-table-column labelTranslationKey="transaction.payee" property="payee"
                             [columnType]="columnType.String"></app-table-column>
           <app-table-column labelTranslationKey="transaction.memo" property="memo"
@@ -38,9 +36,5 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit() {
     this.facade.loadTransactions();
-  }
-
-  private setupTableData(): void {
-
   }
 }
