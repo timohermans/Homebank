@@ -100,6 +100,18 @@
       <path value="$PROJECT_DIR$/vendor/zendframework/zend-eventmanager" />
       <path value="$PROJECT_DIR$/vendor/laravel-doctrine/migrations" />
       <path value="$PROJECT_DIR$/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/vendor/sandrokeil/interop-config" />
+      <path value="$PROJECT_DIR$/vendor/marc-mabe/php-enum" />
+      <path value="$PROJECT_DIR$/vendor/beberlei/assert" />
+      <path value="$PROJECT_DIR$/vendor/prooph/event-sourcing" />
+      <path value="$PROJECT_DIR$/vendor/prooph/common" />
+      <path value="$PROJECT_DIR$/vendor/prooph/event-store-bus-bridge" />
+      <path value="$PROJECT_DIR$/vendor/prooph/event-store" />
+      <path value="$PROJECT_DIR$/vendor/prooph/pdo-event-store" />
+      <path value="$PROJECT_DIR$/vendor/prooph/laravel-package" />
+      <path value="$PROJECT_DIR$/vendor/prooph/service-bus" />
+      <path value="$PROJECT_DIR$/vendor/prooph/pdo-snapshot-store" />
+      <path value="$PROJECT_DIR$/vendor/prooph/snapshot-store" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

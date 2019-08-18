@@ -17,9 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('transactions', 'TransactionController@index');
+Route::get('transactions', 'Core\Http\Controllers\TransactionController@index');
 
 Route::apiResources([
-    'category-groups' => 'CategoryGroupController',
+    'category-groups' => 'CategoryGroups\CategoryGroupController',
     'categories' => 'Category'
 ]);
