@@ -9,6 +9,7 @@ use App\Core\Application\UseCases\CategoryGroup\CreateCategoryGroupUseCaseInterf
 use App\Core\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Prooph\ServiceBus\CommandBus;
+use Prooph\ServiceBus\Exception\CommandDispatchException;
 
 class CategoryGroupController extends Controller
 {
@@ -39,7 +40,7 @@ class CategoryGroupController extends Controller
     {
         $this->commandBus->dispatch($command);
 
-        dd($command->createdId);
+        return $command->createdId;
     }
 
     /**

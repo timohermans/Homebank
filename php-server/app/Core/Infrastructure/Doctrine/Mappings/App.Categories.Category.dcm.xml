@@ -3,12 +3,16 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
-    <entity name="App\Core\Domain\Entities\CategoryGroup" table="category_groups">
+    <entity name="App\Categories\Category" table="categories">
 
         <id name="id" type="string" column="id">
             <generator strategy="UUID"/>
         </id>
 
         <field name="name" column="name" type="string"/>
+
+        <many-to-one field="categoryGroup" target-entity="App\Core\Domain\Entities\Category">
+            <join-column name="categoryGroup_id" referenced-column-name="id"/>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

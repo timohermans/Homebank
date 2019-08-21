@@ -5,6 +5,7 @@ namespace App\CategoryGroups\CreateCategoryGroup;
 
 
 use App\CategoryGroups\CategoryGroup;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
 
 class CreateCategoryGroupHandler
@@ -13,19 +14,18 @@ class CreateCategoryGroupHandler
      * @var EntityManager
      */
     private $entityManager;
-    private $repo;
 
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->entityManager->getRepository(CategoryGroup::class);
     }
 
     public function __invoke(CreateCategoryGroupCommand $command)
     {
         $group = new CategoryGroup($command->get('name'));
+        $this->entityManager->persist($group);
+        $this->entityManager->flush();
 
-
-        $command->createdId = 'hohoho';
+        $command->createdId = $group->getId();
     }
 }
