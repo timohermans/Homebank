@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('transactions', 'Core\Http\Controllers\TransactionController@index');
 
 Route::apiResources([
-    'category-groups' => 'CategoryGroups\CategoryGroupController',
+    'category-groups' => 'Features\CategoryGroups\CategoryGroupController',
     'categories' => 'Category'
 ]);

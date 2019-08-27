@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Core\Domain\Entities;
+namespace App\Features\Categories;
+
+use App\Features\CategoryGroups\CategoryGroup;
 
 class Category {
     /** @var string */

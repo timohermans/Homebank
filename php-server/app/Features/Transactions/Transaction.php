@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Domain\Entities;
+namespace App\Features\Transactions;
 
 use DateTime;
 

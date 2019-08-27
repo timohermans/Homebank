@@ -1,11 +1,10 @@
 <?php
 
 
-namespace App\CategoryGroups;
+namespace App\Features\CategoryGroups;
 
 
-use App\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupCommand;
-use App\Core\Application\UseCases\CategoryGroup\CreateCategoryGroupUseCaseInterface;
+use App\Features\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupCommand;
 use App\Core\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Prooph\ServiceBus\CommandBus;

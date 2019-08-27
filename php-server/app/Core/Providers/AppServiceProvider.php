@@ -19,11 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(CreateCategoryUseCaseInterface::class, CreateCategoryUseCase::class);
-        $this->app->bind(CreateCategoryGroupUseCaseInterface::class, CreateCategoryGroupUseCase::class);
-//        $this->app->bind(CreateCategoryGroupUseCaseInterface::class, function () {
-//            return new CreateCategoryGroupUseCase($this->app->make(EntityManagerInterface::class));
-//        });
     }
 
     /**
@@ -34,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+
+
     }
 }

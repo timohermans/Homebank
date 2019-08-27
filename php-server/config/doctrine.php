@@ -29,8 +29,9 @@ return [
                 'Entities'
             ],
             'paths' => [
-                base_path('app/Core/Infrastructure/Doctrine/Mappings'),
-                base_path('app/Core/Domain/Entities')
+                base_path('app/Features/CategoryGroups'),
+                base_path('app/Features/Categories'),
+                base_path('app/Features/Transactions'),
             ],
             'repository' => Doctrine\ORM\EntityRepository::class,
             'proxies' => [

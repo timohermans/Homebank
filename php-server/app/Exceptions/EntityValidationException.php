@@ -1,10 +1,10 @@
 <?php
 
+namespace App\Exceptions;
 
-namespace App\Core\Domain\Exceptions;
-
+use Exception;
 
 class EntityValidationException extends Exception
 {
-
+    //
 }

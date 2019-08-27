@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Core\Http\Controllers;
+namespace App\Features\Transactions;
 
-use App\Core\Application\UseCases\CategoryGroup\CreateCategoryGroupUseCaseInterface;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class CategoryGroupController extends Controller
+class TransactionsController extends Controller
 {
-
-    public function __construct(CreateCategoryGroupUseCaseInterface $createCategoryUseCase)
-    {
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,24 +14,24 @@ class CategoryGroupController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param CreateCategoryGroupUseCaseInterface $createGroupUseCase
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, CreateCategoryGroupUseCaseInterface $createGroupUseCase)
+    public function store(Request $request)
     {
-        dd($createGroupUseCase);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -47,8 +42,8 @@ class CategoryGroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -59,7 +54,7 @@ class CategoryGroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

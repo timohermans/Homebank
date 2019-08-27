@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CategoryGroups\CreateCategoryGroup;
+namespace App\Features\CategoryGroups\CreateCategoryGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
 

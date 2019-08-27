@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CategoryGroups;
+namespace App\Features\CategoryGroups;
 
 
 use App\Core\Domain\Validations\Guard;
@@ -14,11 +14,17 @@ class CategoryGroup
     /** @var Category[] */
     protected $categories;
 
-    public function __construct(string $name)
+    private function __construct()
     {
+    }
+
+    public static function create(string $name): CategoryGroup {
         Guard::againstEmptyString($name);
 
-        $this->name = $name;
+        $group = new CategoryGroup();
+        $group->name = $name;
+
+        return $group;
     }
 
     /**

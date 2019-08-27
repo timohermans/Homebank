@@ -9,8 +9,8 @@ declare(strict_types=1);
  * @license   https://github.com/prooph/laravel-package/blob/master/LICENSE.md New BSD License
  */
 // default example configuration for prooph components, see http://getprooph.org/
-use App\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupCommand;
-use App\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupHandler;
+use App\Features\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupCommand;
+use App\Features\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupHandler;
 
 return [
     'event_store' => [
