@@ -176,6 +176,8 @@ return [
         // App\Core\Providers\BroadcastServiceProvider::class,
         App\Core\Providers\EventServiceProvider::class,
         App\Core\Providers\RouteServiceProvider::class,
+        Rebing\GraphQL\GraphQLServiceProvider::class,
+
     ],
 
     /*
@@ -230,6 +232,8 @@ return [
         'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
         'Registry' => LaravelDoctrine\ORM\Facades\Registry::class,
         'Doctrine' => LaravelDoctrine\ORM\Facades\Doctrine::class,
+        'GraphQL' => Rebing\GraphQL\Support\Facades\GraphQL::class,
+
     ],
 
 ];

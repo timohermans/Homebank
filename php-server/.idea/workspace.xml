@@ -2,53 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="634b07df-de5f-4ecc-9b0d-6482a1561e78" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../client/.idea/client.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/CategoryGroups/CategoryGroupController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/CategoryGroups/CreateCategoryGroup/CreateCategoryGroupHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Core/Domain/Exceptions/EntityValidationException.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Core/Domain/Validations/Guard.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Core/Infrastructure/SynchronousCommandInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Core/Domain/Traits/Converter.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/api.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Application/UseCases/Category/CreateCategoryUseCase.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Application/UseCases/Category/CreateCategoryUseCaseInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Application/UseCases/CategoryGroup/CreateCategoryGroupUseCase.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Application/UseCases/CategoryGroup/CreateCategoryGroupUseCaseInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Application/UseCases/UseCaseInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Domain/Entities/CategoryGroup.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CategoryGroups/CategoryGroup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Domain/Entities/Transaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Transactions/Transaction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/Auth/VerificationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryGroupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/CategoryGroupController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Controllers/TransactionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Middleware/Authenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/CheckForMaintenanceMode.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Middleware/CheckForMaintenanceMode.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/EncryptCookies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Middleware/EncryptCookies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/TrimStrings.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Middleware/TrimStrings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Middleware/TrustProxies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/BroadcastServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Providers/BroadcastServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Providers/EventServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Features/CategoryGroups/CategoryGroup.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Features/CategoryGroups/CategoryGroup.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -214,6 +175,8 @@
       <path value="$PROJECT_DIR$/vendor/prooph/service-bus" />
       <path value="$PROJECT_DIR$/vendor/prooph/pdo-snapshot-store" />
       <path value="$PROJECT_DIR$/vendor/prooph/snapshot-store" />
+      <path value="$PROJECT_DIR$/vendor/webonyx/graphql-php" />
+      <path value="$PROJECT_DIR$/vendor/rebing/graphql-laravel" />
     </include_path>
   </component>
   <component name="ProjectId" id="1OsnBjEBDwJZAJcolTtYFPZPDEn" />
@@ -226,22 +189,22 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/CategoryGroups/CreateCategoryGroup" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="com.maddyhome.idea.vim.ui.VimEmulationConfigurable" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups\CreateCategoryGroup" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\laradock" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server" />
-      <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Application\UseCases\CategoryGroup" />
-      <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Infrastructure\Doctrine\Mappings" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Transactions" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core\Domain" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core" />
       <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Domain\Entities" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups\CreateCategoryGroup" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\laradock" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server" />
+      <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Application\UseCases\CategoryGroup" />
+      <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Infrastructure\Doctrine\Mappings" />
     </key>
   </component>
   <component name="RunDashboard">
