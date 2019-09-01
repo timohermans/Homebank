@@ -112,6 +112,9 @@
       <path value="$PROJECT_DIR$/vendor/prooph/service-bus" />
       <path value="$PROJECT_DIR$/vendor/prooph/pdo-snapshot-store" />
       <path value="$PROJECT_DIR$/vendor/prooph/snapshot-store" />
+      <path value="$PROJECT_DIR$/vendor/nuwave/lighthouse" />
+      <path value="$PROJECT_DIR$/vendor/webonyx/graphql-php" />
+      <path value="$PROJECT_DIR$/vendor/mll-lab/laravel-graphql-playground" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

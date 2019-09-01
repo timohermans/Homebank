@@ -10,7 +10,7 @@ declare(strict_types=1);
  */
 // default example configuration for prooph components, see http://getprooph.org/
 use App\Features\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupCommand;
-use App\Features\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupHandler;
+use App\Features\CategoryGroups\CreateCategoryGroup\CreateCategoryGroupUseCase;
 
 return [
     'event_store' => [
@@ -31,7 +31,7 @@ return [
             'router' => [
                 'routes' => [
                     // list of commands with corresponding command handler
-                    CreateCategoryGroupCommand::class => CreateCategoryGroupHandler::class,
+                    CreateCategoryGroupCommand::class => CreateCategoryGroupUseCase::class,
 
                 ],
             ],

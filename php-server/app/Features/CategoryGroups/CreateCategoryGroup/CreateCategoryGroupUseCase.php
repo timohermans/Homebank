@@ -9,7 +9,7 @@ use App\Features\CategoryGroups\CategoryGroup;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
 
-class CreateCategoryGroupHandler
+class CreateCategoryGroupUseCase
 {
     /**
      * @var EntityManager
