@@ -3,16 +3,14 @@
 namespace App\GraphQL\Queries;
 
 use App\Features\Categories\Category;
+use App\Features\Transactions\Transaction;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class Categories
+class Transactions
 {
-
-    /**
-     * @var EntityManager
-     */
+    /** @var EntityManager */
     private $entityManager;
 
     public function __construct(EntityManager $entityManager)
@@ -34,12 +32,12 @@ class Categories
         $fields = $resolveInfo->getFieldSelection(5);
 
         $qb = $this->entityManager->createQueryBuilder()
-            ->select('c')
-            ->from(Category::class, 'c');
+            ->select('t')
+            ->from(Transaction::class, 't');
 
-        if (isset($fields['categoryGroup'])) {
-            $qb = $qb->join('c.categoryGroup', 'cg')
-            -> addSelect('cg'); // eager load the category group
+        if (isset($fields['category'])) {
+            $qb = $qb->leftJoin('t.category', 'c')
+                ->addSelect('c'); // eager load the category group
         }
 
         $qb = $qb->getQuery()

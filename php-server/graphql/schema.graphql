@@ -34,8 +34,8 @@ type Transaction {
     id: String!
     date: DateTime!
     memo: String!
-    inFlow: String!
-    outFlow: String!
+    inflow: String!
+    outflow: String!
     isBankTransaction: Boolean!
     isInflowForBudgeting: Boolean!
     category: Category

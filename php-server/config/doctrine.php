@@ -76,7 +76,7 @@ return [
             |--------------------------------------------------------------------------
             */
             'mapping_types' => [
-                'enum' => 'string'
+                'enum' => 'string',
             ]
         ]
     ],
@@ -112,7 +112,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_types' => [
-        'json' => LaravelDoctrine\ORM\Types\Json::class
+        'json' => LaravelDoctrine\ORM\Types\Json::class,
+        'date'       => DoctrineExtensions\Types\CarbonDateType::class,
+        'datetime'   => DoctrineExtensions\Types\CarbonDateTimeType::class,
+        'datetimetz' => DoctrineExtensions\Types\CarbonDateTimeTzType::class,
+        'time'       => DoctrineExtensions\Types\CarbonTimeType::class
     ],
     /*
     |--------------------------------------------------------------------------

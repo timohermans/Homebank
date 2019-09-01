@@ -33,28 +33,23 @@ class Transaction
     public function __construct(
         DateTime $date,
         string $payee,
-        Category $category,
+        ?Category $category,
         string $memo,
-        string $outFlow,
-        string $inFlow,
+        string $outflow,
+        string $inflow,
         bool $isInflowForBudgeting,
         bool $isBankTransaction)
     {
-        Assertion::date($date);
         Assertion::notEmpty($payee); // https://github.com/beberlei/assert
         Assertion::notEmpty($memo);
-        Assertion::numeric($outFlow);
-        Assertion::numeric($inFlow);
-
-        if (StringUtil::isEmpty($inFlow) && StringUtil::isEmpty($outFlow)) {
-            throw new EntityValidationException('Must have at least an inflow or an outflow');
-        }
+        Assertion::numeric($outflow);
+        Assertion::numeric($inflow);
 
         $this->date = $date;
         $this->payee = $payee;
         $this->memo = $memo;
-        $this->outflow = $outFlow;
-        $this->inflow = $inFlow;
+        $this->outflow = $outflow;
+        $this->inflow = $inflow;
         $this->isBankTransaction = $isBankTransaction;
 
         if ($isInflowForBudgeting) {
