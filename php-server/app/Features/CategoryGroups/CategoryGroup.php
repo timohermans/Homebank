@@ -3,18 +3,14 @@
 namespace App\Features\CategoryGroups;
 
 
-use App\Core\Domain\Traits\Converter;
 use App\Core\Domain\Validations\Guard;
-use ReflectionClass;
 
 class CategoryGroup
 {
-    use Converter;
-
     /** @var string */
-    private $id;
+    protected $id;
     /** @var string */
-    private $name;
+    protected $name;
     /** @var Category[] */
     protected $categories;
 
@@ -22,8 +18,7 @@ class CategoryGroup
     {
     }
 
-    public static function create(string $name): CategoryGroup
-    {
+    public static function create(string $name): CategoryGroup {
         Guard::againstEmptyString($name);
 
         $group = new CategoryGroup();
@@ -35,15 +30,7 @@ class CategoryGroup
     /**
      * @return string id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-
 }
