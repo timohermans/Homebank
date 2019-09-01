@@ -34,15 +34,18 @@ class Categories
         $fields = $resolveInfo->getFieldSelection(5);
 
         $qb = $this->entityManager->createQueryBuilder()
-            ->select('category')
-            ->from(Category::class, 'category');
+            ->select('c')
+            ->from(Category::class, 'c');
 
         if (isset($fields['categoryGroup'])) {
-            $qb = $qb->join('category.categoryGroup', 'group');
+            $qb = $qb->join('c.categoryGroup', 'cg')
+            -> addSelect('cg'); // eager load the category group
         }
 
         $qb = $qb->getQuery()
             ->getArrayResult();
+
+        dd($qb);
 
         return $qb;
     }
