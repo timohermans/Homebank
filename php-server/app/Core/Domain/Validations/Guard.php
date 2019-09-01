@@ -10,7 +10,7 @@ class Guard
 {
     public static function againstEmptyString(string $value)
     {
-         if (!isset($value) || trim($value) == '') {
+         if (StringUtil::isEmpty($value)) {
              throw new EntityValidationException("$value cannot be an empty string");
          }
     }

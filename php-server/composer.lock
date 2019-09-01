@@ -4,23 +4,28 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44cb856d7db3dcfa79ad484464878bd8",
+    "content-hash": "9c513a2ea09094bea2583cdbdceb660e",
     "packages": [
         {
             "name": "beberlei/assert",
-            "version": "v3.2.1",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "ce139b6bf8f07fb8389d2c8e15b98dc24fdd93c7"
+                "reference": "65b8152224aef7d3c197d5db05211d4319711b66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/ce139b6bf8f07fb8389d2c8e15b98dc24fdd93c7",
-                "reference": "ce139b6bf8f07fb8389d2c8e15b98dc24fdd93c7",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/65b8152224aef7d3c197d5db05211d4319711b66",
+                "reference": "65b8152224aef7d3c197d5db05211d4319711b66",
                 "shasum": ""
             },
             "require": {
+                "ext-ctype": "*",
+                "ext-intl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
                 "php": "^7"
             },
             "require-dev": {
@@ -44,13 +49,13 @@
             "authors": [
                 {
                     "name": "Benjamin Eberlei",
-                    "role": "Lead Developer",
-                    "email": "kontakt@beberlei.de"
+                    "email": "kontakt@beberlei.de",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Richard Quadling",
-                    "role": "Collaborator",
-                    "email": "rquadling@gmail.com"
+                    "email": "rquadling@gmail.com",
+                    "role": "Collaborator"
                 }
             ],
             "description": "Thin assertion library for input validation in business models.",
@@ -59,7 +64,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2019-05-28T15:18:28+00:00"
+            "time": "2019-08-23T17:56:26+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
