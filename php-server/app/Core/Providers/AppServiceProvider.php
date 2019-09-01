@@ -2,16 +2,18 @@
 
 namespace App\Core\Providers;
 
-use App\Core\Application\UseCases\Category\CreateCategoryUseCase;
-use App\Core\Application\UseCases\Category\CreateCategoryUseCaseInterface;
-use App\Core\Application\UseCases\CategoryGroup\CreateCategoryGroupUseCase;
-use App\Core\Application\UseCases\CategoryGroup\CreateCategoryGroupUseCaseInterface;
+use App\Features\Categories\CreateCategory\CreateCategoryUseCase;
+use App\Features\Categories\CreateCategory\CreateCategoryUseCaseInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    public $bindings = [
+        CreateCategoryUseCaseInterface::class => CreateCategoryUseCase::class
+    ];
+
     /**
      * Register any application services.
      *
