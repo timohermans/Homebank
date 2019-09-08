@@ -2,54 +2,37 @@ import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, 
 import {TableColumnComponent} from './table-column/table-column.component';
 import {get, slice, isNil} from 'lodash';
 import {ColumnType, TableActionType, TableData, TableRequest} from './table.model';
-import * as moment from 'moment';
-import {toCurrency} from '../../pipes/to-currency.pipe';
 import {TableActionComponent} from './table-action/table-action.component';
+import {isEmpty, sumBy} from 'lodash';
 
 @Component({
   selector: 'app-table',
-  template: `
-      <table class="table">
-          <thead>
-          <tr>
-              <th *ngFor="let column of columns">
-                  {{column.labelTranslationKey | translate}}
-              </th>
-              <th *ngIf="!(actions | isEmpty)"></th>
-          </tr>
-          </thead>
-          <tbody class="table__rows">
-          <tr class="table__row" *ngFor="let item of items | map:getItemsOnPage: areItemsAsync: page: pageSize">
-              <td *ngFor="let column of columns" [ngClass]="column.classes">
-                  <ng-container
-                          *ngTemplateOutlet="column.innerTemplate; context: {$implicit: item | map: getValueFor: column}"></ng-container>
-              </td>
-              <td class="table_actions" *ngIf="!(actions | isEmpty)">
-                  <button class="btn btn-link" *ngFor="let action of actions"
-                          [attr.title]="action.labelTranslationKey | translate"
-                          (click)="handleActionClick(action, item)">
-                      <fa-icon [icon]="action.actionType | map: toIcon"></fa-icon>
-                  </button>
-              </td>
-          </tr>
-          </tbody>
-      </table>
-      <ngb-pagination (pageChange)="handlePageChange($event, pageSize)" [page]="page" [pageSize]="pageSize"
-                      [collectionSize]="totalSize"
-                      [ellipses]="true" [maxSize]="10"></ngb-pagination>
-  `,
+  templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements AfterViewInit {
-  private _data: any;
   @ContentChildren(TableColumnComponent) columns: QueryList<TableColumnComponent>;
   @ContentChildren(TableActionComponent) actions: QueryList<TableActionComponent>;
-  public columnConfigs: TableColumnComponent[];
-
   @Output() dataRequest = new EventEmitter<TableRequest>();
 
+  private _data: any;
+
+  public selectedRowItemByIndex: { index: number, item: any, isEditModeEnabled: boolean };
+
+  /**
+   * The data for the table. This can either just be a simple list of items or a TableData object.
+   *
+   * When a TableData object is supplied, the meta.areItemsAsync property will determine whether or not the table is a
+   * table that will emit events for requesting paginated data.
+   *
+   * When meta.areItemsAsync is true and no items are initially supplied, a dataRequest event will immediately
+   * emit.
+   */
   @Input() set data(data: any[] | TableData) {
     this._data = data;
+    setTimeout(() => {
+      this.setTableWith(this._data);
+    });
   }
 
   public areItemsAsync = false;
@@ -62,10 +45,46 @@ export class TableComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.setTableWith(this._data);
+    setTimeout(() => {
+      this.calculateColumnWidths();
+    });
+  }
+
+  private calculateColumnWidths(): void {
+    if (isEmpty(this.columns)) {
+      return;
+    }
+
+    const columnsSet = [];
+    const columnsNotSet = [];
+
+    this.columns.forEach((column: TableColumnComponent) => {
+      if (column.width) {
+        columnsSet.push(column);
+      } else {
+        columnsNotSet.push(column);
+      }
+    });
+
+    if (columnsNotSet.length === 0) {
+      return;
+    }
+
+    const percentageSet = +sumBy(columnsSet, column => +column.width);
+    let width = 10;
+
+    if (percentageSet < 90) {
+      width = (100 - percentageSet) / columnsNotSet.length;
+    }
+
+    columnsNotSet.forEach(column => column.width = width);
   }
 
   private setTableWith(data: any[] | TableData): void {
+    if (data == null) {
+      return;
+    }
+
     if ('meta' in data && 'items' in data) {
       this.areItemsAsync = data.meta.isAsync;
       this.items = data.items;
@@ -130,6 +149,14 @@ export class TableComponent implements AfterViewInit {
         return 'edit';
       default:
         throw new Error(`yo, missing icon for action ${actionType}`);
+    }
+  }
+
+  public selectRow(rowIndex: number, rowItem: any): void {
+    if (!this.selectedRowItemByIndex || this.selectedRowItemByIndex.index !== rowIndex) {
+      this.selectedRowItemByIndex = {index: rowIndex, item: rowItem, isEditModeEnabled: false};
+    } else if (this.selectedRowItemByIndex.index === rowIndex) {
+      this.selectedRowItemByIndex.isEditModeEnabled = true;
     }
   }
 }

@@ -34,6 +34,7 @@ type Transaction {
     id: String!
     date: DateTime!
     memo: String!
+    payee: String!
     inflow: String!
     outflow: String!
     isBankTransaction: Boolean!

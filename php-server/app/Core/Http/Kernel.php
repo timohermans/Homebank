@@ -9,6 +9,7 @@ use App\Core\Http\Middleware\RedirectIfAuthenticated;
 use App\Core\Http\Middleware\TrimStrings;
 use App\Core\Http\Middleware\TrustProxies;
 use App\Core\Http\Middleware\VerifyCsrfToken;
+use Barryvdh\Cors\HandleCors;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -39,6 +40,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        HandleCors::class,
     ];
 
     /**

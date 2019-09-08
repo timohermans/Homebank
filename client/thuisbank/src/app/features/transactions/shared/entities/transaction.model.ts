@@ -1,3 +1,7 @@
+export interface TransactionQueryResult {
+  transactions: Transaction[];
+}
+
 export interface Transaction {
   id: number;
   date: Date;

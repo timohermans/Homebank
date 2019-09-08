@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {SupportService} from 'src/app/shared/services/support.service';
-import {TransactionFacade} from '../../../shared/transaction.facade';
 
 @Component({
   selector: 'app-import-file-modal',
@@ -15,8 +14,7 @@ export class ImportFileModalComponent implements OnInit {
 
   constructor(
     private thisModal: NgbActiveModal,
-    private supportService: SupportService,
-    private transactionFacade: TransactionFacade
+    private supportService: SupportService
   ) {}
 
   ngOnInit() {
@@ -69,6 +67,6 @@ export class ImportFileModalComponent implements OnInit {
       return;
     }
 
-    this.transactionFacade.uploadFrom(this.files);
+    throw new Error('not implemented yet (this.transactionService.uploadFrom()');
   }
 }

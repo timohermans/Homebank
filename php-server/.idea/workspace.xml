@@ -2,20 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="634b07df-de5f-4ecc-9b0d-6482a1561e78" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Features/Transactions/UploadFromFile/UploadFromFileUseCase.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Features/Transactions/UploadFromFile/UploadFromFileUseCaseInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/entities/transaction.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/entities/transaction.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/services/transaction.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/services/transaction.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/transaction.facade.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-overview.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-overview.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transactions.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transactions.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table-column/table-column.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table-column/table-column.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/api.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Features/Transactions/App.Features.Transactions.Transaction.dcm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/Features/Transactions/App.Features.Transactions.Transaction.dcm.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Features/Transactions/Transaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Features/Transactions/Transaction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GraphQL/Mutations/UploadTransactions.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/GraphQL/Mutations/UploadTransactions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GraphQL/Queries/Categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/GraphQL/Queries/Categories.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Core/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/doctrine.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/schema.graphql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laradock" beforeDir="false" afterPath="$PROJECT_DIR$/laradock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laradock/DOCUMENTATION/themes/hugo-material-docs/layouts/partials/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/laradock/DOCUMENTATION/themes/hugo-material-docs/layouts/partials/header.html" afterDir="false" />
@@ -190,6 +200,8 @@
       <path value="$PROJECT_DIR$/vendor/league/csv" />
       <path value="$PROJECT_DIR$/vendor/laravel-doctrine/extensions" />
       <path value="$PROJECT_DIR$/vendor/beberlei/doctrineextensions" />
+      <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-cors" />
+      <path value="$PROJECT_DIR$/vendor/asm89/stack-cors" />
     </include_path>
   </component>
   <component name="ProjectId" id="1OsnBjEBDwJZAJcolTtYFPZPDEn" />
@@ -200,9 +212,9 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/CategoryGroups/CreateCategoryGroup" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
@@ -243,17 +255,7 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@eb615898" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@eb615898" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@2f4d031f" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -276,6 +278,9 @@
       <workItem from="1566051434232" duration="9884000" />
       <workItem from="1566124232699" duration="13352000" />
       <workItem from="1567254048006" duration="19529000" />
+      <workItem from="1567530804158" duration="700000" />
+      <workItem from="1567531824458" duration="1688000" />
+      <workItem from="1567536624696" duration="1426000" />
     </task>
     <servers />
   </component>

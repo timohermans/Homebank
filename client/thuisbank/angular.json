@@ -13,6 +13,11 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/theme"
+              ]
+            },
             "outputPath": "dist/thuisbank",
             "index": "src/index.html",
             "main": "src/main.ts",

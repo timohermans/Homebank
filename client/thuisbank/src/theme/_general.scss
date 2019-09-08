@@ -1,0 +1,5 @@
+@import "variables";
+
+body {
+  min-width: map-get($container-max-widths, sm);
+}

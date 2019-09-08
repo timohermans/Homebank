@@ -14,7 +14,6 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {FileItemComponent} from './transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component';
-import {TransactionFacade} from './shared/transaction.facade';
 
 @NgModule({
   declarations: [
@@ -39,9 +38,7 @@ import {TransactionFacade} from './shared/transaction.facade';
   exports: [
     TransactionListComponent
   ],
-  providers: [
-    TransactionFacade
-  ]
+  providers: []
 })
 export class TransactionsModule {
   constructor() {

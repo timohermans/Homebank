@@ -1,0 +1,17 @@
+@import "variables";
+
+.table {
+  table-layout: fixed;
+
+  .table__row-selected {
+    background-color: $blue-800;
+    color: $light;
+  }
+
+  td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+}

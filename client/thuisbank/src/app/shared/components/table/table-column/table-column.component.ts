@@ -12,6 +12,7 @@ export class TableColumnComponent implements OnInit {
   @Input() property: string;
   @Input() columnType: ColumnType;
   @Input() classes: string[];
+  @Input() width: number;
   public value: string;
 
   @ViewChild('innerTemplate', {static: false})

@@ -1,22 +1,52 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Transaction} from '../entities/transaction.model';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 import {Observable} from 'rxjs';
-import {environment} from 'src/environments/environment';
-import {switchMap} from 'rxjs/operators';
+import {ApolloQueryResult} from 'apollo-client';
+import {Transaction, TransactionQueryResult} from '../entities/transaction.model';
+import {map, tap} from 'rxjs/operators';
+
+const TransactionsQuery = gql`
+    query FetchTransactions {
+        transactions {
+            id,
+            date,
+            payee,
+            memo,
+            inflow,
+            outflow,
+            isBankTransaction,
+            isInflowForBudgeting,
+            category {
+                id,
+                name
+            }
+        }
+    }
+`;
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionService {
-  private readonly transactionUrl = `${environment.apiUrl}/transactions`;
-  constructor(private http: HttpClient) {}
-
-  public fetchAll(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(this.transactionUrl);
+  constructor(
+    private apollo: Apollo
+  ) {
   }
 
-  public upload(formData: FormData): Observable<any> {
-    return this.http.post(this.transactionUrl, formData);
+  public getTransactions(): Observable<Transaction[]> {
+    return this.apollo.watchQuery<TransactionQueryResult>({
+      query: TransactionsQuery
+    }).valueChanges.pipe(map((result: ApolloQueryResult<TransactionQueryResult>) => result.data.transactions));
+  }
+
+  public uploadFrom(files: File[]): void {
+    const formData = new FormData();
+    for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
+      const file = files[fileIndex];
+      formData.append(`file-${fileIndex}`, file);
+    }
+
   }
 }

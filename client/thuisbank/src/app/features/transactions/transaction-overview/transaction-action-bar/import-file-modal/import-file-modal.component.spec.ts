@@ -6,8 +6,8 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {SupportService} from 'src/app/shared/services/support.service';
 import {MockComponent} from 'ng-mocks';
 import {FileItemComponent} from './file-item/file-item.component';
-import {TransactionFacade} from '../../../shared/transaction.facade';
 import {cold} from 'jasmine-marbles';
+import {TransactionService} from '../../../shared/services/transaction.service';
 
 describe('ImportFileModalComponent', () => {
   let component: ImportFileModalComponent;
@@ -15,21 +15,21 @@ describe('ImportFileModalComponent', () => {
   let page: Page;
   let activeModalSpy: jasmine.SpyObj<NgbActiveModal>;
   let supportServiceSpy: jasmine.SpyObj<SupportService>;
-  let transactionFacadeSpy: jasmine.SpyObj<TransactionFacade>;
+  let transactionServiceSpy: jasmine.SpyObj<TransactionService>;
 
   beforeEach(() => {
     activeModalSpy = jasmine.createSpyObj<NgbActiveModal>(['dismiss']);
     const supportService = jasmine.createSpyObj<SupportService>(['isDragAndDropAvailable']);
     supportService.isDragAndDropAvailable.and.returnValue(true);
 
-    const transactionFacade = jasmine.createSpyObj<TransactionFacade>(['uploadFrom']);
+    const transactionService = jasmine.createSpyObj<TransactionService>(['uploadFrom']);
 
     TestBed.configureTestingModule({
       declarations: [ImportFileModalComponent, MockComponent(FileItemComponent)],
       providers: [
         {provide: NgbActiveModal, useValue: activeModalSpy},
         {provide: SupportService, useValue: supportService},
-        {provide: TransactionFacade, useValue: transactionFacade},
+        {provide: TransactionService, useValue: transactionService},
       ],
     }).compileComponents();
 
@@ -39,7 +39,7 @@ describe('ImportFileModalComponent', () => {
     fixture.detectChanges();
 
     supportServiceSpy = TestBed.get(SupportService);
-    transactionFacadeSpy = TestBed.get(TransactionFacade);
+    transactionServiceSpy = TestBed.get(TransactionService);
   });
 
   it('should create', () => {
@@ -128,7 +128,7 @@ describe('ImportFileModalComponent', () => {
         });
 
         it('start uploading the files', () => {
-          expect(transactionFacadeSpy.uploadFrom).toHaveBeenCalledWith(
+          expect(transactionServiceSpy.uploadFrom).toHaveBeenCalledWith(
             filesTest.filter(file => file.type === csvType)
           );
         });
@@ -136,7 +136,7 @@ describe('ImportFileModalComponent', () => {
         it('indicates that the uploading is underway', () => {
           const expectedIsUploading$ = cold('a|', {a: true});
 
-          expect(transactionFacadeSpy.isUploading$).toBeObservable(expectedIsUploading$);
+          expect(transactionServiceSpy.isUploading$).toBeObservable(expectedIsUploading$);
         });
       });
     });
@@ -148,7 +148,7 @@ describe('ImportFileModalComponent', () => {
     });
 
     it('should not try to upload files', () => {
-      expect(transactionFacadeSpy.uploadFrom).toHaveBeenCalledTimes(0);
+      expect(transactionServiceSpy.uploadFrom).toHaveBeenCalledTimes(0);
     });
   });
 });

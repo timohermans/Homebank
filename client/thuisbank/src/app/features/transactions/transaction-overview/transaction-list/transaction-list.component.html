@@ -1,26 +1,13 @@
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Payee</th>
-      <th>Category</th>
-      <th>Memo</th>
-      <th>Outflow</th>
-      <th>Inflow</th>
-    </tr>
-  </thead>
-  <tbody class="table__rows">
-    <tr class="table__row" *ngFor="let transaction of transactions$ | async">
-      <td class="table__column">{{ transaction.date | date: 'yyyy-MM-dd' }}</td>
-      <td class="table__column">{{ transaction.payee }}</td>
-      <td class="table__column">
-        {{ transaction.category?.categoryGroup?.name }}: {{ transaction.category?.name }}
-      </td>
-      <td class="table__column">{{ transaction.memo }}</td>
-      <td class="table__column">{{ transaction.outFlow | toCurrency }}</td>
-      <td class="table__column">{{ transaction.inFlow | toCurrency }}</td>
-    </tr>
-  </tbody>
-</table>
+<app-table [data]="transactions$ | async">
+  <app-table-date-column labelTranslationKey="transaction.date" property="date"></app-table-date-column>
+  <app-table-column labelTranslationKey="transaction.payee" property="payee"
+                    [columnType]="columnType.String"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.memo" property="memo" width="40"
+                    [columnType]="columnType.String"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.inflow" property="inflow"
+                    [columnType]="columnType.Money"></app-table-column>
+  <app-table-column labelTranslationKey="transaction.outflow" property="outflow"
+                    [columnType]="columnType.Money"></app-table-column>
+  <app-table-action [actionType]="actionType.Edit"
+                    labelTranslationKey="transaction.edit"></app-table-action>
+</app-table>
