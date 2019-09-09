@@ -3,7 +3,7 @@ import {TableColumnComponent} from './table-column/table-column.component';
 import {get, slice, isNil} from 'lodash';
 import {ColumnType, TableActionType, TableData, TableRequest} from './table.model';
 import {TableActionComponent} from './table-action/table-action.component';
-import {isEmpty, sumBy} from 'lodash';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-table',
@@ -15,9 +15,9 @@ export class TableComponent implements AfterViewInit {
   @ContentChildren(TableActionComponent) actions: QueryList<TableActionComponent>;
   @Output() dataRequest = new EventEmitter<TableRequest>();
 
-  private _data: any;
+  public readonly actionColumnWidthPercentage = 5;
 
-  public selectedRowItemByIndex: { index: number, item: any, isEditModeEnabled: boolean };
+  private _data: any;
 
   /**
    * The data for the table. This can either just be a simple list of items or a TableData object.
@@ -51,7 +51,7 @@ export class TableComponent implements AfterViewInit {
   }
 
   private calculateColumnWidths(): void {
-    if (isEmpty(this.columns)) {
+    if (_.isEmpty(this.columns)) {
       return;
     }
 
@@ -70,7 +70,12 @@ export class TableComponent implements AfterViewInit {
       return;
     }
 
-    const percentageSet = +sumBy(columnsSet, column => +column.width);
+    let percentageSet = +_.sumBy(columnsSet, column => +column.width);
+
+    if (!_.isEmpty(this.actions)) {
+      percentageSet += this.actionColumnWidthPercentage;
+    }
+
     let width = 10;
 
     if (percentageSet < 90) {
@@ -149,14 +154,6 @@ export class TableComponent implements AfterViewInit {
         return 'edit';
       default:
         throw new Error(`yo, missing icon for action ${actionType}`);
-    }
-  }
-
-  public selectRow(rowIndex: number, rowItem: any): void {
-    if (!this.selectedRowItemByIndex || this.selectedRowItemByIndex.index !== rowIndex) {
-      this.selectedRowItemByIndex = {index: rowIndex, item: rowItem, isEditModeEnabled: false};
-    } else if (this.selectedRowItemByIndex.index === rowIndex) {
-      this.selectedRowItemByIndex.isEditModeEnabled = true;
     }
   }
 }

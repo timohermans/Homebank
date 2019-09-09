@@ -14,6 +14,9 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {FileItemComponent} from './transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component';
+import { TransactionCreateOrEditComponent } from './transaction-create-or-edit/transaction-create-or-edit.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import {FileItemComponent} from './transaction-overview/transaction-action-bar/i
     TransactionActionBarComponent,
     ImportFileModalComponent,
     FileItemComponent,
+    TransactionCreateOrEditComponent,
   ],
   entryComponents: [
     ImportFileModalComponent
@@ -30,10 +34,12 @@ import {FileItemComponent} from './transaction-overview/transaction-action-bar/i
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
     TransactionsRoutingModule,
     HttpClientModule,
     NgbModalModule,
     FontAwesomeModule,
+    TranslateModule
   ],
   exports: [
     TransactionListComponent

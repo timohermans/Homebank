@@ -1,9 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
 import {Transaction} from '../../shared/entities/transaction.model';
-import {ColumnType, TableActionType} from '../../../../shared/components/table/table.model';
-import {ApolloQueryResult} from 'apollo-client';
-import {TransactionService} from '../../shared/services/transaction.service';
+import {ColumnType, TableActionEvent, TableActionType} from '../../../../shared/components/table/table.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-transaction-list',
@@ -11,14 +9,17 @@ import {TransactionService} from '../../shared/services/transaction.service';
   styleUrls: ['./transaction-list.component.css'],
 })
 export class TransactionListComponent implements OnInit {
+  @Input() transactions: Transaction[];
   columnType = ColumnType;
   actionType = TableActionType;
 
-  public transactions$: Observable<Transaction[]> = this.transactionService.getTransactions();
-
-  constructor(private transactionService: TransactionService) {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
+  }
+
+  public goToEdit(actionEvent: TableActionEvent): void {
+    this.router.navigate(['transactions', actionEvent.item.id, 'edit']);
   }
 }
