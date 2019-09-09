@@ -1,8 +1,8 @@
-import {Transaction} from 'src/app/features/transactions/shared/entities/transaction.model';
-import {EntityAdapter, createEntityAdapter, EntityState} from '@ngrx/entity';
+import { Transaction } from 'src/app/features/transactions/shared/entities/transaction.model';
+import { EntityAdapter, createEntityAdapter, EntityState } from '@ngrx/entity';
 
 export const transactionAdapter: EntityAdapter<Transaction> = createEntityAdapter<Transaction>({
-  selectId: transaction => transaction.id,
+  selectId: transaction => transaction.id
 });
 
 export interface State extends EntityState<Transaction> {
@@ -15,5 +15,5 @@ export interface State extends EntityState<Transaction> {
 export const initialState: State = transactionAdapter.getInitialState({
   isLoading: false,
   isUploading: false,
-  error: null,
+  error: null
 });

@@ -1,5 +1,5 @@
-import {ComponentFixture} from '@angular/core/testing';
-import {ImportFileModalComponent} from './import-file-modal.component';
+import { ComponentFixture } from '@angular/core/testing';
+import { ImportFileModalComponent } from './import-file-modal.component';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 

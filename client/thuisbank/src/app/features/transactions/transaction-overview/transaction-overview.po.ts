@@ -1,7 +1,7 @@
-import {ComponentFixture} from '@angular/core/testing';
-import {TransactionOverviewComponent} from './transaction-overview.component';
-import {DebugElement} from '@angular/core';
-import {By} from '@angular/platform-browser';
+import { ComponentFixture } from '@angular/core/testing';
+import { TransactionOverviewComponent } from './transaction-overview.component';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 export class Page {
   public get transactionList(): DebugElement {

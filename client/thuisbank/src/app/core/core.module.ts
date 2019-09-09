@@ -5,10 +5,6 @@ import { StateManagementModule } from './state-management/state-management.modul
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    LayoutModule,
-    StateManagementModule
-  ]
+  imports: [CommonModule, LayoutModule, StateManagementModule]
 })
-export class CoreModule { }
+export class CoreModule {}

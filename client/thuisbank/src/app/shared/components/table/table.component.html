@@ -1,30 +1,50 @@
 <table class="table table-sm">
   <thead>
-  <tr>
-    <th *ngFor="let column of columns" [style.width.%]="column.width">
-      {{column.labelTranslationKey | translate}}
-    </th>
-    <th class="header__actions" [style.width.%]="actionColumnWidthPercentage" *ngIf="!(actions | isEmpty)"></th>
-  </tr>
+    <tr>
+      <th *ngFor="let column of columns" [style.width.%]="column.width">
+        {{ column.labelTranslationKey | translate }}
+      </th>
+      <th
+        class="header__actions"
+        [style.width.%]="actionColumnWidthPercentage"
+        *ngIf="!(actions | isEmpty)"
+      ></th>
+    </tr>
   </thead>
   <tbody class="table__rows">
-  <tr class="table__row"
-      *ngFor="let item of items | map:getItemsOnPage: areItemsAsync: page: pageSize; let index = index"
-  >
-    <td *ngFor="let column of columns" [ngClass]="column.classes">
-      <ng-container
-        *ngTemplateOutlet="column.innerTemplate; context: {$implicit: item | map: getValueFor: column}"></ng-container>
-    </td>
-    <td class="table_actions" *ngIf="!(actions | isEmpty)">
-      <button class="btn btn-link" *ngFor="let action of actions"
-              [attr.title]="action.labelTranslationKey | translate"
-              (click)="handleActionClick(action, item)">
-        <fa-icon [icon]="action.actionType | map: toIcon"></fa-icon>
-      </button>
-    </td>
-  </tr>
+    <tr
+      class="table__row"
+      *ngFor="
+        let item of items | map: getItemsOnPage:areItemsAsync:page:pageSize;
+        let index = index
+      "
+    >
+      <td *ngFor="let column of columns" [ngClass]="column.classes">
+        <ng-container
+          *ngTemplateOutlet="
+            column.innerTemplate;
+            context: { $implicit: item | map: getValueFor:column }
+          "
+        ></ng-container>
+      </td>
+      <td class="table_actions" *ngIf="!(actions | isEmpty)">
+        <button
+          class="btn btn-link"
+          *ngFor="let action of actions"
+          [attr.title]="action.labelTranslationKey | translate"
+          (click)="handleActionClick(action, item)"
+        >
+          <fa-icon [icon]="action.actionType | map: toIcon"></fa-icon>
+        </button>
+      </td>
+    </tr>
   </tbody>
 </table>
-<ngb-pagination (pageChange)="handlePageChange($event, pageSize)" [page]="page" [pageSize]="pageSize"
-                [collectionSize]="totalSize"
-                [ellipses]="true" [maxSize]="10"></ngb-pagination>
+<ngb-pagination
+  (pageChange)="handlePageChange($event, pageSize)"
+  [page]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="totalSize"
+  [ellipses]="true"
+  [maxSize]="10"
+></ngb-pagination>

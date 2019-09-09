@@ -1,4 +1,4 @@
-import {ToCurrencyPipe} from './to-currency.pipe';
+import { ToCurrencyPipe } from './to-currency.pipe';
 import * as _ from 'lodash';
 
 describe('ToCurrencyPipe', () => {

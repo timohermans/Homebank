@@ -1,11 +1,11 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {TransactionOverviewComponent} from './transaction-overview.component';
-import {Page} from './transaction-overview.po';
-import {TransactionListComponent} from './transaction-list/transaction-list.component';
-import {MockComponent} from 'ng-mocks';
-import {TransactionActionBarComponent} from './transaction-action-bar/transaction-action-bar.component';
-import {TransactionHeaderComponent} from './transaction-header/transaction-header.component';
+import { TransactionOverviewComponent } from './transaction-overview.component';
+import { Page } from './transaction-overview.po';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { MockComponent } from 'ng-mocks';
+import { TransactionActionBarComponent } from './transaction-action-bar/transaction-action-bar.component';
+import { TransactionHeaderComponent } from './transaction-header/transaction-header.component';
 
 describe('TransactionOverviewComponent', () => {
   let component: TransactionOverviewComponent;
@@ -18,8 +18,8 @@ describe('TransactionOverviewComponent', () => {
         TransactionOverviewComponent,
         MockComponent(TransactionListComponent),
         MockComponent(TransactionActionBarComponent),
-        MockComponent(TransactionHeaderComponent),
-      ],
+        MockComponent(TransactionHeaderComponent)
+      ]
     }).compileComponents();
   }));
 

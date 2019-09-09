@@ -1,21 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {SupportService} from 'src/app/shared/services/support.service';
+import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SupportService } from 'src/app/shared/services/support.service';
 
 @Component({
   selector: 'app-import-file-modal',
   templateUrl: './import-file-modal.component.html',
-  styleUrls: ['./import-file-modal.component.scss'],
+  styleUrls: ['./import-file-modal.component.scss']
 })
 export class ImportFileModalComponent implements OnInit {
   public isDragAndDropAvailable = false;
   public isFileOverArea = false;
   public files: File[] = [];
 
-  constructor(
-    private thisModal: NgbActiveModal,
-    private supportService: SupportService
-  ) {}
+  constructor(private thisModal: NgbActiveModal, private supportService: SupportService) {}
 
   ngOnInit() {
     this.isDragAndDropAvailable = this.supportService.isDragAndDropAvailable();

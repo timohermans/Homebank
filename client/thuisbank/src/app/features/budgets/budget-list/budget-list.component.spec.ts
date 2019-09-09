@@ -1,15 +1,15 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {BudgetListComponent} from './budget-list.component';
-import {By} from '@angular/platform-browser';
-import {MockComponent, MockPipe} from 'ng-mocks';
-import {MockStore, provideMockStore} from '@ngrx/store/testing';
+import { BudgetListComponent } from './budget-list.component';
+import { By } from '@angular/platform-browser';
+import { MockComponent, MockPipe } from 'ng-mocks';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import {BudgetHeaderComponent} from '../budget-header/budget-header.component';
-import {Store} from '@ngrx/store';
-import {BudgetModel} from '../shared/budget.model';
-import {MapPipe} from 'src/app/shared/pipes/map.pipe';
-import {ToCurrencyPipe} from 'src/app/shared/pipes/to-currency.pipe';
+import { BudgetHeaderComponent } from '../budget-header/budget-header.component';
+import { Store } from '@ngrx/store';
+import { BudgetModel } from '../shared/budget.model';
+import { MapPipe } from 'src/app/shared/pipes/map.pipe';
+import { ToCurrencyPipe } from 'src/app/shared/pipes/to-currency.pipe';
 
 export class Page {
   getCategoryGroupBy(name: string) {
@@ -48,7 +48,7 @@ const budgetTestData = [
     categoryGroupName: 'obligated',
     categoryId: 1,
     categoryName: 'internet',
-    monthForBudget: new Date(),
+    monthForBudget: new Date()
   },
   {
     id: 2,
@@ -59,7 +59,7 @@ const budgetTestData = [
     categoryGroupName: 'obligated',
     categoryId: 2,
     categoryName: 'electrical bill',
-    monthForBudget: new Date(),
+    monthForBudget: new Date()
   },
   {
     id: 3,
@@ -70,8 +70,8 @@ const budgetTestData = [
     categoryGroupName: 'variable',
     categoryId: 3,
     categoryName: 'groceries',
-    monthForBudget: new Date(),
-  },
+    monthForBudget: new Date()
+  }
 ];
 
 describe('BudgetListComponent', () => {
@@ -79,8 +79,8 @@ describe('BudgetListComponent', () => {
   let fixture: ComponentFixture<BudgetListComponent>;
   let page: Page;
 
-  let store: MockStore<{budgets: BudgetModel[]}>;
-  const initialState = {budgets: []};
+  let store: MockStore<{ budgets: BudgetModel[] }>;
+  const initialState = { budgets: [] };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -88,9 +88,9 @@ describe('BudgetListComponent', () => {
         BudgetListComponent,
         MockComponent(BudgetHeaderComponent),
         MapPipe,
-        MockPipe(ToCurrencyPipe, (value: number) => `€ ${value}`),
+        MockPipe(ToCurrencyPipe, (value: number) => `€ ${value}`)
       ],
-      providers: [provideMockStore({initialState})],
+      providers: [provideMockStore({ initialState })]
     }).compileComponents();
 
     store = TestBed.get(Store);
@@ -116,7 +116,7 @@ describe('BudgetListComponent', () => {
   describe('with budget data', () => {
     beforeEach(() => {
       store.setState({
-        budgets: budgetTestData,
+        budgets: budgetTestData
       });
 
       fixture.detectChanges();
@@ -129,10 +129,10 @@ describe('BudgetListComponent', () => {
 
       describe('at the obligated row', () => {
         const columns = [
-          {testId: 'GroupCategory', value: 'obligated'},
-          {testId: 'GroupBudgeted', value: '€ 100'},
-          {testId: 'GroupActivity', value: '€ 20'},
-          {testId: 'GroupAvailable', value: '€ 70'},
+          { testId: 'GroupCategory', value: 'obligated' },
+          { testId: 'GroupBudgeted', value: '€ 100' },
+          { testId: 'GroupActivity', value: '€ 20' },
+          { testId: 'GroupAvailable', value: '€ 70' }
         ];
 
         columns.forEach(column => {
@@ -168,7 +168,7 @@ describe('BudgetListComponent', () => {
           { testId: 'Category', value: rowCategoryName },
           { testId: 'Activity', value: '€ 10' },
           { testId: 'Available', value: '€ 50' },
-          { testId: 'Budgeted', value: '€ 50' },
+          { testId: 'Budgeted', value: '€ 50' }
         ];
 
         columns.forEach(column => {

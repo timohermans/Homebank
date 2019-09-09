@@ -1,12 +1,12 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {TransactionActionBarComponent} from './transaction-action-bar.component';
-import {Page} from './transaction-action-bar.po';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImportFileModalComponent} from './import-file-modal/import-file-modal.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {faFileCsv} from '@fortawesome/free-solid-svg-icons';
+import { TransactionActionBarComponent } from './transaction-action-bar.component';
+import { Page } from './transaction-action-bar.po';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImportFileModalComponent } from './import-file-modal/import-file-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
 
 describe('TransactionActionBarComponent', () => {
   let component: TransactionActionBarComponent;
@@ -21,7 +21,7 @@ describe('TransactionActionBarComponent', () => {
     TestBed.configureTestingModule({
       imports: [FontAwesomeModule],
       declarations: [TransactionActionBarComponent],
-      providers: [{provide: NgbModal, useValue: modalServiceSpy}],
+      providers: [{ provide: NgbModal, useValue: modalServiceSpy }]
     }).compileComponents();
 
     library.add(faFileCsv);

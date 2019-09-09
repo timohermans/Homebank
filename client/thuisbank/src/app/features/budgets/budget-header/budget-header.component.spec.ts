@@ -8,9 +8,8 @@ describe('BudgetHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BudgetHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [BudgetHeaderComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

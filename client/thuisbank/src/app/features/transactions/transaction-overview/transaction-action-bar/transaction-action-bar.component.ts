@@ -8,11 +8,9 @@ import { ImportFileModalComponent } from './import-file-modal/import-file-modal.
   styleUrls: ['./transaction-action-bar.component.css']
 })
 export class TransactionActionBarComponent implements OnInit {
+  constructor(private modalService: NgbModal) {}
 
-  constructor(private modalService: NgbModal) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public openImportModal() {
     this.modalService.open(ImportFileModalComponent);

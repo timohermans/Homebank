@@ -1,4 +1,7 @@
 <app-transaction-header class="transaction-overview__header"></app-transaction-header>
 <app-transaction-action-bar class="transaction-overview__actions"></app-transaction-action-bar>
-<app-transaction-list [transactions]="transactions$ | async" class="transaction-overview__list"></app-transaction-list>
+<app-transaction-list
+  [transactions]="transactions$ | async"
+  class="transaction-overview__list"
+></app-transaction-list>
 <router-outlet></router-outlet>

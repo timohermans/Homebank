@@ -1,5 +1,5 @@
-import {ComponentFixture} from '@angular/core/testing';
-import {TransactionActionBarComponent} from './transaction-action-bar.component';
+import { ComponentFixture } from '@angular/core/testing';
+import { TransactionActionBarComponent } from './transaction-action-bar.component';
 
 export class Page {
   public get importButton(): HTMLButtonElement {

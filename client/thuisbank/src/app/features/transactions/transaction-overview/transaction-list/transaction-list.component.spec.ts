@@ -1,28 +1,31 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {TransactionListComponent} from './transaction-list.component';
-import {Page} from './transaction-list.po';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TransactionListComponent } from './transaction-list.component';
+import { Page } from './transaction-list.po';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {MockStore, provideMockStore} from '@ngrx/store/testing';
-import {Transaction} from '../../shared/entities/transaction.model';
-import {Store} from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { Transaction } from '../../shared/entities/transaction.model';
+import { Store } from '@ngrx/store';
 import { MockPipe } from 'ng-mocks';
 import { ToCurrencyPipe } from 'src/app/shared/pipes/to-currency.pipe';
 
 describe('TransactionListComponent', () => {
   let component: TransactionListComponent;
   let fixture: ComponentFixture<TransactionListComponent>;
-  let store: MockStore<{transactions: Transaction[]}>;
-  const initialState = {transactions: []};
+  let store: MockStore<{ transactions: Transaction[] }>;
+  const initialState = { transactions: [] };
   let page: Page;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TransactionListComponent, MockPipe(ToCurrencyPipe, (value: number) => `€${value}`)],
-      providers: provideMockStore({initialState}),
+      declarations: [
+        TransactionListComponent,
+        MockPipe(ToCurrencyPipe, (value: number) => `€${value}`)
+      ],
+      providers: provideMockStore({ initialState })
     }).compileComponents();
 
-    store = TestBed.get<Store<{transactions: Transaction}>>(Store);
+    store = TestBed.get<Store<{ transactions: Transaction }>>(Store);
     fixture = TestBed.createComponent(TransactionListComponent);
     page = new Page(fixture);
     component = fixture.componentInstance;
@@ -64,21 +67,21 @@ describe('TransactionListComponent', () => {
             name: 'Huis',
             categoryGroup: {
               id: 1,
-              name: 'Verplichte kosten',
-            },
+              name: 'Verplichte kosten'
+            }
           },
           inFlow: 0,
           outFlow: 65.99,
           isBankTransaction: true,
           isInflowForBudgeting: false,
           memo: 'Ziggo Z2 pakket factuure juli',
-          payee: 'Ziggo B.V.',
-        },
+          payee: 'Ziggo B.V.'
+        }
       ];
 
       beforeEach(() => {
         store.setState({
-          transactions,
+          transactions
         });
 
         fixture.detectChanges();
@@ -97,9 +100,7 @@ describe('TransactionListComponent', () => {
           });
 
           it('displays the correct category', () => {
-            const expectedCategory = `${transaction.category.categoryGroup.name}: ${
-              transaction.category.name
-            }`;
+            const expectedCategory = `${transaction.category.categoryGroup.name}: ${transaction.category.name}`;
             expect(page.getCellValueAt(rowIndex, 2)).toBe(expectedCategory);
           });
 

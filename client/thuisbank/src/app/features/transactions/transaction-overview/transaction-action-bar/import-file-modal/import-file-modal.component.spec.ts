@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ImportFileModalComponent} from './import-file-modal.component';
-import {Page} from './import-file-modal.po';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {SupportService} from 'src/app/shared/services/support.service';
-import {MockComponent} from 'ng-mocks';
-import {FileItemComponent} from './file-item/file-item.component';
-import {cold} from 'jasmine-marbles';
-import {TransactionService} from '../../../shared/services/transaction.service';
+import { ImportFileModalComponent } from './import-file-modal.component';
+import { Page } from './import-file-modal.po';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SupportService } from 'src/app/shared/services/support.service';
+import { MockComponent } from 'ng-mocks';
+import { FileItemComponent } from './file-item/file-item.component';
+import { cold } from 'jasmine-marbles';
+import { TransactionService } from '../../../shared/services/transaction.service';
 
 describe('ImportFileModalComponent', () => {
   let component: ImportFileModalComponent;
@@ -27,10 +27,10 @@ describe('ImportFileModalComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ImportFileModalComponent, MockComponent(FileItemComponent)],
       providers: [
-        {provide: NgbActiveModal, useValue: activeModalSpy},
-        {provide: SupportService, useValue: supportService},
-        {provide: TransactionService, useValue: transactionService},
-      ],
+        { provide: NgbActiveModal, useValue: activeModalSpy },
+        { provide: SupportService, useValue: supportService },
+        { provide: TransactionService, useValue: transactionService }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ImportFileModalComponent);
@@ -93,9 +93,9 @@ describe('ImportFileModalComponent', () => {
     describe('dropping some files in the area', () => {
       const csvType = 'application/vnd.ms-excel';
       const filesTest: File[] = [
-        new File([], 'rabobank201903.csv', {type: csvType}),
-        new File([], 'image-in-disquise.csv', {type: 'image/png'}),
-        new File([], 'rabobank201902.csv', {type: csvType}),
+        new File([], 'rabobank201903.csv', { type: csvType }),
+        new File([], 'image-in-disquise.csv', { type: 'image/png' }),
+        new File([], 'rabobank201902.csv', { type: csvType })
       ];
 
       beforeEach(() => {
@@ -104,7 +104,7 @@ describe('ImportFileModalComponent', () => {
 
         page.dropArea.dispatchEvent(
           new DragEvent('drop', {
-            dataTransfer,
+            dataTransfer
           })
         );
         fixture.detectChanges();
@@ -134,7 +134,7 @@ describe('ImportFileModalComponent', () => {
         });
 
         it('indicates that the uploading is underway', () => {
-          const expectedIsUploading$ = cold('a|', {a: true});
+          const expectedIsUploading$ = cold('a|', { a: true });
 
           expect(transactionServiceSpy.isUploading$).toBeObservable(expectedIsUploading$);
         });

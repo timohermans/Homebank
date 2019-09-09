@@ -30,7 +30,11 @@
         </div>
       </div>
 
-      <div class="budget-table__row" *ngFor="let budget of categoryGroup.budgets" [attr.data-test-id]="budget.categoryName">
+      <div
+        class="budget-table__row"
+        *ngFor="let budget of categoryGroup.budgets"
+        [attr.data-test-id]="budget.categoryName"
+      >
         <div data-label="Category" class="budget-table__category-group-column">
           {{ budget.categoryName }}
         </div>

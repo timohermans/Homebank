@@ -5,10 +5,6 @@ import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    TransactionStoreModule,
-    StoreModule.forRoot({})
-  ]
+  imports: [CommonModule, TransactionStoreModule, StoreModule.forRoot({})]
 })
-export class StateManagementModule { }
+export class StateManagementModule {}

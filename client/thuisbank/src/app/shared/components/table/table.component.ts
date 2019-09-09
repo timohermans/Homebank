@@ -1,8 +1,16 @@
-import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList} from '@angular/core';
-import {TableColumnComponent} from './table-column/table-column.component';
-import {get, slice, isNil} from 'lodash';
-import {ColumnType, TableActionType, TableData, TableRequest} from './table.model';
-import {TableActionComponent} from './table-action/table-action.component';
+import {
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  EventEmitter,
+  Input,
+  Output,
+  QueryList
+} from '@angular/core';
+import { TableColumnComponent } from './table-column/table-column.component';
+import { get, slice, isNil } from 'lodash';
+import { ColumnType, TableActionType, TableData, TableRequest } from './table.model';
+import { TableActionComponent } from './table-action/table-action.component';
 import * as _ from 'lodash';
 
 @Component({
@@ -41,8 +49,7 @@ export class TableComponent implements AfterViewInit {
   public pageSize = 10;
   public totalSize = 0;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -82,7 +89,7 @@ export class TableComponent implements AfterViewInit {
       width = (100 - percentageSet) / columnsNotSet.length;
     }
 
-    columnsNotSet.forEach(column => column.width = width);
+    columnsNotSet.forEach(column => (column.width = width));
   }
 
   private setTableWith(data: any[] | TableData): void {
@@ -116,7 +123,12 @@ export class TableComponent implements AfterViewInit {
     return get(item, column.property);
   }
 
-  public getItemsOnPage(items: any[], areItemsAsync: boolean, page: number, pageSize: number): any[] {
+  public getItemsOnPage(
+    items: any[],
+    areItemsAsync: boolean,
+    page: number,
+    pageSize: number
+  ): any[] {
     if (areItemsAsync) {
       return items;
     } else {

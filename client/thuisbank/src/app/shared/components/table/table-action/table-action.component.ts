@@ -1,11 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TableActionEvent, TableActionType} from '../table.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TableActionEvent, TableActionType } from '../table.model';
 
 @Component({
   selector: 'app-table-action',
-  template: `
-
-  `,
+  template: ``,
   styleUrls: ['./table-action.component.scss']
 })
 export class TableActionComponent implements OnInit {
@@ -14,11 +12,7 @@ export class TableActionComponent implements OnInit {
 
   @Output() actionClick = new EventEmitter<TableActionEvent>();
 
+  constructor() {}
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

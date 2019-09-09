@@ -1,4 +1,4 @@
-import {MapPipe} from './map.pipe';
+import { MapPipe } from './map.pipe';
 
 describe('MapPipe', () => {
   it('create an instance', () => {

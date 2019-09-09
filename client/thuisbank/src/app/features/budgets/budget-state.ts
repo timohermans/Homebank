@@ -1,2 +1,1 @@
-export interface BudgetState {
-}
+export interface BudgetState {}

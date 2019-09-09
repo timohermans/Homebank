@@ -1,10 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {Transaction} from './features/transactions/shared/entities/transaction.model';
-import {ColumnType, TableActionEvent, TableActionType, TableData, TableRequest} from './shared/components/table/table.model';
-import {TranslateService} from '@ngx-translate/core';
-import {map, mergeMap} from 'rxjs/operators';
-import {slice} from 'lodash';
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { Transaction } from './features/transactions/shared/entities/transaction.model';
+import {
+  ColumnType,
+  TableActionEvent,
+  TableActionType,
+  TableData,
+  TableRequest
+} from './shared/components/table/table.model';
+import { TranslateService } from '@ngx-translate/core';
+import { map, mergeMap } from 'rxjs/operators';
+import { slice } from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +32,10 @@ export class AppComponent implements OnInit {
 
   private transactions = [];
   public transactions$: Observable<TableData>;
-  public tableDataRequest$ = new BehaviorSubject<TableRequest>({pageSize: 5, page: 1});
+  public tableDataRequest$ = new BehaviorSubject<TableRequest>({
+    pageSize: 5,
+    page: 1
+  });
 
   ngOnInit(): void {
     this.setupFakeApi();
@@ -68,29 +77,26 @@ export class AppComponent implements OnInit {
     }
   }
 
-
   private setupTableData(): void {
-    this.transactions$ = combineLatest(
-      this.tableDataRequest$
-    ).pipe(
+    this.transactions$ = combineLatest(this.tableDataRequest$).pipe(
       mergeMap(([tableRequest]) => {
         // this normally would be an api call
-        const transactions = slice(this.transactions,
+        const transactions = slice(
+          this.transactions,
           (tableRequest.page - 1) * tableRequest.pageSize,
-          (tableRequest.page - 1) * tableRequest.pageSize + tableRequest.pageSize);
-
-        return of(
-          {
-            items: transactions,
-            meta: {
-              totalSize: this.transactions.length,
-              isAsync: true,
-              page: tableRequest.page,
-              pageSize: tableRequest.pageSize
-            }
-          } as TableData
+          (tableRequest.page - 1) * tableRequest.pageSize + tableRequest.pageSize
         );
-      }),
+
+        return of({
+          items: transactions,
+          meta: {
+            totalSize: this.transactions.length,
+            isAsync: true,
+            page: tableRequest.page,
+            pageSize: tableRequest.pageSize
+          }
+        } as TableData);
+      })
     );
   }
 

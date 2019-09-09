@@ -9,18 +9,33 @@
     <form [formGroup]="transactionForm">
       <div class="form-group">
         <label for="payee" translate>payee</label>
-        <input type="text" formControlName="payee" class="form-control" id="payee"
-               [placeholder]="'payeePlaceholder' | translate">
+        <input
+          type="text"
+          formControlName="payee"
+          class="form-control"
+          id="payee"
+          [placeholder]="'payeePlaceholder' | translate"
+        />
       </div>
       <div class="form-group">
         <label for="memo" translate>memo</label>
-        <input type="text" formControlName="memo" class="form-control" id="memo"
-               [placeholder]="'memoPlaceholder' | translate">
+        <input
+          type="text"
+          formControlName="memo"
+          class="form-control"
+          id="memo"
+          [placeholder]="'memoPlaceholder' | translate"
+        />
       </div>
       <div class="form-group">
         <label for="category" translate>category</label>
-        <input type="text" formControlName="category" class="form-control" id="category"
-               [placeholder]="'categoryPlaceholder' | translate">
+        <input
+          type="text"
+          formControlName="category"
+          class="form-control"
+          id="category"
+          [placeholder]="'categoryPlaceholder' | translate"
+        />
         <div>
           category-list
         </div>
@@ -28,6 +43,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
+      Save
+    </button>
   </div>
 </ng-template>

@@ -1,8 +1,8 @@
-import {TestBed, async, ComponentFixture} from '@angular/core/testing';
-import {AppComponent} from './app.component';
-import {By} from '@angular/platform-browser';
-import {MockComponent} from 'ng-mocks';
-import {RouterOutlet} from '@angular/router';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { By } from '@angular/platform-browser';
+import { MockComponent } from 'ng-mocks';
+import { RouterOutlet } from '@angular/router';
 
 class Page {
   public get routerOutlet(): RouterOutlet {
@@ -19,7 +19,7 @@ describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, MockComponent(RouterOutlet)],
+      declarations: [AppComponent, MockComponent(RouterOutlet)]
     }).compileComponents();
   }));
 

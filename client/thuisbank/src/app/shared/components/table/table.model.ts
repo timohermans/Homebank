@@ -1,6 +1,4 @@
-export abstract class BaseTableColumn {
-
-}
+export abstract class BaseTableColumn {}
 export enum ColumnType {
   String = 'string',
   Money = 'money',

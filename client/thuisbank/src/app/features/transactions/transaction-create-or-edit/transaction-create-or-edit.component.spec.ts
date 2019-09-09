@@ -8,9 +8,8 @@ describe('TransactionCreateOrEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransactionCreateOrEditComponent ]
-    })
-    .compileComponents();
+      declarations: [TransactionCreateOrEditComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

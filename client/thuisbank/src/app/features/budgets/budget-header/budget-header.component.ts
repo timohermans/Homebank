@@ -7,9 +7,7 @@ import { Moment } from 'moment';
   styleUrls: ['./budget-header.component.css']
 })
 export class BudgetHeaderComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

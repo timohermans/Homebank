@@ -1,14 +1,32 @@
 <app-table [data]="transactions">
-  <app-table-date-column labelTranslationKey="transaction.date" property="date"></app-table-date-column>
-  <app-table-column labelTranslationKey="transaction.payee" property="payee"
-                    [columnType]="columnType.String"></app-table-column>
-  <app-table-column labelTranslationKey="transaction.memo" property="memo" width="40"
-                    [columnType]="columnType.String"></app-table-column>
-  <app-table-column labelTranslationKey="transaction.inflow" property="inflow"
-                    [columnType]="columnType.Money"></app-table-column>
-  <app-table-column labelTranslationKey="transaction.outflow" property="outflow"
-                    [columnType]="columnType.Money"></app-table-column>
-  <app-table-action [actionType]="actionType.Edit"
-                    labelTranslationKey="transaction.edit"
-                    (actionClick)="goToEdit($event)"></app-table-action>
+  <app-table-date-column
+    labelTranslationKey="transaction.date"
+    property="date"
+  ></app-table-date-column>
+  <app-table-column
+    labelTranslationKey="transaction.payee"
+    property="payee"
+    [columnType]="columnType.String"
+  ></app-table-column>
+  <app-table-column
+    labelTranslationKey="transaction.memo"
+    property="memo"
+    width="40"
+    [columnType]="columnType.String"
+  ></app-table-column>
+  <app-table-column
+    labelTranslationKey="transaction.inflow"
+    property="inflow"
+    [columnType]="columnType.Money"
+  ></app-table-column>
+  <app-table-column
+    labelTranslationKey="transaction.outflow"
+    property="outflow"
+    [columnType]="columnType.Money"
+  ></app-table-column>
+  <app-table-action
+    [actionType]="actionType.Edit"
+    labelTranslationKey="transaction.edit"
+    (actionClick)="goToEdit($event)"
+  ></app-table-action>
 </app-table>
