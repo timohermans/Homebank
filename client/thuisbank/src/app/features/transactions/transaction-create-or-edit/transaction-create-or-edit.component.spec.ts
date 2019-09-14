@@ -6,13 +6,17 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { Category } from '../../categories/shared/models/category.model';
 import { cold } from 'jest-marbles';
+import * as faker from 'faker';
+import { TransactionService } from '../shared/services/transaction.service';
 jest.mock('@ng-bootstrap/ng-bootstrap');
 jest.mock('../../categories/shared/services/category.service');
+jest.mock('../shared/services/transaction.service');
 jest.mock('@angular/router');
 
-describe('TransactionCreateOrEditComponent', () => {
+fdescribe('TransactionCreateOrEditComponent', () => {
   let categoriesStore: BehaviorSubject<Category[]>;
   let formBuilder: FormBuilder;
+  let transactionService: jest.Mocked<TransactionService>;
   let categoryService: jest.Mocked<CategoryService>;
   let modalService: jest.Mocked<NgbModal>;
   let modalRef: jest.Mocked<NgbModalRef>;
@@ -26,15 +30,19 @@ describe('TransactionCreateOrEditComponent', () => {
     categoryService = new CategoryService(null) as jest.Mocked<CategoryService>;
     categoryService.getAll.mockReturnValue(categoriesStore);
 
+    transactionService = new TransactionService(null) as jest.Mocked<TransactionService>;
+
     modalRef = new NgbModalRef(null, null, null, null) as jest.Mocked<NgbModalRef>;
     modalRef.result = new Promise(() => {});
     modalService = new NgbModal(null, null, null, null) as jest.Mocked<NgbModal>;
     modalService.open.mockReturnValue(modalRef);
 
     router = new Router(null, null, null, null, null, null, null, null) as jest.Mocked<Router>;
+
     component = new TransactionCreateOrEditComponent(
       formBuilder,
       categoryService,
+      transactionService,
       modalService,
       router
     );
@@ -103,5 +111,31 @@ describe('TransactionCreateOrEditComponent', () => {
 
       expect(component.categories$).toBeObservable(expected);
     });
+  });
+
+  describe('Assigning a category to a transaction', () => {
+    const transactionChanges = {
+      id: faker.random.number,
+      memo: faker.random.words(10),
+      payee: faker.random.words(2),
+      categoryId: faker.random.number
+    };
+
+    beforeEach(() => {
+      component.transactionForm.setValue(transactionChanges);
+      component.update();
+    });
+
+    it('Successfully saves the transaction', () => {
+      expect(transactionService.update).toHaveBeenCalledWith(transactionChanges);
+    });
+
+    it('Closes the modal', () => {
+      expect(component.modal.close).toHaveBeenCalled();
+    });
+
+    // it('Shows a message', () => {
+    //   expect(toastr.succes).toHaveBeenCalledWith('transaction-create-edit.success');
+    // });
   });
 });

@@ -48,4 +48,8 @@ export class TransactionService {
       formData.append(`file-${fileIndex}`, file);
     }
   }
+
+  public update(transaction: TransactionUpdate): any {
+    // TODO: implement
+  }
 }

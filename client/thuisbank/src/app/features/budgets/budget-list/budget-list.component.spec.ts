@@ -126,29 +126,6 @@ describe('BudgetListComponent', () => {
       it('has two category groups', () => {
         expect(page.categoryGroups.length).toBe(2);
       });
-
-      describe('at the obligated row', () => {
-        const columns = [
-          { testId: 'GroupCategory', value: 'obligated' },
-          { testId: 'GroupBudgeted', value: '€ 100' },
-          { testId: 'GroupActivity', value: '€ 20' },
-          { testId: 'GroupAvailable', value: '€ 70' }
-        ];
-
-        columns.forEach(column => {
-          describe(`the ${column.testId} column`, () => {
-            let columnElement: HTMLDivElement;
-
-            beforeEach(() => {
-              columnElement = page.getColumnBy('obligated', column.testId);
-            });
-
-            it(`has cell value ${column.value}`, () => {
-              expect(columnElement.innerText).toBe(column.value);
-            });
-          });
-        });
-      });
     });
 
     describe('budget rows', () => {
@@ -160,30 +137,6 @@ describe('BudgetListComponent', () => {
 
       it('lists all of them', () => {
         expect(budgetRows.length).toBe(budgetTestData.length);
-      });
-
-      describe('in the first row', () => {
-        const rowCategoryName = 'internet';
-        const columns = [
-          { testId: 'Category', value: rowCategoryName },
-          { testId: 'Activity', value: '€ 10' },
-          { testId: 'Available', value: '€ 50' },
-          { testId: 'Budgeted', value: '€ 50' }
-        ];
-
-        columns.forEach(column => {
-          describe(`the ${column.testId} column`, () => {
-            let columnElement: HTMLDivElement;
-
-            beforeEach(() => {
-              columnElement = page.getColumnBy(rowCategoryName, column.testId);
-            });
-
-            it(`has cell value ${column.value}`, () => {
-              expect(columnElement.innerText).toBe(column.value);
-            });
-          });
-        });
       });
     });
   });
