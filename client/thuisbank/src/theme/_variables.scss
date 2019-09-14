@@ -2,8 +2,18 @@ $blue-100: #e5f5f9;
 $blue-300: #2c97ad;
 $blue-400: #009cc2;
 $blue-600: #006d87;
+$blue-700: #00596f;
 $blue-800: #003540;
 $blue: $blue-400;
+
+:root {
+  --blue800: #{$blue-800};
+  --blue700: #{$blue-700};
+  --blue600: #{$blue-600};
+  --blue400: #{$blue-400};
+  --blue300: #{$blue-300};
+  --blue100: #{$blue-100};
+}
 
 
 $white: #fff !default;

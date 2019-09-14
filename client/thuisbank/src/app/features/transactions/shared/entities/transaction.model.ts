@@ -1,3 +1,5 @@
+import {Category} from '../../../categories/shared/models/category.model';
+
 export interface TransactionQueryResult {
   transactions: Transaction[];
 }
@@ -12,15 +14,4 @@ export interface Transaction {
   isBankTransaction: boolean;
   isInflowForBudgeting: boolean;
   category: Category;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  categoryGroup: CategoryGroup;
-}
-
-export interface CategoryGroup {
-  id: number;
-  name: string;
 }

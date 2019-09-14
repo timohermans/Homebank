@@ -3,6 +3,8 @@ import { AppComponent } from './app.component';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng-mocks';
 import { RouterOutlet } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+jest.mock('@ngx-translate/core');
 
 class Page {
   public get routerOutlet(): RouterOutlet {
@@ -19,7 +21,8 @@ describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, MockComponent(RouterOutlet)]
+      declarations: [AppComponent, MockComponent(RouterOutlet)],
+      providers: [{ provide: TranslateService, useClass: TranslateService }]
     }).compileComponents();
   }));
 

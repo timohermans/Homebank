@@ -6,6 +6,10 @@
       "pre-commit": "npm run prettier:check"
     }
   },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": ["./jest-setup.ts"]
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -14,7 +18,8 @@
     "prettier": "prettier",
     "prettier:check": "prettier --check \"src/**/*.{ts,html}\"",
     "prettier:format": "prettier \"src/**/*.{ts,html}\" --write",
-    "test": "ng test",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "analyze": "ng build --prod --stats-json --extra-webpack-config webpack.extras.js && webpack-bundle-analyzer dist/thuisbank/stats-es2015.json"
@@ -57,14 +62,16 @@
     "@angular/cli": "~8.0.3",
     "@angular/compiler-cli": "~8.0.1",
     "@angular/language-service": "~8.0.1",
-    "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.134",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-marbles": "^0.6.0",
     "jasmine-spec-reporter": "~4.2.1",
+    "jest": "^24.9.0",
+    "jest-preset-angular": "^7.1.1",
     "karma": "~4.1.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",

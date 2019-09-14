@@ -36,8 +36,18 @@
           id="category"
           [placeholder]="'categoryPlaceholder' | translate"
         />
-        <div>
-          category-list
+        <div class="category__container">
+          <ul class="category__group-list">
+            <li *ngFor="let group of (categories$ | async)">
+              <div>{{group.groupName}}</div>
+              <ul class="category__list">
+                <li class="category__item" *ngFor="let category of group.categories" (click)="selectCategory(category)">
+                  {{category.name}}
+                </li>
+              </ul>
+
+            </li>
+          </ul>
         </div>
       </div>
     </form>

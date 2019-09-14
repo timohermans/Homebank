@@ -1,0 +1,22 @@
+.category__container {
+}
+
+.category__group-list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 5px;
+}
+
+.category__list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 15px;
+}
+
+.category__item {
+  &:hover {
+    background-color: var(--blue700);
+    color: var(--white);
+    cursor: pointer;
+  }
+}
