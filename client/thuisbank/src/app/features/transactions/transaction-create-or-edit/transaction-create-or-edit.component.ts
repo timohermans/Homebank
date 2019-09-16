@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CategoryService } from '../../categories/shared/services/category.service';
 import { Category } from '../../categories/shared/models/category.model';
@@ -9,6 +9,7 @@ import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
 import { TransactionService } from '../shared/services/transaction.service';
+import { TransactionUpdate } from '../shared/entities/transaction.model';
 
 @Component({
   selector: 'app-transaction-create-or-edit',
@@ -44,7 +45,8 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit {
     private categoryService: CategoryService,
     private transactionService: TransactionService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {}
@@ -63,6 +65,10 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit {
   }
 
   public update() {
-    throw new Error('Method not implemented.');
+    const updateValues = this.transactionForm.value as TransactionUpdate;
+    this.transactionService.update(updateValues).subscribe(() => {
+      this.modal.close();
+      this.router.navigate(['transactions']);
+    });
   }
 }

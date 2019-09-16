@@ -1,7 +1,11 @@
 import {Category} from '../../../categories/shared/models/category.model';
 
-export interface TransactionQueryResult {
+export interface TransactionCollectionQueryResult {
   transactions: Transaction[];
+}
+
+export interface TransactionQueryResult {
+  transaction: Transaction;
 }
 
 export interface Transaction {
@@ -14,4 +18,11 @@ export interface Transaction {
   isBankTransaction: boolean;
   isInflowForBudgeting: boolean;
   category: Category;
+}
+
+export interface TransactionUpdate {
+  id: string;
+  payee: string;
+  memo: string;
+  categoryId: string;
 }

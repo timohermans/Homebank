@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ApolloQueryResult } from 'apollo-client';
-import { Transaction, TransactionQueryResult } from '../entities/transaction.model';
+import {
+  Transaction,
+  TransactionCollectionQueryResult,
+  TransactionUpdate,
+  TransactionQueryResult
+} from '../entities/transaction.model';
 import { map, tap } from 'rxjs/operators';
 
 const TransactionsQuery = gql`
@@ -25,6 +30,20 @@ const TransactionsQuery = gql`
   }
 `;
 
+const TransactionForEditQuery = gql`
+  query FetchTransactionForEdit {
+    transaction(id: $transactionId) {
+      id
+      payee
+      memo
+      category {
+        id
+        name
+      }
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,11 +52,26 @@ export class TransactionService {
 
   public getTransactions(): Observable<Transaction[]> {
     return this.apollo
-      .watchQuery<TransactionQueryResult>({
+      .watchQuery<TransactionCollectionQueryResult>({
         query: TransactionsQuery
       })
       .valueChanges.pipe(
-        map((result: ApolloQueryResult<TransactionQueryResult>) => result.data.transactions)
+        map(
+          (result: ApolloQueryResult<TransactionCollectionQueryResult>) => result.data.transactions
+        )
+      );
+  }
+
+  public getForEditBy(id: string): Observable<Transaction> {
+    return this.apollo
+      .watchQuery<TransactionQueryResult>({
+        query: TransactionForEditQuery,
+        variables: {
+          transactionId: id
+        }
+      })
+      .valueChanges.pipe(
+        map((result: ApolloQueryResult<TransactionQueryResult>) => result.data.transaction)
       );
   }
 
@@ -49,7 +83,8 @@ export class TransactionService {
     }
   }
 
-  public update(transaction: TransactionUpdate): any {
+  public update(transaction: TransactionUpdate): Observable<any> {
     // TODO: implement
+    return of({});
   }
 }

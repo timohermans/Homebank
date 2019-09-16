@@ -2,25 +2,28 @@ import { TransactionCreateOrEditComponent } from './transaction-create-or-edit.c
 import { FormBuilder } from '@angular/forms';
 import { CategoryService } from '../../categories/shared/services/category.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { BehaviorSubject, of } from 'rxjs';
+import { Router, ActivatedRoute, ParamMap, convertToParamMap } from '@angular/router';
+import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
 import { Category } from '../../categories/shared/models/category.model';
 import { cold } from 'jest-marbles';
 import * as faker from 'faker';
 import { TransactionService } from '../shared/services/transaction.service';
+import { TransactionUpdate } from '../shared/entities/transaction.model';
 jest.mock('@ng-bootstrap/ng-bootstrap');
 jest.mock('../../categories/shared/services/category.service');
 jest.mock('../shared/services/transaction.service');
 jest.mock('@angular/router');
 
-fdescribe('TransactionCreateOrEditComponent', () => {
+describe('TransactionCreateOrEditComponent', () => {
   let categoriesStore: BehaviorSubject<Category[]>;
+  let transactionIdStore: ReplaySubject<ParamMap>;
   let formBuilder: FormBuilder;
   let transactionService: jest.Mocked<TransactionService>;
   let categoryService: jest.Mocked<CategoryService>;
   let modalService: jest.Mocked<NgbModal>;
   let modalRef: jest.Mocked<NgbModalRef>;
   let router: jest.Mocked<Router>;
+  let activeRoute: jest.Mocked<ActivatedRoute>;
   let component: TransactionCreateOrEditComponent;
 
   beforeEach(() => {
@@ -34,21 +37,27 @@ fdescribe('TransactionCreateOrEditComponent', () => {
 
     modalRef = new NgbModalRef(null, null, null, null) as jest.Mocked<NgbModalRef>;
     modalRef.result = new Promise(() => {});
+
     modalService = new NgbModal(null, null, null, null) as jest.Mocked<NgbModal>;
     modalService.open.mockReturnValue(modalRef);
 
     router = new Router(null, null, null, null, null, null, null, null) as jest.Mocked<Router>;
+
+    transactionIdStore = new ReplaySubject(1);
+    activeRoute = new ActivatedRoute() as jest.Mocked<ActivatedRoute>;
+    (activeRoute.paramMap as any) = transactionIdStore;
 
     component = new TransactionCreateOrEditComponent(
       formBuilder,
       categoryService,
       transactionService,
       modalService,
-      router
+      router,
+      activeRoute
     );
   });
 
-  describe('when loading the component', () => {
+  describe('Loading the component', () => {
     beforeEach(() => {
       component.ngAfterViewInit();
     });
@@ -62,7 +71,7 @@ fdescribe('TransactionCreateOrEditComponent', () => {
     });
   });
 
-  describe('when closing the modal', () => {
+  describe('Closing the modal', () => {
     beforeEach(() => {
       modalRef.result = Promise.resolve();
       component.ngAfterViewInit();
@@ -73,7 +82,7 @@ fdescribe('TransactionCreateOrEditComponent', () => {
     });
   });
 
-  describe('when receiving categories', () => {
+  describe('Receiving available categories', () => {
     const categories: Category[] = [
       { id: 1, name: 'cat 1', categoryGroup: { id: 1, name: 'group 1' } },
       { id: 2, name: 'cat 2', categoryGroup: { id: 1, name: 'group 1' } },
@@ -113,15 +122,28 @@ fdescribe('TransactionCreateOrEditComponent', () => {
     });
   });
 
+  describe('Editing an existing transaction', () => {
+    beforeEach(() => {
+      transactionIdStore.next(convertToParamMap({ id: 'abc-def-ghi' }));
+      transactionService.getForEditBy.mockReturnValue(
+        of({
+          // TODO: fill it up and test if the form is set
+        })
+      );
+    });
+  });
+
   describe('Assigning a category to a transaction', () => {
-    const transactionChanges = {
-      id: faker.random.number,
+    const transactionChanges: TransactionUpdate = {
+      id: faker.random.uuid(),
       memo: faker.random.words(10),
       payee: faker.random.words(2),
-      categoryId: faker.random.number
+      categoryId: faker.random.uuid()
     };
 
     beforeEach(() => {
+      component.ngAfterViewInit();
+      transactionService.update.mockReturnValue(of({}));
       component.transactionForm.setValue(transactionChanges);
       component.update();
     });
@@ -132,6 +154,10 @@ fdescribe('TransactionCreateOrEditComponent', () => {
 
     it('Closes the modal', () => {
       expect(component.modal.close).toHaveBeenCalled();
+    });
+
+    it('goes back to the transaction page', () => {
+      expect(router.navigate).toHaveBeenCalled();
     });
 
     // it('Shows a message', () => {

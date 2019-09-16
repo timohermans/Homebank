@@ -69,6 +69,7 @@
     "@types/lodash": "^4.14.134",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "faker": "^4.1.0",
     "jest": "^24.9.0",
     "jest-marbles": "^2.5.0",
     "jest-preset-angular": "^7.1.1",
