@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from '../shared/services/transaction.service';
+import { TransactionService } from '../../services/transaction.service';
 import { Observable } from 'rxjs';
-import { Transaction } from '../shared/entities/transaction.model';
+import { Transaction } from '../../entities/transaction.model';
 
 @Component({
   selector: 'app-transaction-overview',

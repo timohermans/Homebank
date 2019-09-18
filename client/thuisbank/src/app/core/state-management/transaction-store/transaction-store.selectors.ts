@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { State as TransactionState, transactionAdapter } from './transaction-store.state';
-import { Transaction } from 'src/app/features/transactions/shared/entities/transaction.model';
+import { Transaction } from 'src/app/features/transactions/entities/transaction.model';
 import { transactionFeatureKey } from './transaction-store.module';
 
 export const getError = (state: TransactionState): any => state.error;
@@ -14,7 +14,7 @@ export const selectAllTransactionItems: (
   state: object
 ) => Transaction[] = transactionAdapter.getSelectors(selectTransaction).selectAll;
 
-export const selectTransactionById = (id: number) =>
+export const selectTransactionById = (id: string) =>
   createSelector(
     this.selectAllTransactionItems,
     (allTransactions: Transaction[]) => {

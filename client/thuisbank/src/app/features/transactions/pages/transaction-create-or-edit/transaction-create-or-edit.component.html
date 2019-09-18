@@ -27,29 +27,10 @@
           [placeholder]="'memoPlaceholder' | translate"
         />
       </div>
-      <div class="form-group">
-        <label for="category" translate>category</label>
-        <input
-          type="text"
-          formControlName="category"
-          class="form-control"
-          id="category"
-          [placeholder]="'categoryPlaceholder' | translate"
-        />
-        <div class="category__container">
-          <ul class="category__group-list">
-            <li *ngFor="let group of (categories$ | async)">
-              <div>{{group.groupName}}</div>
-              <ul class="category__list">
-                <li class="category__item" *ngFor="let category of group.categories" (click)="selectCategory(category)">
-                  {{category.name}}
-                </li>
-              </ul>
-
-            </li>
-          </ul>
-        </div>
-      </div>
+      <app-form-category-selector
+        [categories]="categories$ | async"
+        formControlName="categoryId"
+      ></app-form-category-selector>
     </form>
   </div>
   <div class="modal-footer">

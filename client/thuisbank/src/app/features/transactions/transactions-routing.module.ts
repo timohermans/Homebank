@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TransactionOverviewComponent } from './transaction-overview/transaction-overview.component';
-import { TransactionCreateOrEditComponent } from './transaction-create-or-edit/transaction-create-or-edit.component';
+import { TransactionOverviewComponent } from './pages/transaction-overview/transaction-overview.component';
+import { TransactionCreateOrEditComponent } from './pages/transaction-create-or-edit/transaction-create-or-edit.component';
 
 const routes: Routes = [
   {

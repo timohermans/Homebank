@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { Transaction } from './features/transactions/shared/entities/transaction.model';
+import { Transaction } from './features/transactions/entities/transaction.model';
 import {
   ColumnType,
   TableActionEvent,
@@ -38,43 +38,7 @@ export class AppComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.setupFakeApi();
     this.setupTableData();
-  }
-
-  private setupFakeApi(): void {
-    for (let i = 0; i < 999; i++) {
-      this.transactions.push({
-        id: i + i * 1,
-        date: new Date(2019, 8, 2),
-        inFlow: 102.23,
-        outFlow: 0,
-        isBankTransaction: false,
-        isInflowForBudgeting: true,
-        memo: 'Mini salaris',
-        payee: 'Werk b.v.'
-      } as Transaction);
-      this.transactions.push({
-        id: i + i * 2,
-        date: new Date(2019, 8, 5),
-        inFlow: 0,
-        outFlow: 55.0,
-        isBankTransaction: false,
-        isInflowForBudgeting: false,
-        memo: 'Pintransactie 1',
-        payee: 'Lidl Sittard'
-      } as Transaction);
-      this.transactions.push({
-        id: i + i * 3,
-        date: new Date(2019, 8, 5),
-        inFlow: 50.4,
-        outFlow: 0,
-        isBankTransaction: false,
-        isInflowForBudgeting: false,
-        memo: 'Pintransactie 2',
-        payee: 'Jan Linders Sittards'
-      } as Transaction);
-    }
   }
 
   private setupTableData(): void {

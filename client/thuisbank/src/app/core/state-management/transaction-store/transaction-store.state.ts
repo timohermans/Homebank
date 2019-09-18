@@ -1,4 +1,4 @@
-import { Transaction } from 'src/app/features/transactions/shared/entities/transaction.model';
+import { Transaction } from 'src/app/features/transactions/entities/transaction.model';
 import { EntityAdapter, createEntityAdapter, EntityState } from '@ngrx/entity';
 
 export const transactionAdapter: EntityAdapter<Transaction> = createEntityAdapter<Transaction>({

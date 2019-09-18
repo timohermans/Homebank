@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Transaction } from 'src/app/features/transactions/shared/entities/transaction.model';
+import { Transaction } from 'src/app/features/transactions/entities/transaction.model';
 
 export enum ActionTypes {
   SET_ALL_TRANSACTIONS = '[Transaction Overview] Set all transactions'

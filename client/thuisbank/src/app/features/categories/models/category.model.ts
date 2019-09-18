@@ -3,12 +3,12 @@ export interface CategoryQueryResult {
 }
 
 export interface Category {
-  id: number;
+  id: string;
   name: string;
   categoryGroup: CategoryGroup;
 }
 
 export interface CategoryGroup {
-  id: number;
+  id: string;
   name: string;
 }

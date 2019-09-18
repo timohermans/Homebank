@@ -1,0 +1,15 @@
+<div class="form-group">
+  <input type="text" class="form-control category-select__search" [(ngModel)]="selectedCategoryDisplay" />
+</div>
+
+<div class="category-select__groups">
+  <div class="category-select__group" *ngFor="let group of categoriesPerGroup">
+    <div class="group__title">{{ group.groupName }}</div>
+
+    <ul>
+      <li class="group__category-item" *ngFor="let category of group.categories" (click)="selectCategory(category)">
+        {{ category.name }}
+      </li>
+    </ul>
+  </div>
+</div>

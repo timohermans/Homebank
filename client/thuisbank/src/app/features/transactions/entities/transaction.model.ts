@@ -1,4 +1,4 @@
-import {Category} from '../../../categories/shared/models/category.model';
+import {Category} from '../../categories/models/category.model';
 
 export interface TransactionCollectionQueryResult {
   transactions: Transaction[];
@@ -9,7 +9,7 @@ export interface TransactionQueryResult {
 }
 
 export interface Transaction {
-  id: number;
+  id: string;
   date: Date;
   payee: string;
   memo: string;

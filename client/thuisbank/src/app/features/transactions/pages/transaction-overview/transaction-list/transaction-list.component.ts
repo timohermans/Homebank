@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Transaction } from '../../shared/entities/transaction.model';
+import { Transaction } from '../../../entities/transaction.model';
 import {
   ColumnType,
   TableActionEvent,
   TableActionType
-} from '../../../../shared/components/table/table.model';
+} from '../../../../../shared/components/table/table.model';
 import { Router } from '@angular/router';
 
 @Component({
