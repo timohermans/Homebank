@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ImportFileModalComponent } from './import-file-modal/import-file-modal.component';
+import { ImportFileModalComponent } from '../../../components/import-file-modal/import-file-modal.component';
 
 @Component({
   selector: 'app-transaction-action-bar',
@@ -11,8 +11,4 @@ export class TransactionActionBarComponent implements OnInit {
   constructor(private modalService: NgbModal) {}
 
   ngOnInit() {}
-
-  public openImportModal() {
-    this.modalService.open(ImportFileModalComponent);
-  }
 }

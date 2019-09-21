@@ -1,16 +1,16 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
-import {CategoryService} from '../../../categories/services/category.service';
-import {Category} from '../../../categories/models/category.model';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { CategoryService } from '../../../categories/services/category.service';
+import { Category } from '../../../categories/models/category.model';
 import * as _ from 'lodash';
-import {filter, map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {Dictionary} from '@ngrx/entity';
-import {TransactionService} from '../../services/transaction.service';
-import {Transaction, TransactionUpdate} from '../../entities/transaction.model';
-import {untilDestroyed} from "ngx-take-until-destroy";
+import { filter, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Dictionary } from '@ngrx/entity';
+import { TransactionService } from '../../services/transaction.service';
+import { Transaction, TransactionUpdate } from '../../entities/transaction.model';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'app-transaction-create-or-edit',
@@ -18,7 +18,7 @@ import {untilDestroyed} from "ngx-take-until-destroy";
   styleUrls: ['./transaction-create-or-edit.component.scss']
 })
 export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('content', {static: false}) modalContent: any;
+  @ViewChild('content', { static: false }) modalContent: any;
 
   public modal: NgbModalRef;
 
@@ -38,8 +38,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     private modalService: NgbModal,
     private router: Router,
     private activeRoute: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.listenToIdChanges();
@@ -51,14 +50,15 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
         filter((paramMap: ParamMap) => paramMap.has('id')),
         mergeMap((paramMap: ParamMap) => this.transactionService.getForEditBy(paramMap.get('id'))),
         untilDestroyed(this)
-      ).subscribe((transaction: Transaction) => {
-      this.transactionForm.setValue({
-        id: transaction.id,
-        payee: transaction.payee,
-        memo: transaction.memo,
-        categoryId: transaction.category ? transaction.category.id : null
+      )
+      .subscribe((transaction: Transaction) => {
+        this.transactionForm.setValue({
+          id: transaction.id,
+          payee: transaction.payee,
+          memo: transaction.memo,
+          categoryId: transaction.category ? transaction.category.id : null
+        });
       });
-    })
   }
 
   ngAfterViewInit(): void {
@@ -68,16 +68,13 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     });
 
     this.modal.result
-      .then(result => {
-      }, reason => {
-      })
+      .then(result => {}, reason => {})
       .finally(() => {
         this.router.navigate(['transactions']);
       });
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   public update() {
     const updateValues = this.transactionForm.value as TransactionUpdate;

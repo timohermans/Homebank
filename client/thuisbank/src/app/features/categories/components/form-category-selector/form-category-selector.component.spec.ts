@@ -114,7 +114,8 @@ describe('FormCategorySelectorComponent', () => {
 
       beforeEach(() => {
         expectedOnChange.mockReset();
-        expectedCategory = expectedCategoriesPerGroup[expectedGroupIndex].categories[expectedCategoryIndex];
+        expectedCategory =
+          expectedCategoriesPerGroup[expectedGroupIndex].categories[expectedCategoryIndex];
         fixture.componentInstance.registerOnChange(expectedOnChange);
         categoryElement = page.getCategoryAt(expectedGroupIndex, expectedCategoryIndex);
         categoryElement.click();

@@ -2,33 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="634b07df-de5f-4ecc-9b0d-6482a1561e78" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/transaction-action-bar.component.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/entities/transaction.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/entities/transaction.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/services/transaction.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/services/transaction.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/shared/transaction.facade.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-list/transaction-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-overview.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transaction-overview/transaction-overview.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component-v2.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-create-or-edit/transaction-create-or-edit.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-create-or-edit/transaction-create-or-edit.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/file-item/file-item.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/file-item/file-item.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/file-item/file-item.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/file-item/file-item.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/file-item/file-item.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/import-file-modal.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/import-file-modal.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/import-file-modal.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/import-file-modal/import-file-modal.po.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/import-file-modal/import-file-modal.po.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/transaction-action-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/transaction-action-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/transaction-action-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-action-bar/transaction-action-bar.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transactions.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/transactions.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table-column/table-column.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table-column/table-column.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/components/table/table.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/api.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/utils/base-page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/shared/utils/base-page.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Core/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Core/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/schema.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/Version20190830133245.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/Version20190830133245.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laradock" beforeDir="false" afterPath="$PROJECT_DIR$/laradock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laradock/DOCUMENTATION/themes/hugo-material-docs/layouts/partials/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/laradock/DOCUMENTATION/themes/hugo-material-docs/layouts/partials/header.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,21 +54,12 @@
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="laradock" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="MySQL - default@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="laradock" type="feb32156:DbDataSourceImpl" />
+        <item name="MySQL - default@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="default: schema" type="76f4a085:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="laradock" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="default: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="transactions: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -212,25 +197,25 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="com.maddyhome.idea.vim.ui.VimEmulationConfigurable" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups\CreateCategoryGroup" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\laradock" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server" />
+      <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Application\UseCases\CategoryGroup" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Models" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Transactions" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core\Domain" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups\CreateCategoryGroup" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\laradock" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server" />
-      <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Application\UseCases\CategoryGroup" />
-      <recent name="C:\Users\timoh\source\repos\homebank-php\api\app\Core\Infrastructure\Doctrine\Mappings" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -255,7 +240,12 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand />
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@aed09477" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+          </expand>
           <select />
         </treeState>
       </serviceView>
@@ -281,6 +271,9 @@
       <workItem from="1567530804158" duration="700000" />
       <workItem from="1567531824458" duration="1688000" />
       <workItem from="1567536624696" duration="1426000" />
+      <workItem from="1569077458165" duration="1632000" />
+      <workItem from="1569079107995" duration="615000" />
+      <workItem from="1569089422980" duration="672000" />
     </task>
     <servers />
   </component>

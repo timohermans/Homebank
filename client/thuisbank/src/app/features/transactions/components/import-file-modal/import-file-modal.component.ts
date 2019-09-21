@@ -44,9 +44,9 @@ export class ImportFileModalComponent implements OnInit {
     this.preventBubblingBy(dropEvent);
   }
 
-  private processNew(files: FileList) {
+  public processNew(files: FileList | File[]) {
     for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
-      const file = files.item(fileIndex);
+      const file = files[fileIndex];
 
       if (file.type === 'application/vnd.ms-excel') {
         this.files.push(file);

@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    data-test-id="closeCross"
+    (click)="dismissModal()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!--  <div-->
+  <!--    class="box"-->
+  <!--    data-test-id="dropArea"-->
+  <!--    [class.is-dragover]="isFileOverArea"-->
+  <!--    (dragenter)="onFileOverArea($event)"-->
+  <!--    (dragover)="onFileOverArea($event)"-->
+  <!--    (dragend)="onFileLeavesArea($event)"-->
+  <!--    (dragleave)="onFileLeavesArea($event)"-->
+  <!--    (drop)="onFileDropped($event)"-->
+  <!--    (submit)="uploadFiles()"-->
+  <!--  >-->
+  <div class="file__container">
+    <input
+      class="file__upload"
+      type="file"
+      name="files[]"
+      id="file"
+      data-multiple-caption="{count} files selected"
+      multiple
+      (change)="processNew($event.target.files)"
+    />
+
+    <div class="file__list" data-test-id="fileList">
+      <app-file-item [file]="file" *ngFor="let file of files"></app-file-item>
+    </div>
+
+    <label for="file"
+      ><strong>Choose a file</strong
+      ><span *ngIf="isDragAndDropAvailable" class="box__dragndrop"> or drag it here</span>.</label
+    >
+    <button class="box__button" type="submit">Upload</button>
+  </div>
+  <!--    <div class="box__uploading">Uploading&hellip;</div>-->
+  <!--    <div class="box__success">Done!</div>-->
+  <!--    <div class="box__error">Error! <span></span>.</div>-->
+</div>
+<!--</div>-->
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark">
+    Close
+  </button>
+</div>
