@@ -29,6 +29,10 @@ export class PageUtils<T> {
     this.fixture.detectChanges();
   }
 
+  public buttonAt(css: string): HTMLButtonElement {
+    return this.elementAt<HTMLButtonElement>(css);
+  }
+
   public elementAt<ElementType>(css: string): ElementType {
     return this.fixture.nativeElement.querySelector(css);
   }
@@ -41,11 +45,19 @@ export class PageUtils<T> {
     return this.fixture.debugElement.query(By.css(css));
   }
 
-  public serviceOf(type: any): any {
-    return TestBed.get(type) as any;
+  public componentsAt(css: string): DebugElement[] {
+    return this.fixture.debugElement.queryAll(By.css(css));
   }
 
-  public serviceInstance<ST>(type: any): ST {
-    return TestBed.get(type) as ST;
+  // @ts-ignore
+  public serviceOf(type: any): jest.Mocked<any> {
+    // @ts-ignore
+    return TestBed.get(type) as jest.Mocked<any>;
+  }
+
+  // @ts-ignore
+  public serviceInstance<ST>(type: any): jest.Mocked<ST> {
+    // @ts-ignore
+    return TestBed.get(type) as jest.Mocked<ST>;
   }
 }

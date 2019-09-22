@@ -9,7 +9,6 @@ import { Transaction } from '../../entities/transaction.model';
   styleUrls: ['./transaction-overview.component.css']
 })
 export class TransactionOverviewComponent implements OnInit {
-  // TODO: create the loading indicator pipe from the feedly article
   public transactions$: Observable<Transaction[]> = this.transactionService.getTransactions();
 
   constructor(private transactionService: TransactionService) {}

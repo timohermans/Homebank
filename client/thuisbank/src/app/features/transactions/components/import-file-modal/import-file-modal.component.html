@@ -29,6 +29,7 @@
       name="files[]"
       id="file"
       data-multiple-caption="{count} files selected"
+      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
       multiple
       (change)="processNew($event.target.files)"
     />
@@ -37,11 +38,19 @@
       <app-file-item [file]="file" *ngFor="let file of files"></app-file-item>
     </div>
 
-    <label for="file"
-      ><strong>Choose a file</strong
-      ><span *ngIf="isDragAndDropAvailable" class="box__dragndrop"> or drag it here</span>.</label
-    >
-    <button class="box__button" type="submit">Upload</button>
+    <!--    <label for="file">-->
+    <!--      <strong>Choose a file</strong>-->
+    <!--      <span *ngIf="isDragAndDropAvailable" class="box__dragndrop"> or drag it here</span>.</label-->
+    <!--    >-->
+    <button class="file__submit" (click)="uploadFiles()" [disabled]="isUploadingFiles">
+      <span
+        *ngIf="isUploadingFiles"
+        class="file__loading-indicator spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      Upload
+    </button>
   </div>
   <!--    <div class="box__uploading">Uploading&hellip;</div>-->
   <!--    <div class="box__success">Done!</div>-->

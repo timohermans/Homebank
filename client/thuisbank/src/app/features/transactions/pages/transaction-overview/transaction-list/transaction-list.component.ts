@@ -7,6 +7,8 @@ import {
 } from '../../../../../shared/components/table/table.model';
 import { Router } from '@angular/router';
 
+// FEATURE: Show a loading indicator when transactions are loading
+
 @Component({
   selector: 'app-transaction-list',
   templateUrl: './transaction-list.component.html',

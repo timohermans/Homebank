@@ -10,6 +10,8 @@ import {
   TransactionQueryResult
 } from '../entities/transaction.model';
 import { map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 const TransactionsQuery = gql`
   query FetchTransactions {
@@ -48,7 +50,7 @@ const TransactionForEditQuery = gql`
   providedIn: 'root'
 })
 export class TransactionService {
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo, private httpClient: HttpClient) {}
 
   public getTransactions(): Observable<Transaction[]> {
     return this.apollo
@@ -75,16 +77,29 @@ export class TransactionService {
       );
   }
 
-  public uploadFrom(files: File[]): void {
+  public uploadFiles(files: File[] = []): Observable<any> {
     const formData = new FormData();
-    for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
-      const file = files[fileIndex];
-      formData.append(`file-${fileIndex}`, file);
+
+    if (files.length > 1) {
+      alert(`I'm sorry but I only support one file at a time right now :(`);
     }
+
+    const uploadUrlSegment = 'graphql?mutation=mutation+UploadTransaction{uploadTransactions}';
+    formData.append('file', files[0]);
+    formData.append(
+      'operations',
+      JSON.stringify({
+        query: 'mutation ($file: Upload!) { uploadTransactions(file: $file) }',
+        variables: { file: null }
+      })
+    );
+    formData.append('map', JSON.stringify({ file: ['variables.file'] }));
+
+    return this.httpClient.post(`${environment.apiUrl}/${uploadUrlSegment}`, formData);
   }
 
   public update(transaction: TransactionUpdate): Observable<any> {
-    // TODO: implement
+    // FEATURE: Update a transaction (assign category)
     return of({});
   }
 }

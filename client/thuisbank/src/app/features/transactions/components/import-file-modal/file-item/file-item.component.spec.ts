@@ -1,24 +1,26 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { configureTestSuite } from 'ng-bullet';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PageUtils } from '../../../../../shared/utils/base-page';
 import { FileItemComponent } from './file-item.component';
 
 describe('FileItemComponent', () => {
-  let component: FileItemComponent;
   let fixture: ComponentFixture<FileItemComponent>;
+  let page: PageUtils<FileItemComponent>;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       declarations: [FileItemComponent]
-    }).compileComponents();
-  }));
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FileItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    page = new PageUtils<FileItemComponent>(fixture);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('Displays the file name', () => {
+    page.class.file = new File([], 'test.csv');
+    page.updateView();
+    expect(page.elementAt<HTMLDivElement>('.file__name').textContent).toBe('test.csv');
   });
 });
