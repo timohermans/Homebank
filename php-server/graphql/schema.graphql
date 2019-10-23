@@ -11,6 +11,7 @@ type Query {
     categoryGroups: [CategoryGroup!]!
     categories: [Category!]!
     transactions: [Transaction!]!
+    transaction(id: String!): Transaction!
 }
 
 type Mutation {

@@ -29,7 +29,6 @@ const initialCategories: Category[] = [
 
 describe('TransactionCreateOrEditComponent', () => {
   let categoriesStore: BehaviorSubject<Category[]>;
-  let paramMapStore: BehaviorSubject<ParamMap>;
   let formBuilder: FormBuilder;
   let transactionService: jest.Mocked<TransactionService>;
   let categoryService: jest.Mocked<CategoryService>;
@@ -46,7 +45,7 @@ describe('TransactionCreateOrEditComponent', () => {
     categoryService = new CategoryService(null) as jest.Mocked<CategoryService>;
     categoryService.getAll.mockReturnValue(categoriesStore);
 
-    transactionService = new TransactionService(null) as jest.Mocked<TransactionService>;
+    transactionService = new TransactionService(null, null) as jest.Mocked<TransactionService>;
 
     modalRef = new NgbModalRef(null, null, null, null) as jest.Mocked<NgbModalRef>;
     modalRef.result = new Promise(() => {});

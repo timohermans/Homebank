@@ -3,6 +3,9 @@ import { TransactionService } from '../../services/transaction.service';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../entities/transaction.model';
 
+// FEATURE: Make sure duplicate records aren't uploaded again
+// FEATURE: Try to match and align the previously selected cateogries when uploaded
+
 @Component({
   selector: 'app-transaction-overview',
   templateUrl: './transaction-overview.component.html',
@@ -13,5 +16,7 @@ export class TransactionOverviewComponent implements OnInit {
 
   constructor(private transactionService: TransactionService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('hey ho');
+  }
 }

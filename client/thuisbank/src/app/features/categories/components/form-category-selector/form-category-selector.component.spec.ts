@@ -2,10 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormCategorySelectorComponent } from './form-category-selector.component';
 import { Category } from '../../models/category.model';
-import { BasePage } from '../../../../shared/utils/base-page';
+import { BasePage, PageUtils } from '../../../../shared/utils/base-page';
 import { configureTestSuite } from 'ng-bullet';
 import { CategoriesPerGroup } from '../../models/categories-per-group.model';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgControl } from '@angular/forms';
 
 class Page extends BasePage<FormCategorySelectorComponent> {
   public get categoryGroups(): HTMLDivElement[] {
@@ -38,17 +38,20 @@ class Page extends BasePage<FormCategorySelectorComponent> {
 describe('FormCategorySelectorComponent', () => {
   let fixture: ComponentFixture<FormCategorySelectorComponent>;
   let page: Page;
+  let pageUtil: PageUtils<FormCategorySelectorComponent>;
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
-      declarations: [FormCategorySelectorComponent]
+      declarations: [FormCategorySelectorComponent],
+      providers: [{ provide: NgControl, useClass: NgControl }]
     });
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FormCategorySelectorComponent);
     page = new Page(fixture);
+    pageUtil = new PageUtils<FormCategorySelectorComponent>(fixture);
   });
 
   describe('Receiving available categories', () => {
@@ -95,11 +98,11 @@ describe('FormCategorySelectorComponent', () => {
         (categoriesPerGroup: CategoriesPerGroup, index: number) => {
           expect(page.categoryGroups[index].textContent).toBe(categoriesPerGroup.groupName);
 
-          const categories = page.getCategoriesAtGroupIndex(index);
-          expect(categories.length).toBe(categoriesPerGroup.categories.length);
+          const _categories = page.getCategoriesAtGroupIndex(index);
+          expect(_categories.length).toBe(categoriesPerGroup.categories.length);
 
-          categoriesPerGroup.categories.forEach((category: Category, index: number) => {
-            expect(categories[index].textContent).toContain(category.name);
+          categoriesPerGroup.categories.forEach((category: Category, _index: number) => {
+            expect(_categories[_index].textContent).toContain(category.name);
           });
         }
       );
@@ -122,7 +125,7 @@ describe('FormCategorySelectorComponent', () => {
         fixture.detectChanges();
       });
 
-      it("Let's the parent know that a category is selected", () => {
+      it(`Let's the parent know that a category is selected`, () => {
         expect(expectedOnChange).toHaveBeenCalled();
       });
 

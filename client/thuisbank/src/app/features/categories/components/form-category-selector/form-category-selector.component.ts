@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Category } from '../../models/category.model';
 import * as _ from 'lodash';
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { CategoriesPerGroup } from '../../models/categories-per-group.model';
 
 @Component({
@@ -16,6 +16,8 @@ export class FormCategorySelectorComponent implements ControlValueAccessor, OnIn
       categoriesPerGroup,
       (group, key) => new CategoriesPerGroup(key, group)
     );
+
+    this.updateSelectedCategory();
   }
 
   private onChange: (value: string) => void;
@@ -24,22 +26,33 @@ export class FormCategorySelectorComponent implements ControlValueAccessor, OnIn
   public selectedCategoryId: string;
   public selectedCategoryDisplay: string;
 
-  constructor() {}
+  constructor(private controlDir: NgControl) {
+    controlDir.valueAccessor = this;
+  }
 
   ngOnInit() {}
 
-  writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
+  writeValue(obj: string): void {
+    this.selectedCategoryId = obj;
+    this.updateSelectedCategory();
   }
+
+  private updateSelectedCategory(): void {
+    if (_.isEmpty(this.categories)) {
+      return;
+    }
+
+    const selectedCategory = _.find(
+      this.categories,
+      (category: Category) => category.id === this.selectedCategoryId
+    );
+  }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-  registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
-  }
+  registerOnTouched(fn: any): void {}
+  setDisabledState?(isDisabled: boolean): void {}
 
   public selectCategory(category: Category) {
     this.selectedCategoryId = category.id;

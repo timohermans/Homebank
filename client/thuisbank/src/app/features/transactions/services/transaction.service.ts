@@ -33,7 +33,7 @@ const TransactionsQuery = gql`
 `;
 
 const TransactionForEditQuery = gql`
-  query FetchTransactionForEdit {
+  query FetchTransactionForEdit($transactionId: String!) {
     transaction(id: $transactionId) {
       id
       payee
