@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="634b07df-de5f-4ecc-9b0d-6482a1561e78" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/GraphQL/Queries/Transaction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/categories/components/form-category-selector/form-category-selector.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-create-or-edit/transaction-create-or-edit.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-create-or-edit/transaction-create-or-edit.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-overview.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-overview.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/services/transaction.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/services/transaction.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/environments/environment.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/thuisbank/cypress/fixtures/CSV_A_20191027_123137.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/thuisbank/cypress/integration/transactions/transactions_spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/transaction-upload-action/transaction-upload-action.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/transaction-upload-action/transaction-upload-action.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-list/transaction-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-list/transaction-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/Version20190804112219.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/Version20190804112219.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/schema.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Features/Transactions/Transaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Features/Transactions/Transaction.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Features/Transactions/UploadFromFile/UploadFromFileUseCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Features/Transactions/UploadFromFile/UploadFromFileUseCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laradock" beforeDir="false" afterPath="$PROJECT_DIR$/laradock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,16 +46,24 @@
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - default@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="laradock root" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="MySQL - default@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MySQL - default@localhost [2]" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MySQL - default@localhost [2]" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - default@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="MySQL - default@localhost [2]" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="default: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
@@ -193,25 +203,25 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/GraphQL/Queries" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../server/Homebank.Api/Domain/Entities/Transaction.cs" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="com.maddyhome.idea.vim.ui.VimEmulationConfigurable" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Models" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Transactions" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core\Domain" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups" />
-      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/GraphQL/Queries" />
       <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups\CreateCategoryGroup" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server\laradock" />
       <recent name="C:\Users\timoh\workspace\Homebank\php-server" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Models" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Transactions" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core\Domain" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\CategoryGroups" />
+      <recent name="C:\Users\timoh\workspace\Homebank\php-server\app\Core" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -236,7 +246,17 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand />
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7e8d41dd" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7e8d41dd" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@76c5e92f" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+          </expand>
           <select />
         </treeState>
       </serviceView>
@@ -268,6 +288,9 @@
       <workItem from="1569131858394" duration="2543000" />
       <workItem from="1569171156573" duration="962000" />
       <workItem from="1569257432840" duration="2434000" />
+      <workItem from="1572102160342" duration="2694000" />
+      <workItem from="1572175646828" duration="8000000" />
+      <workItem from="1572289310958" duration="5253000" />
     </task>
     <servers />
   </component>
