@@ -51,6 +51,10 @@ class UploadFromFileUseCase implements UploadFromFileUseCaseInterface
         $records = $this->getRecordsFrom($request);
 
         $transactionsParsed = $this->createTransactionsFrom($records);
+        $existingTransactions = $this->getExistingTransactions($transactionsParsed);
+        $transactionsToInsert = $this->getTransactionsToInsertFrom($transactionsParsed, $existingTransactions);
+        dd($transactionsToInsert);
+
         $this->saveTransactions($transactionsParsed);
 
         return (string)count($transactionsParsed);
@@ -101,6 +105,60 @@ class UploadFromFileUseCase implements UploadFromFileUseCaseInterface
         return $transactionsParsed;
     }
 
+    /**
+     * @param $transactionsParsed Transaction[]
+     * @return Transaction[]
+     */
+    private function getExistingTransactions($transactionsParsed): array
+    {
+        $datesOfTransaction = array_map(function ($transaction) {
+            return $transaction->getDate();
+        }, $transactionsParsed);
+
+        $minDate = min($datesOfTransaction);
+        $maxDate = max($datesOfTransaction);
+
+        return $this->entityManager->createQuery("
+            select t
+            from App\Features\Transactions\Transaction t
+            where t.date > :minDate and t.date < :maxDate
+        ")
+            ->setParameter('minDate', $minDate)
+            ->setParameter('maxDate', $maxDate)
+            ->getResult();
+    }
+
+    /**
+     * @param $transactionsParsed Transaction[]
+     * @param $existingTransactions Transaction[]
+     * @return Transaction[]
+     */
+    private function getTransactionsToInsertFrom($transactionsParsed, $existingTransactions)
+    {
+        $transactionsToSave = [];
+
+        // todo: somehow the equal is wrong..has to do with conversion from db
+
+        foreach ($transactionsParsed as $parsedTransaction) {
+            $foundTransaction = null;
+
+            foreach ($existingTransactions as $existingTransaction) {
+                if ($parsedTransaction->isEqual($existingTransaction)) {
+                    dump('uh?');
+                    $foundTransaction = $existingTransaction;
+                    continue;
+                }
+            }
+
+            if (!isset($foundTransaction)) {
+                dump('adding');
+                $transactionsToSave[] = $parsedTransaction;
+            }
+        }
+
+        return $transactionsToSave;
+    }
+
     private function saveTransactions(array $transactions): void
     {
         foreach ($transactions as $transaction) {
@@ -109,4 +167,5 @@ class UploadFromFileUseCase implements UploadFromFileUseCaseInterface
 
         $this->entityManager->flush();
     }
+
 }

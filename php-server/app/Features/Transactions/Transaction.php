@@ -75,4 +75,64 @@ class Transaction
         $this->isInflowForBudgeting = false;
         $this->category = $category;
     }
+
+    /**
+     * @return DateTime
+     */
+    public function getDate(): DateTime
+    {
+        return $this->date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPayee(): string
+    {
+        return $this->payee;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMemo(): string
+    {
+        return $this->memo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOutflow(): string
+    {
+        return $this->outflow;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInflow(): string
+    {
+        return $this->inflow;
+    }
+
+    /**
+     * @param $t2 Transaction
+     * @return bool
+     */
+    public function isEqual($t2): bool
+    {
+        dump(isset($t2) &&
+//            $this->date === $t2->getDate() &&
+            $this->payee === $t2->getPayee() &&
+            $this->memo === $t2->getMemo() &&
+            $this->inflow === $t2->getInflow() &&
+            $this->outflow === $t2->getOutflow());
+        return isset($t2) &&
+//            $this->date === $t2->getDate() &&
+            $this->payee === $t2->getPayee() &&
+            $this->memo === $t2->getMemo() &&
+            $this->inflow === $t2->getInflow() &&
+            $this->outflow === $t2->getOutflow();
+    }
 }
