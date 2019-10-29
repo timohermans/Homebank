@@ -32,7 +32,6 @@ namespace Homebank.Api.UseCases.Transactions
                 Guard.AgainstNull(transaction, nameof(Transaction));
 
                 var category = await _context.Categories
-                    .Include(categoryInDb => categoryInDb.CategoryGroup)
                     .FirstOrDefaultAsync(transactionInDb => transactionInDb.Id == request.CategoryId, cancellationToken: cancellationToken);
 
                 Guard.AgainstNull(category, nameof(request.CategoryId));

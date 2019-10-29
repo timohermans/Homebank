@@ -38,16 +38,7 @@ namespace Homebank.Api.UseCases.Categories
                     throw new ArgumentException("Category already exists", nameof(request.CategoryName));
                 }
 
-                var categoryGroup = await _context.CategoryGroups.FirstOrDefaultAsync(
-                    groupInDb => groupInDb.Name.Equals(request.CategoryGroupName, StringComparison.OrdinalIgnoreCase),
-                    cancellationToken: cancellationToken);
-
-                if (categoryGroup == null)
-                {
-                    categoryGroup = new CategoryGroup(request.CategoryGroupName);
-                }
-
-                category = new Category(request.CategoryName, categoryGroup);
+                category = new Category(request.CategoryName);
 
                 await _context.Categories.AddAsync(category, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);

@@ -5,7 +5,6 @@ namespace Homebank.Api.Infrastructure
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<CategoryGroup> CategoryGroups { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Budget> Budgets { get; set; }

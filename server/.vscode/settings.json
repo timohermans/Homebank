@@ -13,5 +13,16 @@
     "statusBarItem.hoverBackground": "#3399ff",
     "statusBar.foreground": "#e7e7e7"
   },
-  "peacock.color": "#007fff"
+  "peacock.color": "#007fff",
+  "sqltools.connections": [
+    {
+      "database": "default",
+      "dialect": "PostgreSQL",
+      "name": "localhost",
+      "password": "secret",
+      "port": 5432,
+      "server": "localhost",
+      "username": "default"
+    }
+  ]
 }

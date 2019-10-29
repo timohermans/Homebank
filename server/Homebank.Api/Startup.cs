@@ -29,7 +29,7 @@ namespace Homebank.Api
             services.ConfigureModelStateValidation();
             services.ConfigureCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.SetupSwagger();
         }
 
@@ -49,7 +49,7 @@ namespace Homebank.Api
             app.UseCors(MyAllowSpecificOrigins);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
-            {                
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Homebank API");
             });
             app.UseHttpsRedirection();

@@ -57,8 +57,6 @@ namespace Homebank.Api.UseCases.Budgets
                         Activity = budget.Activity.GetValueOrDefault(),
                         Available = budget.Available.GetValueOrDefault(),
                         Budgeted = budget.Budgeted,
-                        CategoryGroupId = budget.Category.CategoryGroup.Id,
-                        CategoryGroupName = budget.Category.CategoryGroup.Name,
                         CategoryId = budget.Category.Id,
                         CategoryName = budget.Category.Name,
                         MonthForBudget = budget.MonthForBudget
@@ -95,7 +93,7 @@ namespace Homebank.Api.UseCases.Budgets
             public async Task<IEnumerable<Transaction>> GetTransactionsUncategorizedBy(DateTime month)
             {
                 return await _context.Transactions
-                        .Include(transaction => transaction.Category.CategoryGroup)
+                        .Include(transaction => transaction.Category)
                         .OrderByDescending(transaction => transaction.Date)
                         .Where(transaction => transaction.Date.Year == month.Year && transaction.Date.Month == month.Month
                             && transaction.Category == null)
@@ -106,7 +104,6 @@ namespace Homebank.Api.UseCases.Budgets
             {
                 var categories = await _context.Categories
                    .Include(category => category.Transactions)
-                    .Include(category => category.CategoryGroup)
                     .Where(category => category.Budgets == null
                                         || !category.Budgets.Any(budget => budget.MonthForBudget.IsSameMonthAndYear(month)))
                     .ToListAsync();
@@ -120,7 +117,6 @@ namespace Homebank.Api.UseCases.Budgets
             {
                 var budgets = await _context.Budgets
                         .Include(budget => budget.Category.Transactions)
-                        .Include(budget => budget.Category.CategoryGroup)
                         .AsNoTracking()
                         .Where(budget => budget.MonthForBudget.Year == month.Year && budget.MonthForBudget.Month == month.Month)
                         .ToListAsync();
@@ -128,7 +124,7 @@ namespace Homebank.Api.UseCases.Budgets
                 budgets.ForEach(budget => budget.Category?.EnsureTransactionsAreFrom(month));
 
                 return budgets;
-            }            
+            }
 
             private IEnumerable<Budget> CreateTemporaryBudgetsFor(IEnumerable<Category> categoriesWithoutBudget, DateTime month)
             {
@@ -140,7 +136,7 @@ namespace Homebank.Api.UseCases.Budgets
 
             private Budget CreateTemporaryUncategorizedBudgetFrom(IEnumerable<Transaction> transactionsWithoutCategory, DateTime month)
             {
-                var category = new Category("Uncategorized", new CategoryGroup("Uncategorized"), transactionsWithoutCategory);
+                var category = new Category("Uncategorized", transactionsWithoutCategory);
                 return new Budget(month, 0M, category);
             }
         }

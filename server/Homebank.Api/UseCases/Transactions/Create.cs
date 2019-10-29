@@ -42,7 +42,7 @@ namespace Homebank.Api.UseCases.Transactions
                 Category category = null;
                 if (request.Category != null)
                 {
-                    category = new Category(request.Category.CategoryName, new CategoryGroup(request.Category.CategoryGroupName));
+                    category = new Category(request.Category.CategoryName);
                 }
 
                 var transaction = new Transaction(

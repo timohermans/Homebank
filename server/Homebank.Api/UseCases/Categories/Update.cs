@@ -22,13 +22,11 @@ namespace Homebank.Api.UseCases.Categories
         {
             public int Id { get; private set; }
             public string Name { get; private set; }
-            public string GroupName { get; private set; }
 
-            public Response(int id, string name, string groupName)
+            public Response(int id, string name)
             {
                 Id = id;
                 Name = name ?? throw new ArgumentNullException(nameof(name));
-                GroupName = groupName ?? throw new ArgumentNullException(nameof(groupName));
             }
         }
 
@@ -44,28 +42,15 @@ namespace Homebank.Api.UseCases.Categories
             public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
             {
                 var category = await _context.Categories
-                    .Include(categoryInDb => categoryInDb.CategoryGroup)
                     .FirstOrDefaultAsync(categoryInDb => categoryInDb.Id == request.Id,
                         cancellationToken: cancellationToken);
 
                 Guard.AgainstNull(category, nameof(Category));
 
                 category.ChangeNameWith(request.Name);
-                await ChangeGroup(category, request.CategoryGroupId);
 
                 await _context.SaveChangesAsync(cancellationToken);
-                return new Response(category.Id, category.Name, category.CategoryGroup.Name);
-            }
-
-            private async Task ChangeGroup(Category category, int newGroupId)
-            {
-                if (category.CategoryGroup.Id == newGroupId)
-                {
-                    return;
-                }
-
-                var groupToAssignTo = await _context.CategoryGroups.FindAsync(newGroupId);
-                category.AssignTo(groupToAssignTo);
+                return new Response(category.Id, category.Name);
             }
         }
     }

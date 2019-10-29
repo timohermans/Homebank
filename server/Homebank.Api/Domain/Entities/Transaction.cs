@@ -18,7 +18,7 @@ namespace Homebank.Api.Domain.Entities
             get {
                 if (IsInflowForBudgeting)
                 {
-                    return new Category("To be budgeted", new CategoryGroup("Inflow"));
+                    return new Category("To be budgeted");
                 }
 
                 return _category;

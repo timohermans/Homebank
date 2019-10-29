@@ -1,0 +1,16 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./postgresql/conf:/etc/postgresql/
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=default
+      - POSTGRES_USER=default
+      - POSTGRES_PASSWORD=secret
+volumes:
+  postgres:
+    driver: local

@@ -8,7 +8,6 @@ namespace Homebank.Api.Domain.Entities
     public class Category : BaseEntity
     {
         public string Name { get; private set; }
-        public CategoryGroup CategoryGroup { get; private set; }
 
         private HashSet<Transaction> _transactions;
         public IEnumerable<Transaction> Transactions => _transactions?.ToList();
@@ -20,14 +19,13 @@ namespace Homebank.Api.Domain.Entities
         {
         }
 
-        public Category(string name, CategoryGroup categoryGroup)
+        public Category(string name)
         {
             ChangeNameWith(name);
-            CategoryGroup = categoryGroup ?? throw new ArgumentNullException(nameof(categoryGroup));
             _budgets = new HashSet<Budget>();
         }
 
-        public Category(string name, CategoryGroup categoryGroup, IEnumerable<Transaction> transactionsToAssignTo) : this(name, categoryGroup)
+        public Category(string name, IEnumerable<Transaction> transactionsToAssignTo) : this(name)
         {
             foreach (var transaction in transactionsToAssignTo)
             {
@@ -47,16 +45,9 @@ namespace Homebank.Api.Domain.Entities
             Name = name;
         }
 
-        public void AssignTo(CategoryGroup groupToAssignTo)
-        {
-            Guard.AgainstNull(groupToAssignTo, nameof(CategoryGroup));
-            Guard.AgainstDefaultValue(groupToAssignTo.Id, "Category group must be created before assigning the category to it");
-            CategoryGroup = groupToAssignTo;
-        }
-
         public void EnsureTransactionsAreFrom(DateTime month)
         {
-            // EF Core doesn't support filtering on includes. 
+            // EF Core doesn't support filtering on includes.
             _transactions = new HashSet<Transaction>(
                 _transactions
                 .Where(transaction => transaction.Date.Year == month.Year && transaction.Date.Month == month.Month)

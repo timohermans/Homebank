@@ -40,7 +40,6 @@ namespace Homebank.Api.UseCases.Transactions
                 var transactionsFromFile = _csvConverter.Convert(request.TransactionFile).ToList();
                 var transactionsFromDatabase = await _context.Transactions
                     .Include(transaction => transaction.Category)
-                        .ThenInclude(category => category.CategoryGroup)
                     .ToListAsync(cancellationToken: cancellationToken);
                 var transactionsToCreate = new List<Transaction>();
                 var transactionsThatAlreadyExist = new List<Transaction>();

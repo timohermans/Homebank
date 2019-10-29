@@ -23,7 +23,7 @@ namespace Homebank.Api.UseCases.Budgets
 
         public class Response
         {
-            public int Id { get; set; }      
+            public int Id { get; set; }
         }
 
         public class UseCase : IRequestHandler<Command, Response>
@@ -50,7 +50,7 @@ namespace Homebank.Api.UseCases.Budgets
             {
                 var budget = await _context.Budgets
                                 .Include(budgetInDb => budgetInDb.Category.Transactions)
-                                .Include(budgetInDb => budgetInDb.Category.CategoryGroup)
+                                .Include(budgetInDb => budgetInDb.Category)
                                 .FirstOrDefaultAsync(budgetInDb => budgetInDb.MonthForBudget.IsSameMonthAndYear(request.Month)
                                             && budgetInDb.Category.Id == request.CategoryId);
 
@@ -72,7 +72,6 @@ namespace Homebank.Api.UseCases.Budgets
             {
                 var categoryFound = await _context.Categories
                   .Include(category => category.Transactions)
-                  .Include(category => category.CategoryGroup)
                   .Where(category => category.Budgets == null
                                       || !category.Budgets.Any(budget => budget.MonthForBudget.IsSameMonthAndYear(month)))
                   .FirstOrDefaultAsync(category => category.Id == categoryId);
@@ -82,5 +81,5 @@ namespace Homebank.Api.UseCases.Budgets
                 return categoryFound;
             }
         }
-    }   
+    }
 }

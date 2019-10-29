@@ -21,7 +21,7 @@ namespace Homebank.Api.UseCases.Transactions
                 return new Response
                 {
                     Id = transaction.Id,
-                    Category = transaction.Category != null ? $"{transaction?.Category.CategoryGroup.Name} - {transaction?.Category.Name}" : "Uncategorized",
+                    Category = transaction.Category != null ? transaction?.Category.Name : "Uncategorized",
                     Date = transaction.Date,
                     Inflow = transaction.Inflow,
                     OutFlow = transaction.OutFlow,
