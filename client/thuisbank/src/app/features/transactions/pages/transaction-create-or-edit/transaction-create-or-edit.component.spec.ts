@@ -18,11 +18,13 @@ const initialCategories: Category[] = [
   {
     id: faker.random.uuid(),
     name: faker.random.word(),
+    iconName: faker.random.word(),
     categoryGroup: { id: faker.random.uuid(), name: faker.random.word() }
   },
   {
     id: faker.random.uuid(),
     name: faker.random.word(),
+    iconName: faker.random.word(),
     categoryGroup: { id: faker.random.uuid(), name: faker.random.word() }
   }
 ];
@@ -45,7 +47,7 @@ describe('TransactionCreateOrEditComponent', () => {
     categoryService = new CategoryService(null) as jest.Mocked<CategoryService>;
     categoryService.getAll.mockReturnValue(categoriesStore);
 
-    transactionService = new TransactionService(null, null) as jest.Mocked<TransactionService>;
+    transactionService = new TransactionService(null) as jest.Mocked<TransactionService>;
 
     modalRef = new NgbModalRef(null, null, null, null) as jest.Mocked<NgbModalRef>;
     modalRef.result = new Promise(() => {});
@@ -71,36 +73,32 @@ describe('TransactionCreateOrEditComponent', () => {
     );
   });
 
-  describe('Loading the component', () => {
-    beforeEach(() => {
-      component.ngAfterViewInit();
-    });
+  it('Opens the page as a modal', () => {
+    component.ngAfterViewInit();
 
-    it('Opens the page as a modal', () => {
-      expect(modalService.open).toHaveBeenCalled();
-    });
-
-    it('Does not close the modal immediately', () => {
-      expect(router.navigate).toHaveBeenCalledTimes(0);
-    });
-
-    it('Retrieves categories for assigning', () => {
-      expect(component.categories$).toBeObservable(cold('a', { a: initialCategories }));
-    });
+    expect(router.navigate).toHaveBeenCalledTimes(0);
+    expect(modalService.open).toHaveBeenCalled();
   });
 
-  describe('Closing the modal', () => {
-    beforeEach(() => {
-      modalRef.result = Promise.resolve();
-      component.ngAfterViewInit();
-    });
+  it('Retrieves categories automatically', () => {
+    expect(component.categories$).toBeObservable(cold('a', { a: initialCategories }));
+  });
 
-    it('Navigates back to the transaction overview page', () => {
+  it('Navigates back to the overview when modal closes', done => {
+    modalRef.result = Promise.resolve();
+    component.modal.result.finally(() => {
       expect(router.navigate).toHaveBeenCalled();
+      done();
     });
+    component.ngAfterViewInit();
+
+    // setTimeout(() => {
+    //   expect(router.navigate).toHaveBeenCalled();
+    //   done();
+    // }, 0);
   });
 
-  describe('Editing an existing transaction', () => {
+  it('Loads the form with existing transaction on init', () => {
     const existingTransaction = {
       id: 'abc-def-ghi',
       payee: faker.random.words(2),
@@ -108,19 +106,30 @@ describe('TransactionCreateOrEditComponent', () => {
       category: null
     } as Transaction;
 
-    beforeEach(() => {
-      transactionService.getForEditBy.mockReturnValue(of(existingTransaction));
-      component.ngOnInit();
-    });
+    transactionService.getForEditBy.mockReturnValue(of(existingTransaction));
+    component.ngOnInit();
 
-    it('Sets up the form with existing values', () => {
-      expect(component.transactionForm.value).toEqual({
-        id: existingTransaction.id,
-        payee: existingTransaction.payee,
-        memo: existingTransaction.memo,
-        categoryId: null
-      });
+    expect(component.transactionForm.value).toEqual({
+      id: existingTransaction.id,
+      payee: existingTransaction.payee,
+      memo: existingTransaction.memo,
+      categoryId: null
     });
+  });
+
+  it('Updates the selected category ID when selecting a category', () => {
+    const categoryToSelect =
+      initialCategories[faker.random.number({ max: initialCategories.length - 1 })];
+    component.selectCategory(categoryToSelect.id);
+
+    expect(component.transactionForm.get('categoryId').value).toBe(categoryToSelect.id);
+    expect(component.selectedCategoryId).toBe(categoryToSelect.id);
+  });
+
+  it('Determines whether there are any categories yet', () => {
+    categoriesStore.next([]);
+    const expectedHasNoCategories = cold('a', { a: true });
+    expect(component.hasNoCategories$).toBeObservable(expectedHasNoCategories);
   });
 
   describe('Assigning a category to a transaction', () => {
@@ -149,5 +158,37 @@ describe('TransactionCreateOrEditComponent', () => {
     it('Goes back to the transaction page', () => {
       expect(router.navigate).toHaveBeenCalled();
     });
+  });
+
+  it('Can toggle between creating a category and assigning one', () => {
+    component.toggleCreateCategory();
+    expect(component.isCategoryCreationVisible).toBeTruthy();
+  });
+
+  it('Cannot update a transaction when creating a category', () => {
+    component.isCategoryCreationVisible = true;
+    component.transactionForm.get('categoryId').setValue(faker.random.number());
+    transactionService.update.mockReturnValue(of({}));
+
+    component.update();
+
+    expect(transactionService.update).toHaveBeenCalledTimes(0);
+  });
+
+  it('Assigns the category automatically when its created', () => {
+    const categoryCreated = {
+      id: faker.random.uuid(),
+      iconName: faker.random.word(),
+      name: faker.random.word()
+    } as Category;
+    const newCategories$ = cold('a', [categoryCreated]);
+
+    component.isCategoryCreationVisible = true;
+    component.handleCategoryCreated(categoryCreated);
+
+    expect(component.isCategoryCreationVisible).toBeFalsy();
+    expect(component.selectedCategoryId).toBe(categoryCreated.id);
+    expect(component.categories$).toBeObservable(newCategories$);
+    expect(component.transactionForm.get('categoryId').value).toBe(categoryCreated.id);
   });
 });

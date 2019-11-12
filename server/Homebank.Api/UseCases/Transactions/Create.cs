@@ -12,7 +12,7 @@ namespace Homebank.Api.UseCases.Transactions
 
     public static class Create
     {
-        public class Command : IRequest<Get.Response>
+        public class Command : IRequest<GetAll.Response>
         {
             [Required]
             public DateTime Date { get; set; }
@@ -26,7 +26,7 @@ namespace Homebank.Api.UseCases.Transactions
             public Categories.Create.Command Category { get; set; }
         }
 
-        public class UseCase : IRequestHandler<Command, Get.Response>
+        public class UseCase : IRequestHandler<Command, GetAll.Response>
         {
             private readonly AppDbContext _context;
 
@@ -35,7 +35,7 @@ namespace Homebank.Api.UseCases.Transactions
                 _context = context;
             }
 
-            public async Task<Get.Response> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<GetAll.Response> Handle(Command request, CancellationToken cancellationToken)
             {
                 Guard.AgainstNull(request, nameof(request));
 
@@ -58,7 +58,7 @@ namespace Homebank.Api.UseCases.Transactions
                 await _context.Transactions.AddAsync(transaction, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return Get.Response.MapFrom(transaction);
+                return GetAll.Response.MapFrom(transaction);
             }
         }
 

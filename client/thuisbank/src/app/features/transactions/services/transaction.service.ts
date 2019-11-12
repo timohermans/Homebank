@@ -26,6 +26,7 @@ export class TransactionService {
     return this.httpClient.post(`${environment.apiUrl}/transaction/upload`, formData);
   }
 
+  // CRITICAL: Update a transaction (assign category)
   public update(transaction: TransactionUpdate): Observable<any> {
     return this.httpClient.put(`${environment.apiUrl}/transaction`, transaction);
   }

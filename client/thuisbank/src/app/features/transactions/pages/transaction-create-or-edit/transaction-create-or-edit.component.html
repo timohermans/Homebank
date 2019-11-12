@@ -6,32 +6,22 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="transactionForm">
-      <div class="form-group">
-        <label for="payee" translate>payee</label>
-        <input
-          type="text"
-          formControlName="payee"
-          class="form-control"
-          id="payee"
-          [placeholder]="'payeePlaceholder' | translate"
-        />
-      </div>
-      <div class="form-group">
-        <label for="memo" translate>memo</label>
-        <input
-          type="text"
-          formControlName="memo"
-          class="form-control"
-          id="memo"
-          [placeholder]="'memoPlaceholder' | translate"
-        />
-      </div>
-      <app-form-category-selector
-        [categories]="categories$ | async"
-        formControlName="categoryId"
-      ></app-form-category-selector>
-    </form>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-link">
+          <fa-icon class="mr-1" icon="plus"></fa-icon>
+          <span translate>transactionCreateOrEdit.createNewCategoryButton</span>
+        </button>
+    </div>
+
+    <div class="category__list py-4">
+      <span *ngIf="hasNoCategories$ | async" translate>
+          transactionCreateOrEdit.noCategoriesMessage
+      </span>
+      <app-category-list-item
+        [name]="category.name"
+        *ngFor="let category of categories$ | async"
+      ></app-category-list-item>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">

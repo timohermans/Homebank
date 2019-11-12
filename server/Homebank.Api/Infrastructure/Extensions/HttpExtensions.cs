@@ -1,30 +1,41 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace Homebank.Api.Infrastructure.Extensions
 {
-    public static class HttpExtensions
+  public static class HttpExtensions
+  {
+    private static readonly JsonSerializer Serializer = new JsonSerializer
     {
-        private static readonly JsonSerializer Serializer = new JsonSerializer
-        {
-            NullValueHandling = NullValueHandling.Ignore
-        };
+      NullValueHandling = NullValueHandling.Ignore
+    };
 
-        public static void WriteJson<T>(this HttpResponse response, T obj, string contentType = null)
-        {
-            response.ContentType = contentType ?? "application/json";
-            using (var writer = new HttpResponseStreamWriter(response.Body, Encoding.UTF8))
-            {
-                using (var jsonWriter = new JsonTextWriter(writer))
-                {
-                    jsonWriter.CloseOutput = false;
-                    jsonWriter.AutoCompleteOnClose = false;
+    public static IActionResult ToHttpResponse(this object entity)
+    {
+      if (entity == null)
+      {
+        return new NotFoundObjectResult(entity);
+      }
 
-                    Serializer.Serialize(jsonWriter, obj);
-                }
-            }
-        }
+      return new OkObjectResult(entity);
     }
+
+    public static void WriteJson<T>(this HttpResponse response, T obj, string contentType = null)
+    {
+      response.ContentType = contentType ?? "application/json";
+      using (var writer = new HttpResponseStreamWriter(response.Body, Encoding.UTF8))
+      {
+        using (var jsonWriter = new JsonTextWriter(writer))
+        {
+          jsonWriter.CloseOutput = false;
+          jsonWriter.AutoCompleteOnClose = false;
+
+          Serializer.Serialize(jsonWriter, obj);
+        }
+      }
+    }
+  }
 }

@@ -5,7 +5,8 @@ export interface CategoryQueryResult {
 export interface Category {
   id: string;
   name: string;
-  categoryGroup: CategoryGroup;
+  iconName: string;
+  categoryGroup?: CategoryGroup;
 }
 
 export interface CategoryGroup {

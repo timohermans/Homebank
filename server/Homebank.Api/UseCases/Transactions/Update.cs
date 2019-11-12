@@ -10,14 +10,14 @@ namespace Homebank.Api.UseCases.Transactions
 {
     public class Update
     {
-        public class Command : IRequest<Get.Response>
+        public class Command : IRequest<GetAll.Response>
         {
             public int Id { get; set; }
             public int CategoryId { get; set; }
             public bool IsInflowForBudgeting { get; set; }
         }
 
-        public class UseCase : IRequestHandler<Command, Get.Response>
+        public class UseCase : IRequestHandler<Command, GetAll.Response>
         {
             private readonly AppDbContext _context;
 
@@ -26,7 +26,7 @@ namespace Homebank.Api.UseCases.Transactions
                 _context = context;
             }
 
-            public async Task<Get.Response> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<GetAll.Response> Handle(Command request, CancellationToken cancellationToken)
             {
                 var transaction = await _context.Transactions.FindAsync(request.Id);
                 Guard.AgainstNull(transaction, nameof(Transaction));
@@ -41,7 +41,7 @@ namespace Homebank.Api.UseCases.Transactions
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return Get.Response.MapFrom(transaction);
+                return GetAll.Response.MapFrom(transaction);
             }
         }
     }

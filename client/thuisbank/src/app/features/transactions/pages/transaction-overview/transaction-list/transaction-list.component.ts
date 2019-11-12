@@ -8,8 +8,6 @@ import {
 import { Router } from '@angular/router';
 
 // FEATURE: Show a loading indicator when transactions are loading
-// FEATURE: Add the category column
-
 @Component({
   selector: 'app-transaction-list',
   templateUrl: './transaction-list.component.html',

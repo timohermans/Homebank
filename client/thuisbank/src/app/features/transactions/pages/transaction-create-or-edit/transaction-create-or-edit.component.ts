@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { CategoryService } from '../../../categories/services/category.service';
 import { Category } from '../../../categories/models/category.model';
 import * as _ from 'lodash';
-import { filter, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap, takeUntil, tap, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
 import { TransactionService } from '../../services/transaction.service';
@@ -21,8 +21,12 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
   @ViewChild('content', { static: false }) modalContent: any;
 
   public modal: NgbModalRef;
+  public isCategoryCreationVisible: boolean;
 
-  public categories$: Observable<Category[]> = this.categoryService.getAll();
+  public categories$: Observable<Category[]> = this.categoryService.getAll().pipe(shareReplay(1));
+  public hasNoCategories$ = this.categories$.pipe(
+    map((categories: Category[]) => categories.length === 0)
+  );
 
   public transactionForm = this.formBuilder.group({
     id: [null],
@@ -30,6 +34,10 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     memo: [null],
     categoryId: []
   });
+
+  public get selectedCategoryId(): string {
+    return this.transactionForm.get('categoryId').value;
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,11 +84,28 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
 
   ngOnDestroy(): void {}
 
-  public update() {
+  public update(): void {
+    if (this.isCategoryCreationVisible) {
+      return;
+    }
+
     const updateValues = this.transactionForm.value as TransactionUpdate;
     this.transactionService.update(updateValues).subscribe(() => {
       this.modal.close();
       this.router.navigate(['transactions']);
     });
   }
+
+  public selectCategory(id: string): void {
+    this.transactionForm.get('categoryId').setValue(id);
+  }
+
+  public toggleCreateCategory() {
+    this.isCategoryCreationVisible = !this.isCategoryCreationVisible;
+  }
+
+  public handleCategoryCreated(categoryCreated: Category) {
+
+  }
+
 }

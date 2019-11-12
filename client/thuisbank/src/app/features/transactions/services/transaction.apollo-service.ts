@@ -99,7 +99,6 @@ export class TransactionService {
   }
 
   public update(transaction: TransactionUpdate): Observable<any> {
-    // FEATURE: Update a transaction (assign category)
     return of({});
   }
 }

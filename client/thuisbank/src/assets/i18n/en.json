@@ -5,6 +5,11 @@
     "payee": "Payee",
     "memo": "Memo",
     "inflow": "In flow",
-    "outflow": "Out flow"
+    "outflow": "Out flow",
+    "category": "Category"
+  },
+  "transactionCreateOrEdit": {
+    "createNewCategoryButton": "Create new category",
+    "noCategoriesMessage": "You haven't created any categories yet. Add one first :)."
   }
 }
