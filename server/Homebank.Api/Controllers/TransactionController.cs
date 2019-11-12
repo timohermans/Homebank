@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Homebank.Api.Controllers
 {
+    // FEATURE: Document the api and show sexy shit with swagger
     [Route("api/[controller]")]
     [ApiController]
     public class TransactionController : ControllerBase

@@ -7,12 +7,13 @@ namespace Homebank.Api.UseCases.Transactions
     {
         public class Response
         {
+            // IMPROVEMENT: make identifiers string
             public int Id { get; private set; }
             public DateTime Date { get; private set; }
             public string Payee { get; private set; }
             public string Category { get; private set; }
             public string Memo { get; private set; }
-            public decimal OutFlow { get; private set; }
+            public decimal Outflow { get; private set; }
             public decimal Inflow { get; private set; }
             public bool IsBankTransaction { get; private set; }
 
@@ -24,7 +25,7 @@ namespace Homebank.Api.UseCases.Transactions
                     Category = transaction.Category != null ? transaction?.Category.Name : "Uncategorized",
                     Date = transaction.Date,
                     Inflow = transaction.Inflow,
-                    OutFlow = transaction.OutFlow,
+                    Outflow = transaction.OutFlow,
                     IsBankTransaction = transaction.IsBankTransaction,
                     Memo = transaction.Memo,
                     Payee = transaction.Payee

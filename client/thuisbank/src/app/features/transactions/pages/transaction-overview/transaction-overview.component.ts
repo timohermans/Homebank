@@ -17,6 +17,5 @@ export class TransactionOverviewComponent implements OnInit {
   constructor(private transactionService: TransactionService) {}
 
   ngOnInit() {
-    console.log('hey ho');
   }
 }
