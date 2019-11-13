@@ -84,18 +84,13 @@ describe('TransactionCreateOrEditComponent', () => {
     expect(component.categories$).toBeObservable(cold('a', { a: initialCategories }));
   });
 
-  it('Navigates back to the overview when modal closes', done => {
+  it('Navigates back to the overview when modal closes', () => {
     modalRef.result = Promise.resolve();
-    component.modal.result.finally(() => {
-      expect(router.navigate).toHaveBeenCalled();
-      done();
-    });
     component.ngAfterViewInit();
 
-    // setTimeout(() => {
-    //   expect(router.navigate).toHaveBeenCalled();
-    //   done();
-    // }, 0);
+    setTimeout(() => {
+      expect(router.navigate).toHaveBeenCalled();
+    }, 0);
   });
 
   it('Loads the form with existing transaction on init', () => {
