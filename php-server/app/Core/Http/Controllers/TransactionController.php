@@ -2,24 +2,25 @@
 
 namespace App\Core\Http\Controllers;
 
-use App\Core\Domain\Entities\Transaction;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
+// use App\Core\Domain\Entities\Transaction;
+// use Doctrine\Common\Collections\ArrayCollection;
+// use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    protected $em;
-    protected $transactionRepo;
+    // protected $em;
+    // protected $transactionRepo;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct()
     {
-        $this->em = $em;
-        $this->transactionRepo = $em->getRepository(Transaction::class);
+        // $this->em = $em;
+        // $this->transactionRepo = $em->getRepository(Transaction::class);
     }
 
-    public function index(Request $requestInput): iterable
+    public function index(Request $requestInput): string
     {
-        return $this->transactionRepo->findAll();
+        return 'hello';
+        // return $this->transactionRepo->findAll();
     }
 }

@@ -1,0 +1,15 @@
+{
+  "editor.fontFamily": "'Dank Mono', Consolas, 'Courier New', monospace",
+  "sqltools.connections": [
+    {
+      "database": "default",
+      "dialect": "MySQL",
+      "name": "docker",
+      "password": "secret",
+      "port": 3306,
+      "server": "localhost",
+      "username": "default"
+    }
+],
+"terminal.integrated.fontFamily": "'Fira Code'"
+}
