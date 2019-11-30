@@ -23,7 +23,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
   public modal: NgbModalRef;
   public isCategoryCreationVisible: boolean;
 
-  public categories$: Observable<Category[]> = this.categoryService.getAll().pipe(shareReplay(1));
+  public categories$: Observable<Category[]> = this.categoryService.categories$;
   public hasNoCategories$ = this.categories$.pipe(
     map((categories: Category[]) => categories.length === 0)
   );
@@ -49,6 +49,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
   ) {}
 
   ngOnInit() {
+    this.categoryService.loadCategories();
     this.listenToIdChanges();
   }
 
@@ -105,7 +106,8 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
   }
 
   public handleCategoryCreated(categoryCreated: Category) {
-
+    this.isCategoryCreationVisible = false;
+    this.selectCategory(categoryCreated.id);
   }
 
 }

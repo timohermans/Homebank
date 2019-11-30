@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormCategorySelectorComponent } from './components/form-category-selector/form-category-selector.component';
 import {FormsModule} from "@angular/forms";
+import { CategoryCreateComponent } from './components/category-create/category-create.component';
 
-const sharedComponents = [FormCategorySelectorComponent];
+const sharedComponents = [CategoryCreateComponent];
 
 @NgModule({
   declarations: [...sharedComponents],

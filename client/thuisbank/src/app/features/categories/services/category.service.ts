@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-import { map, tap } from 'rxjs/operators';
-import { ApolloQueryResult } from 'apollo-client';
-import { Category, CategoryQueryResult } from '../models/category.model';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Category } from '../models/category.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,9 +8,23 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CategoryService {
+  private categoryStore = new BehaviorSubject<Category[]>([]);
+
+  public get categories$(): Observable<Category[]> {
+    return this.categoryStore.asObservable();
+  }
+
   constructor(private httpClient: HttpClient) {}
 
-  public getAll(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(`${environment.apiUrl}/category`);
+  public loadCategories(): void {
+    this.httpClient
+      .get<Category[]>(`${environment.apiUrl}/category`)
+      .subscribe((categories: Category[]) => {
+        this.categoryStore.next(categories);
+      });
+  }
+
+  public create(category: Category): Observable<any> {
+    return this.httpClient.post(`${environment.apiUrl}/category`, category);
   }
 }

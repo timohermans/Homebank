@@ -6,22 +6,29 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-link">
+    <app-category-create
+      *ngIf="isCategoryCreationVisible"
+      (categoryCreate)="handleCategoryCreated($event)"
+    ></app-category-create>
+
+    <ng-container *ngIf="!isCategoryCreationVisible">
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-link" (click)="toggleCreateCategory($event)">
           <fa-icon class="mr-1" icon="plus"></fa-icon>
           <span translate>transactionCreateOrEdit.createNewCategoryButton</span>
         </button>
-    </div>
+      </div>
 
-    <div class="category__list py-4">
-      <span *ngIf="hasNoCategories$ | async" translate>
+      <div class="category__list py-4">
+        <span *ngIf="hasNoCategories$ | async" translate>
           transactionCreateOrEdit.noCategoriesMessage
-      </span>
-      <app-category-list-item
-        [name]="category.name"
-        *ngFor="let category of categories$ | async"
-      ></app-category-list-item>
-    </div>
+        </span>
+        <app-category-list-item
+          [name]="category.name"
+          *ngFor="let category of categories$ | async"
+        ></app-category-list-item>
+      </div>
+    </ng-container>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">

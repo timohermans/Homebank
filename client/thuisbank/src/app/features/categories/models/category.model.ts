@@ -1,12 +1,17 @@
+import { FormGroup } from '@angular/forms';
+
 export interface CategoryQueryResult {
   categories: Category[];
 }
 
-export interface Category {
-  id: string;
-  name: string;
-  iconName: string;
-  categoryGroup?: CategoryGroup;
+export class Category {
+  public id: string;
+
+  constructor(public name: string, public iconName: string) {}
+
+  public static fromForm(form: FormGroup): Category {
+    throw new Error('not implemented yet');
+  }
 }
 
 export interface CategoryGroup {

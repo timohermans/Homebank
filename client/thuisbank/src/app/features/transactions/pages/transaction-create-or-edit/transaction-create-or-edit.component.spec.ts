@@ -19,14 +19,14 @@ const initialCategories: Category[] = [
     id: faker.random.uuid(),
     name: faker.random.word(),
     iconName: faker.random.word(),
-    categoryGroup: { id: faker.random.uuid(), name: faker.random.word() }
+    categoryGroup: { id: faker.random.uuid(), name: faker.random.word() },
   },
   {
     id: faker.random.uuid(),
     name: faker.random.word(),
     iconName: faker.random.word(),
-    categoryGroup: { id: faker.random.uuid(), name: faker.random.word() }
-  }
+    categoryGroup: { id: faker.random.uuid(), name: faker.random.word() },
+  },
 ];
 
 describe('TransactionCreateOrEditComponent', () => {
@@ -45,7 +45,7 @@ describe('TransactionCreateOrEditComponent', () => {
 
     categoriesStore = new BehaviorSubject<Category[]>(initialCategories);
     categoryService = new CategoryService(null) as jest.Mocked<CategoryService>;
-    categoryService.getAll.mockReturnValue(categoriesStore);
+    Object.defineProperty(categoryService, 'categories$', { get: () => categoriesStore });
 
     transactionService = new TransactionService(null) as jest.Mocked<TransactionService>;
 
@@ -56,11 +56,11 @@ describe('TransactionCreateOrEditComponent', () => {
     modalService.open.mockReturnValue(modalRef);
 
     router = {
-      navigate: jest.fn()
+      navigate: jest.fn(),
     };
 
     activeRoute = {
-      paramMap: of(convertToParamMap({ id: 'abc-def-ghi' }))
+      paramMap: of(convertToParamMap({ id: 'abc-def-ghi' })),
     };
 
     component = new TransactionCreateOrEditComponent(
@@ -81,6 +81,8 @@ describe('TransactionCreateOrEditComponent', () => {
   });
 
   it('Retrieves categories automatically', () => {
+    component.ngOnInit();
+    expect(categoryService.loadCategories).toHaveBeenCalled();
     expect(component.categories$).toBeObservable(cold('a', { a: initialCategories }));
   });
 
@@ -98,7 +100,7 @@ describe('TransactionCreateOrEditComponent', () => {
       id: 'abc-def-ghi',
       payee: faker.random.words(2),
       memo: faker.random.words(5),
-      category: null
+      category: null,
     } as Transaction;
 
     transactionService.getForEditBy.mockReturnValue(of(existingTransaction));
@@ -108,7 +110,7 @@ describe('TransactionCreateOrEditComponent', () => {
       id: existingTransaction.id,
       payee: existingTransaction.payee,
       memo: existingTransaction.memo,
-      categoryId: null
+      categoryId: null,
     });
   });
 
@@ -132,7 +134,7 @@ describe('TransactionCreateOrEditComponent', () => {
       id: faker.random.uuid(),
       memo: faker.random.words(10),
       payee: faker.random.words(2),
-      categoryId: faker.random.uuid()
+      categoryId: faker.random.uuid(),
     };
 
     beforeEach(() => {
@@ -174,16 +176,14 @@ describe('TransactionCreateOrEditComponent', () => {
     const categoryCreated = {
       id: faker.random.uuid(),
       iconName: faker.random.word(),
-      name: faker.random.word()
+      name: faker.random.word(),
     } as Category;
-    const newCategories$ = cold('a', [categoryCreated]);
 
     component.isCategoryCreationVisible = true;
     component.handleCategoryCreated(categoryCreated);
 
     expect(component.isCategoryCreationVisible).toBeFalsy();
     expect(component.selectedCategoryId).toBe(categoryCreated.id);
-    expect(component.categories$).toBeObservable(newCategories$);
     expect(component.transactionForm.get('categoryId').value).toBe(categoryCreated.id);
   });
 });
