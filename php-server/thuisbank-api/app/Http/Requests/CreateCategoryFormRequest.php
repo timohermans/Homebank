@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Jobs\Transactions\Upload\UploadCommand;
+use App\Jobs\Categories\Create\CreateCommand;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UploadTransactionCommand extends FormRequest implements CommandInterface
+class CreateCategoryFormRequest extends FormRequest implements CommandInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,17 +25,13 @@ class UploadTransactionCommand extends FormRequest implements CommandInterface
     public function rules()
     {
         return [
-            'file' => 'required'
+            'name' => 'required|string',
+            'iconName' => 'required|string'
         ];
     }
 
-    /**
-     * @return UploadTransactionCommand
-     */
-    public function getDto(): UploadCommand
+    function getDto()
     {
-        $file = $this->files->get('file');
-
-        return new UploadCommand($file);
+        return new CreateCommand($this->request->all());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Categories;
+namespace App\Jobs\Categories\Get;
 
 use App\Entities\Category;
 use App\Repositories\CategoryRepositoryInterface;
@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Doctrine\ORM\EntityManager;
 
-class Get implements ShouldQueue
+class GetJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -21,7 +21,7 @@ class Get implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param $id
      */
     public function __construct($id)
     {
@@ -31,11 +31,11 @@ class Get implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param TransactionRepositoryInterface $repository
+     * @param CategoryRepositoryInterface $repository
      *
-     * @return void
+     * @return Category
      */
-    public function handle($repository)
+    public function handle(CategoryRepositoryInterface $repository)
     {
         return $repository->find($this->id);
     }

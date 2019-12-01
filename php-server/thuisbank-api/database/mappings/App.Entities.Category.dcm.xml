@@ -9,6 +9,7 @@
             <generator strategy="UUID"/>
         </id>
 
-        <field name="name" column="name" type="string" unique="true"/>
+        <field name="name" column="name" type="string" unique="true" nullable="false"/>
+        <field name="iconName" column="iconName" type="string" nullable="false"/>
     </entity>
 </doctrine-mapping>

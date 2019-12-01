@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Transactions\Upload;
 
-use App\Dto\UploadTransactionDto;
+use App\Entities\Transaction;
 use Assert\Assertion;
+use Doctrine\ORM\EntityManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use LaravelDoctrine\ORM\Facades\EntityManager;
+use League\Csv\Reader;
 use NumberFormatter;
 
-class UploadTransactions implements ShouldQueue
+class UploadJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -26,48 +27,49 @@ class UploadTransactions implements ShouldQueue
     private $positiveAmountCharacter = '+';
     /** @var EntityManager */
     private $entityManager;
+    /** @var UploadedFile */
+    private $file;
 
 
     /**
      * Create a new job instance.
      *
-     * @param UploadTransactionDto $request
-     *
-     * @return void
+     * @param UploadCommand $dto
      */
-    public function __construct(UploadTransactionDto $request)
+    public function __construct(UploadCommand $dto)
     {
-        $this->request = $request;
+        $this->file = $dto->getFile();
         $this->numberFormatter = NumberFormatter::create('nl_NL', NumberFormatter::DECIMAL);
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param EntityManager $entityManager
+     * @return int
+     * @throws \Assert\AssertionFailedException
      */
-    public function handle(EntityManager $entityManager)
+    public function handle($entityManager)
     {
         $this->entityManager = $entityManager;
 
-        Assertion::notNull($this->request['file']);
+        Assertion::notNull($this->file);
 
-        $records = $this->getRecordsFrom($this->request);
+        $records = $this->getRecordsFrom($this->file);
 
         $transactionsParsed = $this->createTransactionsFrom($records);
         $existingTransactions = $this->getExistingTransactions($transactionsParsed);
         $transactionsToInsert = $this->getTransactionsToInsertFrom($transactionsParsed, $existingTransactions);
 
-        $this->saveTransactions($transactionsParsed);
+        $this->saveTransactions($transactionsToInsert);
 
-        return (string) count($transactionsParsed);
+        return count($transactionsToInsert);
     }
 
-    private function getRecordsFrom($request)
+    /**
+     * @param UploadedFile $file
+     * @return mixed
+     */
+    private function getRecordsFrom($file)
     {
-        /** @var File $file */
-        $file = $request['file'];
-
         $content = $file->openFile();
         $csv = Reader::createFromFileObject($content);
 
@@ -147,14 +149,12 @@ class UploadTransactions implements ShouldQueue
 
             foreach ($existingTransactions as $existingTransaction) {
                 if ($parsedTransaction->isEqual($existingTransaction)) {
-                    dump('uh?');
                     $foundTransaction = $existingTransaction;
                     continue;
                 }
             }
 
             if (!isset($foundTransaction)) {
-                dump('adding');
                 $transactionsToSave[] = $parsedTransaction;
             }
         }

@@ -119,14 +119,8 @@ class Transaction
      */
     public function isEqual($t2): bool
     {
-        dump(isset($t2) &&
-//            $this->date === $t2->getDate() &&
-            $this->payee === $t2->getPayee() &&
-            $this->memo === $t2->getMemo() &&
-            $this->inflow === $t2->getInflow() &&
-            $this->outflow === $t2->getOutflow());
         return isset($t2) &&
-//            $this->date === $t2->getDate() &&
+            $this->date == $t2->getDate() &&
             $this->payee === $t2->getPayee() &&
             $this->memo === $t2->getMemo() &&
             $this->inflow === $t2->getInflow() &&

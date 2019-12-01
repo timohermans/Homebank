@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Dto\Categories;
+namespace App\Jobs\Categories\Get;
 
-class GetDto
+class GetRequest
 {
     /** @var string */
     private $id;

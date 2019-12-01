@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Dto\UploadTransactionDto;
+use App\Jobs\Transactions\Upload\UploadCommand;
 use App\Http\Requests\UploadTransactionCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Dto;
+namespace App\Jobs\Transactions\Upload;
 
 use Illuminate\Http\UploadedFile;
 
-class UploadTransactionDto
+class UploadCommand
 {
     /** @var UploadedFile  */
     private $file;
 
+    /**
+     * UploadTransactionDto constructor.
+     * @param UploadedFile $file
+     */
     public function __construct($file) {
         $this->file = $file;
     }

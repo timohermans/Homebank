@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Jobs\UploadTransactions;
+use App\Infrastructure\JobAdapterInterface;
+use App\Jobs\Transactions\Upload\UploadResponse;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
 class TransactionControllerTest extends TestCase
@@ -16,14 +16,15 @@ class TransactionControllerTest extends TestCase
      */
     public function testUploadFileForTransactions()
     {
-        Bus::fake();
+        $this->mock(JobAdapterInterface::class, function ($mock) {
+            $mock->shouldReceive('dispatchNow')->andReturns(new UploadResponse(10, 2));
+        });
 
         $file = UploadedFile::fake()->create('super.csv');
 
-        $response = $this->post('/api/transaction/upload', ['file' => $file]);
-
-        Bus::assertDispatched(UploadTransactions::class);
+        $response = $this->post( '/api/transaction/upload', ['file' => $file]);
 
         $response->assertStatus(200);
+        $response->assertJson(['amountInserted' => 10, 'amountDuplicate' => 2]);
     }
 }

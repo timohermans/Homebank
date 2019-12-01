@@ -2,12 +2,9 @@
 
 namespace Tests\Unit\Categories\Jobs;
 
-use App\Jobs\Categories\Get;
+use App\Entities\Category;
+use App\Jobs\Categories\Get\GetJob;
 use App\Repositories\CategoryRepositoryInterface;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Mockery;
 use Tests\TestCase;
 
@@ -21,8 +18,11 @@ class GetTest extends TestCase
     public function testExample()
     {
         $repo = Mockery::mock(CategoryRepositoryInterface::class);
-        $job = new Get('c_1');
-        $job->handle($repo);
-        $this->assertTrue(true);
+        $repo->shouldReceive('find')->with('c_1')->andReturns(new Category('hallo', 'derp'));
+
+        $job = new GetJob('c_1');
+        $category = $job->handle($repo);
+
+        $this->assertEquals($category->getName(), 'hallo');
     }
 }

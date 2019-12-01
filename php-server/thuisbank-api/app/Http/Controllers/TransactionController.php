@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Dto\UploadTransactionDto;
 use App\Http\Requests\UploadTransactionCommand;
-use App\Jobs\UploadTransactions;
+use App\Infrastructure\JobAdapterInterface;
+use App\Jobs\Transactions\Upload\UploadCommand;
+use App\Jobs\Transactions\Upload\UploadJob;
+use App\Jobs\Transactions\Upload\UploadResponse;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    /** @var UploadTransactions */
+    /** @var UploadJob */
     private $job;
+    /** @var JobAdapterInterface */
+    private $dispatcher;
 
-    public function __construct()
-    { }
+    public function __construct(JobAdapterInterface $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
 
     /**
      * Display a listing of the resource.
@@ -28,7 +35,7 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -39,20 +46,21 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \ReflectionException
      */
     public function upload(UploadTransactionCommand $request)
     {
-        $validated = $request->validated();
+        $result = $this->dispatcher->dispatchNow(UploadJob::class, $request->getDto());
 
-        return UploadTransactions::dispatchNow($request->getDto());
+        return response()->json($result->asArray());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -63,8 +71,8 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -75,7 +83,7 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

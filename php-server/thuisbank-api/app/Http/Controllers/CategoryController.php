@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\Categories\Get;
+use App\Http\Requests\CreateCategoryFormRequest;
+use App\Jobs\Categories\Create\CreateJob;
+use App\Jobs\Categories\Get\GetJob;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -23,9 +25,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryFormRequest $request)
     {
-        //
+        return response()->json(CreateJob::dispatchNow($request->getDto()));
     }
 
     /**
@@ -36,7 +38,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Get::dispatchNow($id);
+        $category = GetJob::dispatchNow($id);
         return response()->json($category->asArray());
     }
 

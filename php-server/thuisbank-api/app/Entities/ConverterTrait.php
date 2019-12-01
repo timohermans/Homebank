@@ -17,7 +17,7 @@ trait ConverterTrait
     {
         $result = array();
 
-        $clazz = new ReflectionClass(__CLASS__);
+        $clazz = new ReflectionClass($this);
         foreach ($clazz->getMethods() as $method) {
             if (substr($method->name, 0, 3) == 'get') {
                 $propName = strtolower(substr($method->name, 3, 1)) . substr($method->name, 4);
