@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 */
 
 Route::apiResource('/category', 'CategoryController');
-Route::post('/category', 'CategoryController@store');
 
 Route::apiResource('/transaction', 'TransactionController');
 Route::post('/transaction/upload', 'TransactionController@upload');

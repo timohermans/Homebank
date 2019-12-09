@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Transaction } from '../../../entities/transaction.model';
+import {Component, Input, OnInit} from '@angular/core';
+import {Transaction} from '../../../entities/transaction.model';
 import {
   ColumnType,
   TableActionEvent,
   TableActionType
 } from '../../../../../shared/components/table/table.model';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 // FEATURE: Show a loading indicator when transactions are loading
 @Component({
@@ -18,9 +18,11 @@ export class TransactionListComponent implements OnInit {
   columnType = ColumnType;
   actionType = TableActionType;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public goToEdit(actionEvent: TableActionEvent): void {
     this.router.navigate(['transactions', actionEvent.item.id, 'edit']);

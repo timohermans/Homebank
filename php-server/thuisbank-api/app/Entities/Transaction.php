@@ -4,13 +4,15 @@ namespace App\Entities;
 
 use App\Entities\Category;
 use Assert\Assertion;
-use DateTime;
+use Carbon\Carbon;
 
 class Transaction
 {
+    use ConverterTrait;
+
     /** @var string */
     private $id;
-    /** @var DateTime */
+    /** @var Carbon */
     private $date;
     /** @var string */
     private $payee;
@@ -28,7 +30,7 @@ class Transaction
     private $category;
 
     public function __construct(
-        DateTime $date,
+        Carbon $date,
         string $payee,
         ?Category $category,
         string $memo,
@@ -74,9 +76,9 @@ class Transaction
     }
 
     /**
-     * @return DateTime
+     * @return Carbon
      */
-    public function getDate(): DateTime
+    public function getDate(): Carbon
     {
         return $this->date;
     }

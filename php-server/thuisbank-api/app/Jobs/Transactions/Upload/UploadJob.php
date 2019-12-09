@@ -3,7 +3,9 @@
 namespace App\Jobs\Transactions\Upload;
 
 use App\Entities\Transaction;
+use App\Jobs\JobResponse;
 use Assert\Assertion;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,6 +20,7 @@ class UploadJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private $numberParser;
     private $numberFormatter;
     private $dateIndex = 4;
     private $amountIndex = 6;
@@ -39,15 +42,19 @@ class UploadJob implements ShouldQueue
     public function __construct(UploadCommand $dto)
     {
         $this->file = $dto->getFile();
-        $this->numberFormatter = NumberFormatter::create('nl_NL', NumberFormatter::DECIMAL);
+        $this->numberParser = NumberFormatter::create('nl_NL', NumberFormatter::DECIMAL);
+        $this->numberParser->setAttribute($this->numberParser::FRACTION_DIGITS, 2);
+        $this->numberFormatter = NumberFormatter::create('en', NumberFormatter::DECIMAL);
+        $this->numberFormatter->setAttribute($this->numberParser::FRACTION_DIGITS, 2);
+        $this->numberFormatter->setAttribute($this->numberParser::GROUPING_USED, false);
     }
 
     /**
      * @param EntityManager $entityManager
-     * @return int
+     * @return UploadResponse
      * @throws \Assert\AssertionFailedException
      */
-    public function handle($entityManager)
+    public function handle(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
 
@@ -61,7 +68,7 @@ class UploadJob implements ShouldQueue
 
         $this->saveTransactions($transactionsToInsert);
 
-        return count($transactionsToInsert);
+        return new UploadResponse(count($transactionsToInsert), count($existingTransactions));
     }
 
     /**
@@ -84,12 +91,13 @@ class UploadJob implements ShouldQueue
                 continue;
             }
 
-            $date = \DateTime::createFromFormat('!Y-m-d', $record[$this->dateIndex]);
+            $date = Carbon::createFromFormat('!Y-m-d', $record[$this->dateIndex]);
             $payee = $record[$this->payeeIndex];
             $memo = $record[$this->memoIndex];
             $amountString = $record[$this->amountIndex];
             $isPositiveAmount = $amountString[0] === $this->positiveAmountCharacter;
-            $amount = $this->numberFormatter->parse(ltrim($amountString, $amountString[0]));
+            $amount = $this->numberParser->parse(ltrim($amountString, $amountString[0]));
+            $amount = $this->numberFormatter->format($amount);
             $incassoId = $record[$this->automaticIncassoIdentification];
             $incassoIdText = trim($incassoId) === '' ? '' : " (Incasso: $incassoId)";
             $isTransactionFromBank = true;
@@ -100,8 +108,8 @@ class UploadJob implements ShouldQueue
                 $payee,
                 null,
                 "$memo$incassoIdText",
-                $isPositiveAmount ? 0 : $amount,
-                $isPositiveAmount ? $amount : 0,
+                $isPositiveAmount ? '0.00' : $amount,
+                $isPositiveAmount ? $amount : '0.00',
                 $isInflowForBudgeting,
                 $isTransactionFromBank
             );
@@ -123,10 +131,11 @@ class UploadJob implements ShouldQueue
         $minDate = min($datesOfTransaction);
         $maxDate = max($datesOfTransaction);
 
+        $transactionClass = Transaction::class;
         return $this->entityManager->createQuery("
             select t
-            from App\Features\Transactions\Transaction t
-            where t.date > :minDate and t.date < :maxDate
+            from $transactionClass t
+            where t.date >= :minDate and t.date <= :maxDate
         ")
             ->setParameter('minDate', $minDate)
             ->setParameter('maxDate', $maxDate)

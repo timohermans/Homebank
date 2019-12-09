@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Transaction;
 use App\Http\Requests\UploadTransactionCommand;
 use App\Infrastructure\JobAdapterInterface;
 use App\Jobs\Transactions\Upload\UploadCommand;
 use App\Jobs\Transactions\Upload\UploadJob;
 use App\Jobs\Transactions\Upload\UploadResponse;
+use Doctrine\ORM\EntityManager;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Http\Request;
 
@@ -16,10 +18,13 @@ class TransactionController extends Controller
     private $job;
     /** @var JobAdapterInterface */
     private $dispatcher;
+    /** @var EntityManager */
+    private $entityManager;
 
-    public function __construct(JobAdapterInterface $dispatcher)
+    public function __construct(JobAdapterInterface $dispatcher, EntityManager $entityManager)
     {
         $this->dispatcher = $dispatcher;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -29,7 +34,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return 'yo';
+        $transactionClass = Transaction::class;
+        $transactions = $this->entityManager->createQuery("select t from $transactionClass t")->getResult();
+
+        return response()->json(array_map(function ($transaction) {
+            /** @var Transaction $transaction */
+            return $transaction->asArray();
+        }, $transactions));
     }
 
     /**

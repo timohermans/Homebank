@@ -2,19 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="634b07df-de5f-4ecc-9b0d-6482a1561e78" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../client/thuisbank/cypress/fixtures/CSV_A_20191027_123137.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client/thuisbank/cypress/integration/transactions/transactions_spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/transaction-upload-action/transaction-upload-action.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/components/transaction-upload-action/transaction-upload-action.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-list/transaction-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/app/features/transactions/pages/transaction-overview/transaction-list/transaction-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/thuisbank/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/thuisbank/src/environments/environment.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Features/Transactions/Transaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Features/Transactions/Transaction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Features/Transactions/UploadFromFile/UploadFromFileUseCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Features/Transactions/UploadFromFile/UploadFromFileUseCase.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laradock" beforeDir="false" afterPath="$PROJECT_DIR$/laradock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laradock/php-fpm/xdebug.ini" beforeDir="false" afterPath="$PROJECT_DIR$/laradock/php-fpm/xdebug.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laradock/workspace/xdebug.ini" beforeDir="false" afterPath="$PROJECT_DIR$/laradock/workspace/xdebug.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/app/Entities/Transaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/app/Entities/Transaction.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/app/Http/Controllers/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/app/Http/Controllers/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/app/Http/Controllers/TransactionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/app/Jobs/Transactions/Upload/UploadJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/app/Jobs/Transactions/Upload/UploadJob.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/config/doctrine.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/config/doctrine.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/tests/TestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/tests/TestCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thuisbank-api/tests/Unit/Transactions/Jobs/UploadTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/thuisbank-api/tests/Unit/Transactions/Jobs/UploadTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.vscode/settings.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -249,12 +254,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7e8d41dd" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@51104cd4" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7e8d41dd" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@76c5e92f" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@51104cd4" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@6dedc9b4" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -291,6 +296,9 @@
       <workItem from="1572102160342" duration="2694000" />
       <workItem from="1572175646828" duration="8000000" />
       <workItem from="1572289310958" duration="5253000" />
+      <workItem from="1575221578568" duration="24000" />
+      <workItem from="1575928101270" duration="23000" />
+      <workItem from="1575928131928" duration="708000" />
     </task>
     <servers />
   </component>
