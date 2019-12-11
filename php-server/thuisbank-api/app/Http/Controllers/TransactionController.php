@@ -19,12 +19,14 @@ class TransactionController extends Controller
     /** @var JobAdapterInterface */
     private $dispatcher;
     /** @var EntityManager */
-    private $entityManager;
+    private $em;
+    private $repository;
 
     public function __construct(JobAdapterInterface $dispatcher, EntityManager $entityManager)
     {
         $this->dispatcher = $dispatcher;
-        $this->entityManager = $entityManager;
+        $this->em = $entityManager;
+        $this->repository = $entityManager->getRepository(Transaction::class);
     }
 
     /**
@@ -35,7 +37,7 @@ class TransactionController extends Controller
     public function index()
     {
         $transactionClass = Transaction::class;
-        $transactions = $this->entityManager->createQuery("select t from $transactionClass t")->getResult();
+        $transactions = $this->em->createQuery("select t from $transactionClass t")->getResult();
 
         return response()->json(array_map(function ($transaction) {
             /** @var Transaction $transaction */

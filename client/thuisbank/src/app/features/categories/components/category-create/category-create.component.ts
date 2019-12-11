@@ -18,7 +18,9 @@ export class CategoryCreateComponent implements OnInit {
 
   constructor(private service: CategoryService, private formBuilder: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   public save(): void {
     this.service.create(this.categoryForm.value);

@@ -76,6 +76,14 @@ class Transaction
     }
 
     /**
+     * @return string 
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
      * @return Carbon
      */
     public function getDate(): Carbon
