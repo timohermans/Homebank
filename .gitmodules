@@ -1,0 +1,3 @@
+[submodule "php-server/laradock"]
+	path = php-server/laradock
+	url = https://github.com/laradock/laradock.git
