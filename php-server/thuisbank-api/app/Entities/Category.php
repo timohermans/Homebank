@@ -7,10 +7,8 @@ use Assert\Assertion;
 
 // TODO: Is it possible to save images in the DB? How to handle this in doctrine (read -> use storage)
 
-class Category
+class Category extends Entity
 {
-    use ConverterTrait;
-
     /** @var string */
     private $id;
     /** @var string */

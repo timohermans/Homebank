@@ -6,10 +6,8 @@ use App\Entities\Category;
 use Assert\Assertion;
 use Carbon\Carbon;
 
-class Transaction
+class Transaction extends Entity
 {
-    use ConverterTrait;
-
     /** @var string */
     private $id;
     /** @var Carbon */
@@ -37,8 +35,8 @@ class Transaction
         string $outflow,
         string $inflow,
         bool $isInflowForBudgeting,
-        bool $isBankTransaction)
-    {
+        bool $isBankTransaction
+    ) {
         Assertion::notEmpty($payee); // https://github.com/beberlei/assert
         Assertion::notEmpty($memo);
         Assertion::numeric($outflow);
@@ -76,7 +74,7 @@ class Transaction
     }
 
     /**
-     * @return string 
+     * @return string
      */
     public function getId(): string
     {

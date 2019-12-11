@@ -9,17 +9,17 @@ use App\Jobs\Transactions\Upload\UploadCommand;
 use App\Jobs\Transactions\Upload\UploadJob;
 use App\Jobs\Transactions\Upload\UploadResponse;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    /** @var UploadJob */
-    private $job;
     /** @var JobAdapterInterface */
     private $dispatcher;
     /** @var EntityManager */
     private $em;
+    /** @var EntityRepository */
     private $repository;
 
     public function __construct(JobAdapterInterface $dispatcher, EntityManager $entityManager)
@@ -36,13 +36,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactionClass = Transaction::class;
-        $transactions = $this->em->createQuery("select t from $transactionClass t")->getResult();
+        $transactions = $this->repository->findAll();
 
-        return response()->json(array_map(function ($transaction) {
-            /** @var Transaction $transaction */
-            return $transaction->asArray();
-        }, $transactions));
+        return response()->json($this->toJson($transactions));
     }
 
     /**
@@ -78,7 +74,13 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        $transaction = $this->repository->find($id);
+
+        if ($transaction === null) {
+            return response()->status(404);
+        }
+
+        return response()->json($this->toJson($transaction), 200);
     }
 
     /**
