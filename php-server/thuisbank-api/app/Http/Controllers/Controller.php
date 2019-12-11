@@ -27,4 +27,17 @@ class Controller extends BaseController
 
         return $result->asArray();
     }
+
+    /**
+     * @param mixed $result
+     * @return int|Illuminate\Http\JsonResponse
+     */
+    public function toEntityResponse($result)
+    {
+        if (!is_array($result) && $result === null) {
+            return response()->status(404);
+        }
+
+        return response()->json($this->toJson($result));
+    }
 }

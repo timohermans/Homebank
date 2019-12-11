@@ -8,18 +8,20 @@ use App\Infrastructure\JobAdapterInterface;
 use App\Jobs\Categories\Create\CreateJob;
 use App\Jobs\Categories\Get\GetJob;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     /** @var JobAdapterInterface */
     private $dispatcher;
-    private $entityManager;
+    /** @var EntityRepository */
+    private $repository;
 
     public function __construct(JobAdapterInterface $dispatcher, EntityManager $entityManager)
     {
         $this->dispatcher = $dispatcher;
-        $this->entityManager = $entityManager;
+        $this->repository = $entityManager->getRepository(Category::class);
     }
 
     /**
@@ -29,16 +31,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categoryClass = Category::class;
-        /** @var Category[] */
-        $categories = $this->entityManager->createQuery("
-            SELECT c
-            FROM $categoryClass c
-        ")->getResult();
+        $categories = $this->repository->findAll();
 
-        return response()->json(array_map(function ($category) {
-            return $category->asArray();
-        }, $categories), 200);
+        return $this->toEntityResponse($categories);
     }
 
     /**
@@ -64,7 +59,8 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = GetJob::dispatchNow($id);
-        return response()->json($category->asArray());
+
+        return $this->toEntityResponse($category);
     }
 
     /**

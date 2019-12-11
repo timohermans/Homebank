@@ -38,7 +38,7 @@ class TransactionController extends Controller
     {
         $transactions = $this->repository->findAll();
 
-        return response()->json($this->toJson($transactions));
+        return $this->toEntityResponse($transactions);
     }
 
     /**
@@ -76,11 +76,7 @@ class TransactionController extends Controller
     {
         $transaction = $this->repository->find($id);
 
-        if ($transaction === null) {
-            return response()->status(404);
-        }
-
-        return response()->json($this->toJson($transaction), 200);
+        return $this->toEntityResponse($transaction);
     }
 
     /**
