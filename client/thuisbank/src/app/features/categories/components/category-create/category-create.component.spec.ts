@@ -3,6 +3,7 @@ import * as faker from 'faker';
 import { CategoryService } from '../../services/category.service';
 import { FormBuilder } from '@angular/forms';
 import { CategoryIconService } from '../../services/category-icon.service';
+import { Category } from '../../models/category.model';
 jest.mock('../../services/category.service');
 jest.mock('../../services/category-icon.service');
 
@@ -15,20 +16,7 @@ describe('CategoryCreateComponent', () => {
     service = new CategoryService(null);
     categoryIconService = new CategoryIconService() as jest.Mocked<CategoryIconService>;
 
-    component = new CategoryCreateComponent(service, new FormBuilder(), categoryIconService);
-  });
-
-  it('Saves the category when the fields are valid', () => {
-    const componentToCreate = {
-      name: faker.random.word(),
-      icon: faker.random.word()
-    };
-
-    component.categoryForm.setValue(componentToCreate);
-
-    component.save();
-
-    expect(service.create).toHaveBeenCalledWith(componentToCreate);
+    component = new CategoryCreateComponent(null, service, new FormBuilder(), categoryIconService);
   });
 
   it('can search for specific icons', () => {
@@ -40,5 +28,54 @@ describe('CategoryCreateComponent', () => {
     component.selectIcon('hallo');
 
     expect(component.categoryForm.get('icon').value).toBe('hallo');
+  });
+
+  it('emits the category that needs to be created when form is valid', done => {
+    const expectedCategory = new Category(null, 'Food', 'apple');
+
+    component.ngOnInit();
+    component.registerOnChange((category: Category) => {
+      expect(category).toEqual(expectedCategory);
+      done();
+    });
+
+    component.categoryForm.setValue({
+      id: null,
+      name: 'Food',
+      icon: 'apple'
+    });
+  });
+
+  it('emits null when the form is not valid', () => {
+    const onChangeFn = jest.fn();
+    component.registerOnChange(onChangeFn);
+    component.ngOnInit();
+
+    component.categoryForm.setValue({
+      name: null,
+      icon: 'apple',
+      id: null
+    });
+
+    expect(onChangeFn).toHaveBeenCalledWith(null);
+  });
+
+  it('can receive a whole category object and sets it in the form', () => {
+    const expectedValue = {
+      id: 'abc-def',
+      name: 'Food',
+      icon: 'apple'
+    };
+    const categoryToPass = Category.fromForm(expectedValue);
+
+    component.writeValue(categoryToPass);
+
+    expect(component.categoryForm.value).toEqual(expectedValue);
+  });
+
+  it('does not break when nothing is passed to the component', () => {
+    expect(() => {
+      component.writeValue(null);
+    }).not.toThrowError();
   });
 });

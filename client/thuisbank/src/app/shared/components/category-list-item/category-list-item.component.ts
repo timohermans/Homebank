@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Category } from 'src/app/features/categories/models/category.model';
 
 @Component({
   selector: 'app-category-list-item',
@@ -6,14 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./category-list-item.component.scss']
 })
 export class CategoryListItemComponent implements OnInit {
-  @Input() name: string;
-  @Input() icon = 'image';
+  @Input() category: Category;
 
   constructor() {}
 
   ngOnInit() {
-    if (!this.name) {
-      throw new Error('Supply a category name');
+    if (!this.category) {
+      throw new Error('Supply a category');
     }
   }
 }

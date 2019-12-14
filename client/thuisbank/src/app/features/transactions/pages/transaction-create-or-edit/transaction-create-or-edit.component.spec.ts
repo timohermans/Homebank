@@ -15,18 +15,8 @@ jest.mock('../../../categories/services/category.service');
 jest.mock('../../services/transaction.service');
 
 const initialCategories: Category[] = [
-  {
-    id: faker.random.uuid(),
-    name: faker.random.word(),
-    iconName: faker.random.word(),
-    categoryGroup: { id: faker.random.uuid(), name: faker.random.word() },
-  },
-  {
-    id: faker.random.uuid(),
-    name: faker.random.word(),
-    iconName: faker.random.word(),
-    categoryGroup: { id: faker.random.uuid(), name: faker.random.word() },
-  },
+  new Category(faker.random.uuid(), faker.random.word(), faker.random.word()),
+  new Category(faker.random.uuid(), faker.random.word(), faker.random.word())
 ];
 
 describe('TransactionCreateOrEditComponent', () => {
@@ -56,11 +46,11 @@ describe('TransactionCreateOrEditComponent', () => {
     modalService.open.mockReturnValue(modalRef);
 
     router = {
-      navigate: jest.fn(),
+      navigate: jest.fn()
     };
 
     activeRoute = {
-      paramMap: of(convertToParamMap({ id: 'abc-def-ghi' })),
+      paramMap: of(convertToParamMap({ id: 'abc-def-ghi' }))
     };
 
     component = new TransactionCreateOrEditComponent(
@@ -98,9 +88,7 @@ describe('TransactionCreateOrEditComponent', () => {
   it('Loads the form with existing transaction on init', () => {
     const existingTransaction = {
       id: 'abc-def-ghi',
-      payee: faker.random.words(2),
-      memo: faker.random.words(5),
-      category: null,
+      category: null
     } as Transaction;
 
     transactionService.getForEditBy.mockReturnValue(of(existingTransaction));
@@ -108,19 +96,17 @@ describe('TransactionCreateOrEditComponent', () => {
 
     expect(component.transactionForm.value).toEqual({
       id: existingTransaction.id,
-      payee: existingTransaction.payee,
-      memo: existingTransaction.memo,
-      categoryId: null,
+      category: null
     });
   });
 
-  it('Updates the selected category ID when selecting a category', () => {
+  it('Updates the selected category when selecting a category', () => {
     const categoryToSelect =
       initialCategories[faker.random.number({ max: initialCategories.length - 1 })];
-    component.selectCategory(categoryToSelect.id);
+    component.selectCategory(categoryToSelect);
 
-    expect(component.transactionForm.get('categoryId').value).toBe(categoryToSelect.id);
-    expect(component.selectedCategoryId).toBe(categoryToSelect.id);
+    expect(component.transactionForm.get('category').value).toBe(categoryToSelect);
+    expect(component.selectedCategory).toBe(categoryToSelect);
   });
 
   it('Determines whether there are any categories yet', () => {
@@ -130,11 +116,9 @@ describe('TransactionCreateOrEditComponent', () => {
   });
 
   describe('Assigning a category to a transaction', () => {
-    const transactionChanges: TransactionUpdate = {
+    const transactionChanges: any = {
       id: faker.random.uuid(),
-      memo: faker.random.words(10),
-      payee: faker.random.words(2),
-      categoryId: faker.random.uuid(),
+      category: new Category(faker.random.uuid(), faker.random.word(), faker.random.word())
     };
 
     beforeEach(() => {
@@ -145,7 +129,10 @@ describe('TransactionCreateOrEditComponent', () => {
     });
 
     it('Successfully saves the transaction', () => {
-      expect(transactionService.update).toHaveBeenCalledWith(transactionChanges);
+      expect(transactionService.update).toHaveBeenCalledWith({
+        id: transactionChanges.id,
+        categoryId: transactionChanges.category.id
+      } as TransactionUpdate);
     });
 
     it('Closes the modal', () => {
@@ -164,7 +151,9 @@ describe('TransactionCreateOrEditComponent', () => {
 
   it('Cannot update a transaction when creating a category', () => {
     component.isCategoryCreationVisible = true;
-    component.transactionForm.get('categoryId').setValue(faker.random.number());
+    component.transactionForm
+      .get('category')
+      .setValue(new Category(faker.random.uuid(), faker.random.word(), faker.random.word()));
     transactionService.update.mockReturnValue(of({}));
 
     component.update();
@@ -173,17 +162,63 @@ describe('TransactionCreateOrEditComponent', () => {
   });
 
   it('Assigns the category automatically when its created', () => {
-    const categoryCreated = {
-      id: faker.random.uuid(),
-      iconName: faker.random.word(),
-      name: faker.random.word(),
-    } as Category;
+    const categoryCreated = new Category(
+      faker.random.uuid(),
+      faker.random.word(),
+      faker.random.word()
+    );
 
     component.isCategoryCreationVisible = true;
     component.handleCategoryCreated(categoryCreated);
 
     expect(component.isCategoryCreationVisible).toBeFalsy();
-    expect(component.selectedCategoryId).toBe(categoryCreated.id);
-    expect(component.transactionForm.get('categoryId').value).toBe(categoryCreated.id);
+    expect(component.selectedCategory).toBe(categoryCreated);
+    expect(component.transactionForm.get('category').value).toBe(categoryCreated);
   });
+
+  it('displays create as button text when in create category mode', () => {
+    component.toggleCreateCategory();
+
+    expect(component.saveButtonText).toEqual('transactionCreateOrEdit.createCategoryButton');
+
+    component.toggleCreateCategory();
+
+    expect(component.saveButtonText).toEqual('transactionCreateOrEdit.saveTransactionButton');
+  });
+
+  it('toggles the category creation when the form is done and does not close the modal', () => {
+    component.modal = { close: jest.fn() } as any;
+    component.toggleCreateCategory();
+
+    component.handleSave();
+    component.handleSave();
+
+    expect(component.isCategoryCreationVisible).toBeFalsy();
+    expect(component.saveButtonText).toBe('transactionCreateOrEdit.saveTransactionButton');
+  });
+
+  it('does not close the modal when creating a category', () => {
+    jest.resetAllMocks();
+    component.modal = { close: jest.fn() } as any;
+    component.toggleCreateCategory();
+
+    component.handleSave();
+
+    expect(component.modal.close).not.toHaveBeenCalled();
+  });
+
+  it('sets the created category as selected when valid', () => {
+    const categoryToCreate = new Category(null, faker.random.word(), faker.random.word());
+    component.modal = { close: () => {} } as any;
+    component.toggleCreateCategory();
+    component.transactionForm
+      .get('category')
+      .setValue(categoryToCreate);
+
+    component.handleSave();
+
+    expect(component.selectedCategory).toEqual(categoryToCreate);
+  });
+
+  it('creates the category when it is not created yet before saving the transaction', () => {});
 });

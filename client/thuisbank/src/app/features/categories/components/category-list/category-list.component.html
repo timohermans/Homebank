@@ -1,0 +1,10 @@
+<div class="icon-container d-flex flex-wrap">
+  <div
+    (click)="selectedIconChange.emit(icon)"
+    class="icon p-2 m-2"
+    [class.is-selected]="selectedIcon === icon"
+    *ngFor="let icon of icons"
+  >
+    <fa-icon [icon]="icon"></fa-icon>
+  </div>
+</div>

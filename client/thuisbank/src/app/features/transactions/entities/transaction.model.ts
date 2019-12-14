@@ -22,7 +22,5 @@ export interface Transaction {
 
 export interface TransactionUpdate {
   id: string;
-  payee: string;
-  memo: string;
   categoryId: string;
 }

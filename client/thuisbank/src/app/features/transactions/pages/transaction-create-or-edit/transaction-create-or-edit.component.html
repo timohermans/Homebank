@@ -1,14 +1,14 @@
 <ng-template #content>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title" translate>transactionCreateOrEdit.title</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" [formGroup]="transactionForm">
     <app-category-create
       *ngIf="isCategoryCreationVisible"
-      (categoryCreate)="handleCategoryCreated($event)"
+      formControlName="category"
     ></app-category-create>
 
     <ng-container *ngIf="!isCategoryCreationVisible">
@@ -24,15 +24,20 @@
           transactionCreateOrEdit.noCategoriesMessage
         </span>
         <app-category-list-item
-          [name]="category.name"
+          *ngIf="selectedCategory && !selectedCategory.id"
+          [category]="selectedCategory"
+        >
+        </app-category-list-item>
+        <app-category-list-item
+          [category]="category"
           *ngFor="let category of categories$ | async"
         ></app-category-list-item>
       </div>
     </ng-container>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
-      Save
+    <button type="button" class="btn btn-outline-dark" (click)="handleSave()">
+      {{ saveButtonText | translate }}
     </button>
   </div>
 </ng-template>

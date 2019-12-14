@@ -21,11 +21,9 @@ describe('CategoryService', () => {
     const categoriesFromApi: Category[] = [];
 
     for (let index = 0; index < faker.random.number(20); index++) {
-      categoriesFromApi.push({
-        id: faker.random.uuid(),
-        name: faker.random.word(),
-        iconName: faker.random.word()
-      });
+      categoriesFromApi.push(
+        new Category(faker.random.uuid(), faker.random.word(), faker.random.word())
+      );
     }
 
     httpClient.get.mockReturnValue(of(categoriesFromApi));
@@ -38,7 +36,11 @@ describe('CategoryService', () => {
   });
 
   it('Creates a category by sending it to the API', () => {
-    const categoryToCreate: Category = new Category(faker.random.word(), faker.random.word());
+    const categoryToCreate: Category = new Category(
+      faker.random.uuid(),
+      faker.random.word(),
+      faker.random.word()
+    );
 
     httpClient.post.mockReturnValue(of({}));
 

@@ -19,24 +19,25 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content', { static: false }) modalContent: any;
+  private readonly saveTransactionButtonText = 'transactionCreateOrEdit.saveTransactionButton';
+  private readonly createCategoryButtonText = 'transactionCreateOrEdit.createCategoryButton';
 
   public modal: NgbModalRef;
   public isCategoryCreationVisible: boolean;
+  public saveButtonText = this.saveTransactionButtonText;
 
   public categories$: Observable<Category[]> = this.categoryService.categories$;
   public hasNoCategories$ = this.categories$.pipe(
-    map((categories: Category[]) => categories.length === 0)
+    map((categories: Category[]) => categories.length === 0 && !this.selectedCategory)
   );
 
   public transactionForm = this.formBuilder.group({
     id: [null],
-    payee: [null],
-    memo: [null],
-    categoryId: []
+    category: []
   });
 
-  public get selectedCategoryId(): string {
-    return this.transactionForm.get('categoryId').value;
+  public get selectedCategory(): Category {
+    return this.transactionForm.get('category').value;
   }
 
   constructor(
@@ -63,9 +64,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
       .subscribe((transaction: Transaction) => {
         this.transactionForm.setValue({
           id: transaction.id,
-          payee: transaction.payee,
-          memo: transaction.memo,
-          categoryId: transaction.category ? transaction.category.id : null
+          category: transaction.category || null
         });
       });
   }
@@ -90,24 +89,42 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
       return;
     }
 
-    const updateValues = this.transactionForm.value as TransactionUpdate;
+    const formValue = this.transactionForm.value;
+    const updateValues = {
+      id: formValue.id,
+      categoryId: formValue.category.id
+    } as TransactionUpdate;
     this.transactionService.update(updateValues).subscribe(() => {
       this.modal.close();
       this.router.navigate(['transactions']);
     });
   }
 
-  public selectCategory(id: string): void {
-    this.transactionForm.get('categoryId').setValue(id);
+  public selectCategory(category: Category): void {
+    this.transactionForm.get('category').setValue(category);
   }
 
   public toggleCreateCategory() {
     this.isCategoryCreationVisible = !this.isCategoryCreationVisible;
+
+    if (this.isCategoryCreationVisible) {
+      this.saveButtonText = this.createCategoryButtonText;
+    } else {
+      this.saveButtonText = this.saveTransactionButtonText;
+    }
   }
 
   public handleCategoryCreated(categoryCreated: Category) {
     this.isCategoryCreationVisible = false;
-    this.selectCategory(categoryCreated.id);
+    this.selectCategory(categoryCreated);
   }
 
+  public handleSave(): void {
+    if (this.isCategoryCreationVisible) {
+      this.toggleCreateCategory();
+      return;
+    }
+
+    this.modal.close('Save click');
+  }
 }

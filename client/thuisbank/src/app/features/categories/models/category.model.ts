@@ -1,16 +1,27 @@
 import { FormGroup } from '@angular/forms';
+import { BaseModel } from 'src/app/shared/models/base.model';
 
 export interface CategoryQueryResult {
   categories: Category[];
 }
 
-export class Category {
-  public id: string;
+export class Category extends BaseModel {
+  constructor(public id: string, public name: string, public iconName: string) {
+    super();
+  }
 
-  constructor(public name: string, public iconName: string) {}
+  public static fromForm(formValue: any): Category {
+    const category = new Category(formValue.id, formValue.name, formValue.icon);
 
-  public static fromForm(form: FormGroup): Category {
-    throw new Error('not implemented yet');
+    return category;
+  }
+
+  public toForm(): any {
+    return {
+      id: this.id,
+      name: this.name,
+      icon: this.iconName
+    };
   }
 }
 

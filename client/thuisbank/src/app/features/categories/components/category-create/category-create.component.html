@@ -22,13 +22,4 @@
   </div>
 </div>
 
-<div class="icon-container d-flex flex-wrap">
-  <div
-    (click)="selectIcon(icon)"
-    class="icon p-2 m-2"
-    [class.is-selected]="iconControl.value === icon"
-    *ngFor="let icon of icons$ | async"
-  >
-    <fa-icon [icon]="icon"></fa-icon>
-  </div>
-</div>
+<app-category-list [icons]="icons$ | async" [selectedIcon]="iconControl.value" (selectedIconChange)="iconControl.setValue($event)"></app-category-list>
