@@ -11,9 +11,7 @@ export class CategoryListComponent implements OnInit {
   @Input() icons: string[];
   @Input() selectedIcon: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

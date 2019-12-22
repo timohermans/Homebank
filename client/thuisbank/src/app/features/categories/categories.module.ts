@@ -5,8 +5,9 @@ import { CategoryCreateComponent } from './components/category-create/category-c
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CategoryListComponent } from './components/category-list/category-list.component';
+import { CategoryListItemComponent } from './components/category-list-item/category-list-item.component';
 
-const sharedComponents = [CategoryCreateComponent];
+const sharedComponents = [CategoryCreateComponent, CategoryListItemComponent];
 
 @NgModule({
   declarations: [...sharedComponents, CategoryListComponent],

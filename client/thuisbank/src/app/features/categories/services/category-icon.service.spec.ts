@@ -1,6 +1,6 @@
 import { CategoryIconService } from './category-icon.service';
 import { Subject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil, filter, take, skip } from 'rxjs/operators';
 import { categoryIcons } from '../models/category-icon.model';
 import * as _ from 'lodash';
 
@@ -65,5 +65,30 @@ describe('CategoryIconService', () => {
     });
 
     service.searchIcon('');
+  });
+
+  it('clears the current search when resetting', done => {
+    let hitCount = 0;
+    let fullCount = 0;
+    let filteredCount = 0;
+    service.categoryIcons$.pipe(takeUntil(destroy)).subscribe(icons => {
+      if (icons.length === 2) {
+        filteredCount += 1;
+      }
+
+      if (icons.length > 2) {
+        fullCount += 1;
+      }
+
+      hitCount += 1;
+      if (hitCount === 3) {
+        expect(fullCount).toBe(2);
+        expect(filteredCount).toBe(1);
+        done();
+      }
+    });
+
+    service.searchIcon('baby');
+    service.resetSearch();
   });
 });

@@ -22,8 +22,12 @@ export class CategoryIconService {
       return;
     }
 
-    fuzzy.goAsync(searchTerm, categoryIcons).then((result: Fuzzysort.Results) => {
+    fuzzy.goAsync(searchTerm, [...categoryIcons]).then((result: Fuzzysort.Results) => {
       this.categoryIcons.next(result.map(r => r.target));
     });
+  }
+
+  public resetSearch(): void {
+    this.categoryIcons.next(categoryIcons);
   }
 }

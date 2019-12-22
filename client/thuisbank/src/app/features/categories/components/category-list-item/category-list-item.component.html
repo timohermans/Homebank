@@ -1,0 +1,10 @@
+<div class="d-flex flex-column align-items-center m-2">
+  <div
+    (click)="iconSelectChange.emit(icon)"
+    class="icon p-2 d-flex flex-column justify-content-center"
+    [class.is-selected]="isSelected"
+  >
+    <fa-icon class="align-self-center" [icon]="icon"></fa-icon>
+  </div>
+  <div *ngIf="name">{{ name }}</div>
+</div>

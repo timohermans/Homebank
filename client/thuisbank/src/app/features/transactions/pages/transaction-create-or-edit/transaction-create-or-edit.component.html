@@ -25,11 +25,15 @@
         </span>
         <app-category-list-item
           *ngIf="selectedCategory && !selectedCategory.id"
-          [category]="selectedCategory"
+          [icon]="selectedCategory.iconName"
+          [name]="selectedCategory.name"
+          [isSelected]="true"
         >
         </app-category-list-item>
         <app-category-list-item
-          [category]="category"
+          [icon]="category.iconName"
+          [name]="category.name"
+          [isSelected]="category.id === selectedCategory.id"
           *ngFor="let category of categories$ | async"
         ></app-category-list-item>
       </div>

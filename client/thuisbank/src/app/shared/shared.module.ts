@@ -10,10 +10,9 @@ import { TableActionComponent } from './components/table/table-action/table-acti
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IsEmptyPipe } from './pipes/is-empty.pipe';
 import { TableDateColumnComponent } from './components/table/table-date-column/table-date-column.component';
-import { CategoryListItemComponent } from './components/category-list-item/category-list-item.component';
 
 const pipes = [MapPipe, ToCurrencyPipe, IsEmptyPipe];
-const components = [TableComponent, TableActionComponent, CategoryListItemComponent];
+const components = [TableComponent, TableActionComponent];
 const entryComponents = [TableColumnComponent, TableDateColumnComponent];
 
 @NgModule({

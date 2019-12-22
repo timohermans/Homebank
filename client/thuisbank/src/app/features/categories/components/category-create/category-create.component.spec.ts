@@ -78,4 +78,10 @@ describe('CategoryCreateComponent', () => {
       component.writeValue(null);
     }).not.toThrowError();
   });
+
+  it('resets the category search on each open', () => {
+    component.ngOnInit();
+
+    expect(categoryIconService.resetSearch).toHaveBeenCalled();
+  })
 });

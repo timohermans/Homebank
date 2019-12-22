@@ -16,7 +16,10 @@
     "title": "Assign category"
   },
   "categoryCreate": {
-    "searchPlaceholder": "Search for an icon",
+    "icon": {
+      "label": "Select an icon",
+      "searchPlaceholder": "or search for it first.."
+    },
     "name": {
       "placeholder": "Enter a category name..",
       "label": "Category name"

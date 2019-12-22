@@ -45,6 +45,7 @@ export class CategoryCreateComponent implements OnInit, ControlValueAccessor, On
 
   ngOnInit() {
     this.registerValueChanges();
+    this.categoryIconService.resetSearch();
   }
 
   private registerValueChanges(): void {
@@ -59,7 +60,7 @@ export class CategoryCreateComponent implements OnInit, ControlValueAccessor, On
         } else {
           this.onChange(Category.fromForm(formValue));
         }
-      } );
+      });
   }
 
   ngOnDestroy(): void {}
