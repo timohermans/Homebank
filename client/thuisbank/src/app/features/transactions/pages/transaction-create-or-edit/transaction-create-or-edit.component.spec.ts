@@ -9,6 +9,7 @@ import { cold } from 'jest-marbles';
 import * as faker from 'faker';
 import { TransactionService } from '../../services/transaction.service';
 import { TransactionUpdate, Transaction } from '../../entities/transaction.model';
+import { AssignCategoryToTransactionModel } from '../../entities/assign-category-to-transaction.model';
 
 jest.mock('@ng-bootstrap/ng-bootstrap');
 jest.mock('../../../categories/services/category.service');
@@ -187,12 +188,21 @@ describe('TransactionCreateOrEditComponent', () => {
   });
 
   it('toggles the category creation when the form is done and does not close the modal', () => {
+    // arrange
+    categoryService.create.mockReturnValue(of(null as Category));
+    component.transactionForm.setValue({
+      id: faker.random.uuid(),
+      category: new Category(null, null, null)
+    });
     component.modal = { close: jest.fn() } as any;
+
+    // act
     component.toggleCreateCategory();
 
     component.handleSave();
     component.handleSave();
 
+    // assert
     expect(component.isCategoryCreationVisible).toBeFalsy();
     expect(component.saveButtonText).toBe('transactionCreateOrEdit.saveTransactionButton');
   });
@@ -211,14 +221,104 @@ describe('TransactionCreateOrEditComponent', () => {
     const categoryToCreate = new Category(null, faker.random.word(), faker.random.word());
     component.modal = { close: () => {} } as any;
     component.toggleCreateCategory();
-    component.transactionForm
-      .get('category')
-      .setValue(categoryToCreate);
+    component.transactionForm.get('category').setValue(categoryToCreate);
 
     component.handleSave();
 
     expect(component.selectedCategory).toEqual(categoryToCreate);
   });
 
-  it('creates the category when it is not created yet before saving the transaction', () => {});
+  it('creates the category when it is not created yet before saving the transaction', () => {
+    component.ngAfterViewInit();
+    const categoryToCreate = new Category(null, faker.random.word(), faker.random.word());
+    component.transactionForm.setValue({
+      id: faker.random.uuid(),
+      category: categoryToCreate
+    });
+
+    categoryService.create.mockReturnValue(of(new Category(null, null, null)));
+
+    component.handleSave();
+
+    expect(categoryService.create).toBeCalledWith(categoryToCreate);
+  });
+
+  it('updates the transaction after the new category has been created', () => {
+    component.ngAfterViewInit();
+    const transactionToUpdate = new AssignCategoryToTransactionModel(
+      faker.random.uuid(),
+      new Category(null, faker.random.word(), faker.random.word())
+    );
+    component.transactionForm.setValue({
+      id: transactionToUpdate.id,
+      category: transactionToUpdate.category
+    });
+
+    categoryService.create.mockImplementation((category: Category) => {
+      category.id = faker.random.uuid();
+      return of(category);
+    });
+
+    component.handleSave();
+
+    expect(transactionToUpdate.category.id).not.toBeNull();
+    expect(transactionService.assignCategory).toHaveBeenCalledWith(transactionToUpdate);
+  });
+
+  it('does not create a category when it is already created before assigning the transaction', () => {
+    component.ngAfterViewInit();
+    const transactionToUpdate = new AssignCategoryToTransactionModel(
+      faker.random.uuid(),
+      new Category(faker.random.uuid(), faker.random.word(), faker.random.word())
+    );
+    component.transactionForm.setValue({
+      id: transactionToUpdate.id,
+      category: transactionToUpdate.category
+    });
+
+    component.handleSave();
+
+    expect(categoryService.create).not.toHaveBeenCalled();
+    expect(transactionService.assignCategory).toHaveBeenCalledWith(transactionToUpdate);
+  });
+
+  it('it does not create or update anything when the transaction is not valid', () => {
+    component.handleSave();
+
+    expect(categoryService.create).not.toHaveBeenCalled();
+    expect(transactionService.assignCategory).not.toHaveBeenCalled();
+  });
+
+  it('does not close the window when the transaction updating is not finished yet', () => {
+    component.ngAfterViewInit();
+    const transactionToUpdate = new AssignCategoryToTransactionModel(
+      faker.random.uuid(),
+      new Category(faker.random.uuid(), faker.random.word(), faker.random.word())
+    );
+    component.transactionForm.setValue({
+      id: transactionToUpdate.id,
+      category: transactionToUpdate.category
+    });
+
+    component.handleSave();
+
+    expect(modalRef.close).not.toHaveBeenCalled();
+  });
+
+  it('closes the window after the transaction is successfully updated', () => {
+    component.ngAfterViewInit();
+    const transactionToUpdate = new AssignCategoryToTransactionModel(
+      faker.random.uuid(),
+      new Category(faker.random.uuid(), faker.random.word(), faker.random.word())
+    );
+    component.transactionForm.setValue({
+      id: transactionToUpdate.id,
+      category: transactionToUpdate.category
+    });
+    transactionService.assignCategory.mockReturnValue(of(null));
+
+    component.handleSave();
+
+    expect(modalRef.close).toHaveBeenCalled();
+  });
 });

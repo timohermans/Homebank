@@ -24,7 +24,7 @@ export class CategoryService {
       });
   }
 
-  public create(category: Category): Observable<any> {
-    return this.httpClient.post(`${environment.apiUrl}/category`, category);
+  public create(category: Category): Observable<Category> {
+    return this.httpClient.post<Category>(`${environment.apiUrl}/category`, category);
   }
 }

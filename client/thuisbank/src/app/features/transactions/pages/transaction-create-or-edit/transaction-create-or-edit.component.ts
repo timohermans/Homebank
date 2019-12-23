@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from '../../../categories/services/category.service';
 import { Category } from '../../../categories/models/category.model';
 import * as _ from 'lodash';
 import { filter, map, mergeMap, switchMap, takeUntil, tap, shareReplay } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY, of } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
 import { TransactionService } from '../../services/transaction.service';
 import { Transaction, TransactionUpdate } from '../../entities/transaction.model';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { AssignCategoryToTransactionModel } from '../../entities/assign-category-to-transaction.model';
 
 @Component({
   selector: 'app-transaction-create-or-edit',
@@ -32,8 +33,8 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
   );
 
   public transactionForm = this.formBuilder.group({
-    id: [null],
-    category: []
+    id: [null, Validators.required],
+    category: [null, Validators.required]
   });
 
   public get selectedCategory(): Category {
@@ -120,11 +121,36 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
   }
 
   public handleSave(): void {
+    if (this.transactionForm.invalid) {
+      return;
+    }
+
     if (this.isCategoryCreationVisible) {
       this.toggleCreateCategory();
       return;
     }
 
-    this.modal.close('Save click');
+    const categoryCreateCall =
+      this.selectedCategory.id == null
+        ? this.categoryService.create(this.selectedCategory)
+        : of(null as Category);
+
+    categoryCreateCall
+      .pipe(
+        mergeMap((category: Category) => {
+          const transactionToUpdate = AssignCategoryToTransactionModel.fromForm(
+            this.transactionForm
+          );
+
+          if (category) {
+            transactionToUpdate.category = category;
+          }
+
+          return this.transactionService.assignCategory(transactionToUpdate);
+        })
+      )
+      .subscribe(() => {
+        this.modal.close('Save click');
+      });
   }
 }
