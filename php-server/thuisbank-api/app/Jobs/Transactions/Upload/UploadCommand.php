@@ -13,7 +13,8 @@ class UploadCommand
      * UploadTransactionDto constructor.
      * @param UploadedFile $file
      */
-    public function __construct($file) {
+    public function __construct($file)
+    {
         $this->file = $file;
     }
 

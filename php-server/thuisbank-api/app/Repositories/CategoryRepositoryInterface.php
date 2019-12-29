@@ -14,4 +14,6 @@ interface CategoryRepositoryInterface
     public function find($id);
 
     public function findByName(string $name);
+
+    public function save(Category $category);
 }

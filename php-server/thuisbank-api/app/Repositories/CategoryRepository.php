@@ -42,4 +42,13 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return $this->repo->findOneBy(['name' => $name]);
     }
+
+    /**
+     * @param Category $category
+     * @return void
+     */
+    public function save(Category $category): void
+    {
+        $this->entityManager->persist($category);
+    }
 }

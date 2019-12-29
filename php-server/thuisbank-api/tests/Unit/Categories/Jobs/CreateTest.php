@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Mockery;
+use Mockery\MockInterface;
 
 class CreateTest extends TestCase
 {
@@ -26,10 +27,11 @@ class CreateTest extends TestCase
 
         $job = new CreateJob($command);
 
+        /** @var CategoryRepositoryInterface&MockInterface */
         $repoMock = Mockery::mock(CategoryRepositoryInterface::class);
         $repoMock->shouldReceive('findByName')->andReturns(null);
-        $repoMock->shouldReceive('save')->with(Mockery::on(function($categoryToSave) {
-           return $categoryToSave->isEqual(new Category('category 1', 'purse'));
+        $repoMock->shouldReceive('save')->with(Mockery::on(function ($categoryToSave) {
+            return $categoryToSave->isEqual(new Category('category 1', 'purse'));
         }));
 
         /** @var CreateResponse $result */
