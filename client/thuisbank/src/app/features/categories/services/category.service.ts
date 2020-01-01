@@ -3,6 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Category } from '../models/category.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,9 @@ export class CategoryService {
   public loadCategories(): void {
     this.httpClient
       .get<Category[]>(`${environment.apiUrl}/category`)
+      .pipe(
+        map((categories: Category[]) => Category.fromJsonArray(categories))
+      )
       .subscribe((categories: Category[]) => {
         this.categoryStore.next(categories);
       });

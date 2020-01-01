@@ -7,6 +7,7 @@ use App\Jobs\Categories\Create\CreateCommand;
 use App\Jobs\Categories\Create\CreateJob;
 use App\Jobs\Categories\Create\CreateResponse;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\UnitOfWorkInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -33,9 +34,12 @@ class CreateTest extends TestCase
         $repoMock->shouldReceive('save')->with(Mockery::on(function ($categoryToSave) {
             return $categoryToSave->isEqual(new Category('category 1', 'purse'));
         }));
+        $uowMock = $this->mock(UnitOfWorkInterface::class, function ($mock) {
+            $mock->shouldReceive('save');
+        });
 
         /** @var CreateResponse $result */
-        $result = $job->handle($repoMock);
+        $result = $job->handle($repoMock, $uowMock);
 
         $this->assertEquals($result->getName(), 'category 1');
         $this->assertEquals($result->getIconName(), 'purse');

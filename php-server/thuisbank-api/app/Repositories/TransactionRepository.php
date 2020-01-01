@@ -26,6 +26,6 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     public function find(string $id): Transaction
     {
-        return $this->find($id);
+        return $this->repo->find($id);
     }
 }

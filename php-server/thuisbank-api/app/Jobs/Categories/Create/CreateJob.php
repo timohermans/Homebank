@@ -5,6 +5,7 @@ namespace App\Jobs\Categories\Create;
 use App\Entities\Category;
 use App\Exceptions\EntityValidationException;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\UnitOfWorkInterface;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -38,10 +39,11 @@ class CreateJob implements ShouldQueue
      * Execute the job.
      *
      * @param CategoryRepositoryInterface $repository
+     * @param UnitOfWorkInterface $unitOfWork
      * @return CreateResponse
      * @throws EntityValidationException
      */
-    public function handle(CategoryRepositoryInterface $repository): CreateResponse
+    public function handle(CategoryRepositoryInterface $repository, UnitOfWorkInterface $unitOfWork): CreateResponse
     {
         $this->repository = $repository;
 
@@ -53,6 +55,7 @@ class CreateJob implements ShouldQueue
         }
 
         $this->repository->save($category);
+        $unitOfWork->save();
 
         return new CreateResponse($category);
     }

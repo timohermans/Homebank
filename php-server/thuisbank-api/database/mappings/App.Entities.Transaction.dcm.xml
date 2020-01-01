@@ -17,7 +17,7 @@
         <field name="isBankTransaction" column="isBankTransaction" type="boolean"/>
         <field name="isInflowForBudgeting" column="isInflowForBudgeting" type="boolean"/>
 
-        <many-to-one field="category" target-entity="App\Entities\Category">
+        <many-to-one field="category" target-entity="App\Entities\Category" fetch="EAGER">
             <cascade>
                 <cascade-persist></cascade-persist>
             </cascade>

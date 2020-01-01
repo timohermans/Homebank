@@ -33,7 +33,8 @@
         <app-category-list-item
           [icon]="category.iconName"
           [name]="category.name"
-          [isSelected]="category.id === selectedCategory.id"
+          [isSelected]="selectedCategory && category.id === selectedCategory.id"
+          (click)="selectCategory(category)"
           *ngFor="let category of categories$ | async"
         ></app-category-list-item>
       </div>

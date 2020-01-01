@@ -429,7 +429,6 @@ export const categoryIcons = [
   'hard-hat',
   'hashtag',
   'hat-wizard',
-  'haykal',
   'hdd',
   'heading',
   'headphones',

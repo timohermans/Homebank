@@ -28,7 +28,7 @@ trait ConverterTrait
                 if (is_object($propValue)) {
                     $interfaces = class_parents($propValue);
 
-                    if (isset($interfaces[JobResponse::class])) {
+                    if (isset($interfaces[JobResponse::class]) || isset($interfaces[Entity::class])) {
                         $propValue = $propValue->asArray();
                     }
                 }

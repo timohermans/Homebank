@@ -1,17 +1,16 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CategoryService } from '../../../categories/services/category.service';
-import { Category } from '../../../categories/models/category.model';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CategoryService} from '../../../categories/services/category.service';
+import {Category} from '../../../categories/models/category.model';
 import * as _ from 'lodash';
-import { filter, map, mergeMap, switchMap, takeUntil, tap, shareReplay } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
-import { Dictionary } from '@ngrx/entity';
-import { TransactionService } from '../../services/transaction.service';
-import { Transaction, TransactionUpdate } from '../../entities/transaction.model';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { AssignCategoryToTransactionModel } from '../../entities/assign-category-to-transaction.model';
+import {filter, map, mergeMap, switchMap, takeUntil, tap, shareReplay} from 'rxjs/operators';
+import {Observable, EMPTY, of} from 'rxjs';
+import {Dictionary} from '@ngrx/entity';
+import {TransactionService} from '../../services/transaction.service';
+import {Transaction, TransactionUpdate} from '../../entities/transaction.model';
+import {untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'app-transaction-create-or-edit',
@@ -19,7 +18,7 @@ import { AssignCategoryToTransactionModel } from '../../entities/assign-category
   styleUrls: ['./transaction-create-or-edit.component.scss']
 })
 export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('content', { static: false }) modalContent: any;
+  @ViewChild('content', {static: false}) modalContent: any;
   private readonly saveTransactionButtonText = 'transactionCreateOrEdit.saveTransactionButton';
   private readonly createCategoryButtonText = 'transactionCreateOrEdit.createCategoryButton';
 
@@ -48,7 +47,8 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     private modalService: NgbModal,
     private router: Router,
     private activeRoute: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.categoryService.loadCategories();
@@ -77,13 +77,16 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     });
 
     this.modal.result
-      .then(result => {}, reason => {})
+      .then(result => {
+      }, reason => {
+      })
       .finally(() => {
         this.router.navigate(['transactions']);
       });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 
   public update(): void {
     if (this.isCategoryCreationVisible) {
@@ -109,6 +112,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     this.isCategoryCreationVisible = !this.isCategoryCreationVisible;
 
     if (this.isCategoryCreationVisible) {
+      this.transactionForm.get('category').setValue(null);
       this.saveButtonText = this.createCategoryButtonText;
     } else {
       this.saveButtonText = this.saveTransactionButtonText;
@@ -138,15 +142,17 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     categoryCreateCall
       .pipe(
         mergeMap((category: Category) => {
-          const transactionToUpdate = AssignCategoryToTransactionModel.fromForm(
-            this.transactionForm
-          );
+          const formValue = this.transactionForm.value;
+          const transactionToUpdate = {
+            id: formValue.id,
+            categoryId: formValue.category ? formValue.category.id : null
+          } as TransactionUpdate;
 
           if (category) {
-            transactionToUpdate.category = category;
+            transactionToUpdate.categoryId = category.id;
           }
 
-          return this.transactionService.assignCategory(transactionToUpdate);
+          return this.transactionService.update(transactionToUpdate);
         })
       )
       .subscribe(() => {

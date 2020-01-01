@@ -127,23 +127,23 @@ class Transaction extends Entity
     }
 
     /**
-     * @param $t2 Transaction
+     * @param $other Transaction
      * @return bool
      */
-    public function isEqual($t2): bool
+    public function isEqual($other): bool
     {
-        return isset($t2) &&
-            $this->date == $t2->getDate() &&
-            $this->payee === $t2->getPayee() &&
-            $this->memo === $t2->getMemo() &&
-            $this->inflow === $t2->getInflow() &&
-            $this->outflow === $t2->getOutflow();
+        return isset($other) &&
+            $this->date == $other->getDate() &&
+            $this->payee === $other->getPayee() &&
+            $this->memo === $other->getMemo() &&
+            $this->inflow === $other->getInflow() &&
+            $this->outflow === $other->getOutflow();
     }
 
     /**
      * @return \App\Entities\Category
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }

@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { TransactionUpdate, Transaction } from '../entities/transaction.model';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { tap } from 'rxjs/operators';
-import { AssignCategoryToTransactionModel } from '../entities/assign-category-to-transaction.model';
+import {Injectable} from '@angular/core';
+import {TransactionUpdate, Transaction} from '../entities/transaction.model';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'src/environments/environment';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   public getTransactions(): Observable<Transaction[]> {
     return this.httpClient.get<any[]>(`${environment.apiUrl}/transaction`);
@@ -29,13 +29,6 @@ export class TransactionService {
 
   // CRITICAL: Update a transaction (assign category)
   public update(transaction: TransactionUpdate): Observable<any> {
-    return this.httpClient.put(`${environment.apiUrl}/transaction`, transaction);
-  }
-
-  public assignCategory(assignCategoryModel: AssignCategoryToTransactionModel): Observable<any> {
-    return this.httpClient.put(
-      `${environment.apiUrl}/transaction/${assignCategoryModel.id}/assign-category`,
-      assignCategoryModel
-    );
+    return this.httpClient.put(`${environment.apiUrl}/transaction/${transaction.id}`, transaction);
   }
 }

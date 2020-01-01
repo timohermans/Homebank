@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Entities\Category;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -24,12 +25,12 @@ class CategoryRepository implements CategoryRepositoryInterface
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function find($id): Category
+    public function find($id): ?Category
     {
         $class = Category::class;
         $qb = $this->entityManager->createQuery("SELECT c FROM $class c WHERE c.id = :id")
             ->setParameter('id', $id)
-            ->getSingleResult();
+            ->getOneOrNullResult();
 
         return $qb;
     }
@@ -38,7 +39,7 @@ class CategoryRepository implements CategoryRepositoryInterface
      * @param string $name
      * @return Category
      */
-    public function findByName(string $name): Category
+    public function findByName(string $name): ?Category
     {
         return $this->repo->findOneBy(['name' => $name]);
     }
@@ -46,6 +47,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * @param Category $category
      * @return void
+     * @throws ORMException
      */
     public function save(Category $category): void
     {
