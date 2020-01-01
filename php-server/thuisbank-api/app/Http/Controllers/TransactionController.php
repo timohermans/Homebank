@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Transaction;
+use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Requests\UploadTransactionCommand;
 use App\Infrastructure\JobAdapterInterface;
+use App\Jobs\Transactions\Update\UpdateJob;
 use App\Jobs\Transactions\Upload\UploadCommand;
 use App\Jobs\Transactions\Upload\UploadJob;
 use App\Jobs\Transactions\Upload\UploadResponse;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Illuminate\Bus\Dispatcher;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use ReflectionException;
 
 class TransactionController extends Controller
 {
@@ -57,7 +61,7 @@ class TransactionController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function upload(UploadTransactionCommand $request)
     {
@@ -80,15 +84,16 @@ class TransactionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateTransactionRequest $request
+     * @param $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTransactionRequest $request, $id)
     {
-        //
+        $result = $this->dispatcher->dispatchNow(UpdateJob::class, $request->getDto());
+
+        return response()->json($result->asArray());
     }
 
     /**

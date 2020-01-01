@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 
+use App\Jobs\JobResponse;
 use ReflectionClass;
 
 trait ConverterTrait
@@ -22,7 +23,17 @@ trait ConverterTrait
             if (substr($method->name, 0, 3) == 'get') {
                 $propName = strtolower(substr($method->name, 3, 1)) . substr($method->name, 4);
 
-                $result[$propName] = $method->invoke($this);
+                $propValue = $method->invoke($this);
+
+                if (is_object($propValue)) {
+                    $interfaces = class_parents($propValue);
+
+                    if (isset($interfaces[JobResponse::class])) {
+                        $propValue = $propValue->asArray();
+                    }
+                }
+
+                $result[$propName] = $propValue;
             }
         }
 

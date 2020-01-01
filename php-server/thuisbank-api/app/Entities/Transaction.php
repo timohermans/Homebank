@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Entities\Category;
 use Assert\Assertion;
+use Assert\AssertionFailedException;
 use Carbon\Carbon;
 
 class Transaction extends Entity
@@ -54,6 +55,10 @@ class Transaction extends Entity
         } else if (!is_null($category)) {
             $this->assignCategory($category);
         }
+
+        if ($category !== null) {
+            $this->assignCategory($category);
+        }
     }
 
     private function markTransactionForInFlow(bool $isInFlowForBudgeting)
@@ -65,7 +70,7 @@ class Transaction extends Entity
         $this->isInflowForBudgeting = $isInFlowForBudgeting;
     }
 
-    private function assignCategory(Category $category)
+    public function assignCategory(Category $category)
     {
         Assertion::notNull($category);
 
@@ -133,5 +138,13 @@ class Transaction extends Entity
             $this->memo === $t2->getMemo() &&
             $this->inflow === $t2->getInflow() &&
             $this->outflow === $t2->getOutflow();
+    }
+
+    /**
+     * @return \App\Entities\Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
     }
 }

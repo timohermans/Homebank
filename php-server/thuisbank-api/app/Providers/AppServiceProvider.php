@@ -6,13 +6,16 @@ use App\Infrastructure\JobAdapter;
 use App\Infrastructure\JobAdapterInterface;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\UnitOfWork;
+use App\Repositories\UnitOfWorkInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public $bindings = [
         CategoryRepositoryInterface::class => CategoryRepository::class,
-        JobAdapterInterface::class => JobAdapter::class
+        JobAdapterInterface::class => JobAdapter::class,
+        UnitOfWorkInterface::class => UnitOfWork::class
     ];
 
     /**
