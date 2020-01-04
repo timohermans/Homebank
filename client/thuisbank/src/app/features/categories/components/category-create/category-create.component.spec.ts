@@ -13,7 +13,7 @@ describe('CategoryCreateComponent', () => {
   let categoryIconService: jest.Mocked<CategoryIconService>;
 
   beforeEach(() => {
-    service = new CategoryService(null);
+    service = new CategoryService(null, null);
     categoryIconService = new CategoryIconService() as jest.Mocked<CategoryIconService>;
 
     component = new CategoryCreateComponent(null, service, new FormBuilder(), categoryIconService);

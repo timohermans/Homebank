@@ -7,10 +7,10 @@ import {Category} from '../../../categories/models/category.model';
 import * as _ from 'lodash';
 import {filter, map, mergeMap, switchMap, takeUntil, tap, shareReplay} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
-import {Dictionary} from '@ngrx/entity';
 import {TransactionService} from '../../services/transaction.service';
 import {Transaction, TransactionUpdate} from '../../entities/transaction.model';
 import {untilDestroyed} from 'ngx-take-until-destroy';
+import {IsLoadingService} from '@service-work/is-loading';
 
 @Component({
   selector: 'app-transaction-create-or-edit',
@@ -46,12 +46,12 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     private transactionService: TransactionService,
     private modalService: NgbModal,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private loadingService: IsLoadingService
   ) {
   }
 
   ngOnInit() {
-    this.categoryService.loadCategories();
     this.listenToIdChanges();
   }
 
@@ -99,6 +99,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
       categoryId: formValue.category.id
     } as TransactionUpdate;
     this.transactionService.update(updateValues).subscribe(() => {
+      this.transactionService.loadTransactions();
       this.modal.close();
       this.router.navigate(['transactions']);
     });
@@ -139,7 +140,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
         ? this.categoryService.create(this.selectedCategory)
         : of(null as Category);
 
-    categoryCreateCall
+    this.loadingService.add(categoryCreateCall
       .pipe(
         mergeMap((category: Category) => {
           const formValue = this.transactionForm.value;
@@ -149,6 +150,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
           } as TransactionUpdate;
 
           if (category) {
+            this.categoryService.loadCategories();
             transactionToUpdate.categoryId = category.id;
           }
 
@@ -156,7 +158,8 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
         })
       )
       .subscribe(() => {
+        this.transactionService.loadTransactions();
         this.modal.close('Save click');
-      });
+      }), {key: 'transaction-update'});
   }
 }

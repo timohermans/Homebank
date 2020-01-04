@@ -1,20 +1,25 @@
 import { CategoryService } from './category.service';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category.model';
-jest.mock('@angular/common/http');
 import * as faker from 'faker';
 import { of } from 'rxjs';
 import { cold } from 'jest-marbles';
 import { environment } from 'src/environments/environment';
+import {IsLoadingService} from '@service-work/is-loading';
+
+jest.mock('@angular/common/http');
+jest.mock('@service-work/is-loading');
 
 describe('CategoryService', () => {
   let service: CategoryService;
   let httpClient: jest.Mocked<HttpClient>;
+  let loadingService: jest.Mocked<IsLoadingService>;
 
   beforeEach(() => {
     httpClient = new HttpClient(null) as jest.Mocked<HttpClient>;
+    loadingService = new IsLoadingService() as jest.Mocked<IsLoadingService>;
 
-    service = new CategoryService(httpClient);
+    service = new CategoryService(httpClient, loadingService);
   });
 
   it('Loads the fetched categories from the API and stores them', () => {

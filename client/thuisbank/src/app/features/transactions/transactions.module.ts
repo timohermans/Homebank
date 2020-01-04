@@ -33,15 +33,10 @@ import { FileItemComponent } from './components/import-file-modal/file-item/file
   ],
   entryComponents: [ImportFileModalComponent],
   imports: [
-    CommonModule,
     SharedModule,
-    ReactiveFormsModule,
     TransactionsRoutingModule,
-    HttpClientModule,
     NgbModalModule,
-    FontAwesomeModule,
-    TranslateModule,
-    CategoriesModule
+    CategoriesModule,
   ],
   exports: [TransactionListComponent],
   providers: []

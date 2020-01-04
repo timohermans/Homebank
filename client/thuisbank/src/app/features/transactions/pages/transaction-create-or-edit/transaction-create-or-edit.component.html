@@ -19,8 +19,8 @@
         </button>
       </div>
 
-      <div class="category__list py-4">
-        <span *ngIf="hasNoCategories$ | async" translate>
+      <div class="category__list py-2">
+        <span *ngIf="(hasNoCategories$ | async)?.length > 0" translate>
           transactionCreateOrEdit.noCategoriesMessage
         </span>
         <app-category-list-item
@@ -37,11 +37,15 @@
           (click)="selectCategory(category)"
           *ngFor="let category of categories$ | async"
         ></app-category-list-item>
+        <app-category-list-item
+          *ngIf="'categories' | swIsLoading | async as isLoadingCategories"
+          [isLoading]="isLoadingCategories"
+        ></app-category-list-item>
       </div>
     </ng-container>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="handleSave()">
+    <button type="button" class="btn btn-outline-dark" (click)="handleSave()" swIsLoading="transaction-update">
       {{ saveButtonText | translate }}
     </button>
   </div>

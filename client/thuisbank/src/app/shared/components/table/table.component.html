@@ -1,17 +1,24 @@
 <table class="table table-sm">
   <thead>
-    <tr>
-      <th *ngFor="let column of columns" [style.width.%]="column.width">
-        {{ column.labelTranslationKey | translate }}
-      </th>
-      <th
-        class="header__actions"
-        [style.width.%]="actionColumnWidthPercentage"
-        *ngIf="!(actions | isEmpty)"
-      ></th>
-    </tr>
+  <tr>
+    <th *ngFor="let column of columns" [style.width.%]="column.width">
+      {{ column.labelTranslationKey | translate }}
+    </th>
+    <th
+      class="header__actions"
+      [style.width.%]="actionColumnWidthPercentage"
+      *ngIf="!(actions | isEmpty)"
+    ></th>
+  </tr>
   </thead>
   <tbody class="table__rows">
+  <tr *ngIf="loadingKey | swIsLoading | async; else rows">
+<!--  <tr *ngIf="true">-->
+    <td class="is-loading" *ngFor="let column of columns">
+      <div class="is-loading-skeleton">&nbsp;</div>
+    </td>
+  </tr>
+  <ng-template #rows>
     <tr
       class="table__row"
       *ngFor="
@@ -38,6 +45,7 @@
         </button>
       </td>
     </tr>
+  </ng-template>
   </tbody>
 </table>
 <ngb-pagination

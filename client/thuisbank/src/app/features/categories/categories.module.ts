@@ -6,12 +6,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { CategoryListItemComponent } from './components/category-list-item/category-list-item.component';
+import {SharedModule} from '../../shared/shared.module';
 
 const sharedComponents = [CategoryCreateComponent, CategoryListItemComponent];
 
 @NgModule({
   declarations: [...sharedComponents, CategoryListComponent],
-  imports: [CommonModule, FormsModule, TranslateModule, FontAwesomeModule, ReactiveFormsModule],
+  imports: [SharedModule],
   exports: [...sharedComponents]
 })
 export class CategoriesModule {}

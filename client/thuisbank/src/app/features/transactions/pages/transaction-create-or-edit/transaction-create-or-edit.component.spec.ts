@@ -2,17 +2,19 @@ import {TransactionCreateOrEditComponent} from './transaction-create-or-edit.com
 import {FormBuilder} from '@angular/forms';
 import {CategoryService} from '../../../categories/services/category.service';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ActivatedRoute, ParamMap, convertToParamMap, Router} from '@angular/router';
-import {BehaviorSubject, of, ReplaySubject} from 'rxjs';
+import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
+import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {Category} from '../../../categories/models/category.model';
 import {cold} from 'jest-marbles';
 import * as faker from 'faker';
 import {TransactionService} from '../../services/transaction.service';
-import {TransactionUpdate, Transaction} from '../../entities/transaction.model';
+import {Transaction, TransactionUpdate} from '../../entities/transaction.model';
+import {IsLoadingService} from '@service-work/is-loading';
 
 jest.mock('@ng-bootstrap/ng-bootstrap');
 jest.mock('../../../categories/services/category.service');
 jest.mock('../../services/transaction.service');
+jest.mock('@service-work/is-loading');
 
 const initialCategories: Category[] = [
   new Category(faker.random.uuid(), faker.random.word(), faker.random.word()),
@@ -29,15 +31,16 @@ describe('TransactionCreateOrEditComponent', () => {
   let router: jest.Mocked<Partial<Router>>;
   let activeRoute: Partial<ActivatedRoute>;
   let component: TransactionCreateOrEditComponent;
+  let loadingService: jest.Mocked<IsLoadingService>;
 
   beforeEach(() => {
     formBuilder = new FormBuilder();
 
     categoriesStore = new BehaviorSubject<Category[]>(initialCategories);
-    categoryService = new CategoryService(null) as jest.Mocked<CategoryService>;
+    categoryService = new CategoryService(null, null) as jest.Mocked<CategoryService>;
     Object.defineProperty(categoryService, 'categories$', {get: () => categoriesStore});
 
-    transactionService = new TransactionService(null) as jest.Mocked<TransactionService>;
+    transactionService = new TransactionService(null, null) as jest.Mocked<TransactionService>;
 
     modalRef = new NgbModalRef(null, null, null, null) as jest.Mocked<NgbModalRef>;
     modalRef.result = new Promise(() => {
@@ -54,13 +57,26 @@ describe('TransactionCreateOrEditComponent', () => {
       paramMap: of(convertToParamMap({id: 'abc-def-ghi'}))
     };
 
+    loadingService = new IsLoadingService() as jest.Mocked<IsLoadingService>;
+    // loadingService.add.mockImplementation((first: Subscription | Observable<any>) => {
+    //   if (first instanceof Subscription) {
+    //     if (first.closed) return first;
+    //
+    //     sub = first;
+    //
+    //     first.add(() => this.remove(first));
+    //   }
+    //
+    // });
+
     component = new TransactionCreateOrEditComponent(
       formBuilder,
       categoryService,
       transactionService,
       modalService,
       router as any,
-      activeRoute as any
+      activeRoute as any,
+      loadingService
     );
   });
 
@@ -69,12 +85,6 @@ describe('TransactionCreateOrEditComponent', () => {
 
     expect(router.navigate).toHaveBeenCalledTimes(0);
     expect(modalService.open).toHaveBeenCalled();
-  });
-
-  it('Retrieves categories automatically', () => {
-    component.ngOnInit();
-    expect(categoryService.loadCategories).toHaveBeenCalled();
-    expect(component.categories$).toBeObservable(cold('a', {a: initialCategories}));
   });
 
   it('Navigates back to the overview when modal closes', () => {
@@ -199,7 +209,12 @@ describe('TransactionCreateOrEditComponent', () => {
     // act
     component.toggleCreateCategory();
 
-    component.handleSave();
+    component.transactionForm.get('category').setValue({
+      id: null,
+      name: faker.random.word(),
+      icon: faker.random.word()
+    });
+
     component.handleSave();
 
     // assert
@@ -244,6 +259,7 @@ describe('TransactionCreateOrEditComponent', () => {
     component.handleSave();
 
     expect(categoryService.create).toBeCalledWith(categoryToCreate);
+    expect(categoryService.loadCategories).toHaveBeenCalled();
   });
 
   it('updates the transaction after the new category has been created', () => {
@@ -304,6 +320,21 @@ describe('TransactionCreateOrEditComponent', () => {
     component.handleSave();
 
     expect(modalRef.close).not.toHaveBeenCalled();
+  });
+
+  it('updates the transaction list when the transaction is successfully updated', () => {
+    component.ngAfterViewInit();
+    const category = new Category(faker.random.uuid(), faker.random.word(), faker.random.word());
+    component.transactionForm.setValue({
+      id: faker.random.uuid(),
+      category: category
+    });
+
+    transactionService.update.mockReturnValue(of(null));
+
+    component.handleSave();
+
+    expect(transactionService.loadTransactions).toHaveBeenCalled();
   });
 
   it('closes the window after the transaction is successfully updated', () => {
