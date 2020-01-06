@@ -58,16 +58,6 @@ describe('TransactionCreateOrEditComponent', () => {
     };
 
     loadingService = new IsLoadingService() as jest.Mocked<IsLoadingService>;
-    // loadingService.add.mockImplementation((first: Subscription | Observable<any>) => {
-    //   if (first instanceof Subscription) {
-    //     if (first.closed) return first;
-    //
-    //     sub = first;
-    //
-    //     first.add(() => this.remove(first));
-    //   }
-    //
-    // });
 
     component = new TransactionCreateOrEditComponent(
       formBuilder,
@@ -109,6 +99,7 @@ describe('TransactionCreateOrEditComponent', () => {
       id: existingTransaction.id,
       category: null
     });
+    expect(component.transaction).toEqual(existingTransaction);
   });
 
   it('Updates the selected category when selecting a category', () => {

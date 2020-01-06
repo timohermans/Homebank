@@ -25,6 +25,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
   public modal: NgbModalRef;
   public isCategoryCreationVisible: boolean;
   public saveButtonText = this.saveTransactionButtonText;
+  public transaction: Transaction;
 
   public categories$: Observable<Category[]> = this.categoryService.categories$;
   public hasNoCategories$ = this.categories$.pipe(
@@ -63,6 +64,7 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
         untilDestroyed(this)
       )
       .subscribe((transaction: Transaction) => {
+        this.transaction = transaction;
         this.transactionForm.setValue({
           id: transaction.id,
           category: transaction.category || null

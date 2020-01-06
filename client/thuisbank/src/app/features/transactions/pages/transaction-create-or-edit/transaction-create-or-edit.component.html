@@ -6,6 +6,13 @@
     </button>
   </div>
   <div class="modal-body" [formGroup]="transactionForm">
+
+    <ul>
+      <li>{{transaction.payee}}</li>
+      <li>{{transaction.memo}}</li>
+      <li>{{transaction.date | date:'medium'}}</li>
+    </ul>
+
     <app-category-create
       *ngIf="isCategoryCreationVisible"
       formControlName="category"
