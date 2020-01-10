@@ -1,31 +1,59 @@
 <ng-template #content>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title" translate>transactionCreateOrEdit.title</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-link">
+  <div class="modal-body" [formGroup]="transactionForm">
+
+    <ul>
+      <li>{{transaction.payee}}</li>
+      <li>{{transaction.memo}}</li>
+      <li>{{transaction.date | date:'medium'}}</li>
+    </ul>
+
+    <app-category-create
+      *ngIf="isCategoryCreationVisible"
+      formControlName="category"
+    ></app-category-create>
+
+    <ng-container *ngIf="!isCategoryCreationVisible">
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-link" (click)="toggleCreateCategory($event)">
           <fa-icon class="mr-1" icon="plus"></fa-icon>
           <span translate>transactionCreateOrEdit.createNewCategoryButton</span>
         </button>
-    </div>
+      </div>
 
-    <div class="category__list py-4">
-      <span *ngIf="hasNoCategories$ | async" translate>
+      <div class="category__list py-2">
+        <span *ngIf="(hasNoCategories$ | async)?.length > 0" translate>
           transactionCreateOrEdit.noCategoriesMessage
-      </span>
-      <app-category-list-item
-        [name]="category.name"
-        *ngFor="let category of categories$ | async"
-      ></app-category-list-item>
-    </div>
+        </span>
+        <app-category-list-item
+          *ngIf="selectedCategory && !selectedCategory.id"
+          [icon]="selectedCategory.iconName"
+          [name]="selectedCategory.name"
+          [isSelected]="true"
+        >
+        </app-category-list-item>
+        <app-category-list-item
+          [icon]="category.iconName"
+          [name]="category.name"
+          [isSelected]="selectedCategory && category.id === selectedCategory.id"
+          (click)="selectCategory(category)"
+          *ngFor="let category of categories$ | async"
+        ></app-category-list-item>
+        <app-category-list-item
+          *ngIf="'categories' | swIsLoading | async as isLoadingCategories"
+          [isLoading]="isLoadingCategories"
+        ></app-category-list-item>
+      </div>
+    </ng-container>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
-      Save
+    <button type="button" class="btn btn-outline-dark" (click)="handleSave()" swIsLoading="transaction-update">
+      {{ saveButtonText | translate }}
     </button>
   </div>
 </ng-template>

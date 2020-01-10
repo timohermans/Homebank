@@ -124,5 +124,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="thuisbank" />
     <orderEntry type="module" module-name="thuisbank" />
+    <orderEntry type="module" module-name="angular" />
+    <orderEntry type="module" module-name="thuisbank" />
   </component>
 </module>

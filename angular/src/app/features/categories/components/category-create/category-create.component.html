@@ -1,0 +1,26 @@
+<div [formGroup]="categoryForm">
+  <div class="form-group">
+    <label for="name" translate>categoryCreate.name.label</label>
+    <input
+      id="name"
+      [attr.placeholder]="'categoryCreate.name.placeholder' | translate"
+      type="text"
+      class="form-control"
+      formControlName="name"
+    />
+  </div>
+
+  <hr />
+
+  <div class="form-group">
+    <label for="name" translate>categoryCreate.icon.label</label>
+    <input
+      [attr.placeholder]="'categoryCreate.icon.searchPlaceholder' | translate"
+      type="text"
+      class="form-control"
+      (keyup)="search($event.target.value)"
+    />
+  </div>
+</div>
+
+<app-category-list [icons]="icons$ | async" [selectedIcon]="iconControl.value" (selectedIconChange)="iconControl.setValue($event)"></app-category-list>

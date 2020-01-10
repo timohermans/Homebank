@@ -1,0 +1,60 @@
+:host {
+  display: block;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+
+  fa-icon {
+    font-size: 1.5rem;
+  }
+}
+
+.is-selected {
+  border: 2px solid #eee;
+  border-radius: 25%;
+}
+
+.is-loading,
+.is-loading-skeleton {
+  margin: 0.3rem;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.is-loading {
+  animation-name: color;
+}
+
+.is-loading-skeleton {
+  width: 100%;
+  animation-name: bcolor;
+}
+
+@keyframes bcolor {
+  0% {
+    background-color: #ddd;
+  }
+  50% {
+    background-color: #eee;
+  }
+  100% {
+    background-color: #ddd;
+  }
+}
+
+
+@keyframes color {
+  0% {
+    color: #ddd;
+  }
+  50% {
+    color: #eee;
+  }
+  100% {
+    color: #ddd;
+  }
+}

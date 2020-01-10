@@ -10,6 +10,19 @@
   },
   "transactionCreateOrEdit": {
     "createNewCategoryButton": "Create new category",
-    "noCategoriesMessage": "You haven't created any categories yet. Add one first :)."
+    "noCategoriesMessage": "You haven't created any categories yet. Add one first :).",
+    "saveTransactionButton": "Save",
+    "createCategoryButton": "Create",
+    "title": "Assign category"
+  },
+  "categoryCreate": {
+    "icon": {
+      "label": "Select an icon",
+      "searchPlaceholder": "or search for it first.."
+    },
+    "name": {
+      "placeholder": "Enter a category name..",
+      "label": "Category name"
+    }
   }
 }

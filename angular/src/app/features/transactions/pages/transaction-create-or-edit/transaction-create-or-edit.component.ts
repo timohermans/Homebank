@@ -1,16 +1,16 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { CategoryService } from '../../../categories/services/category.service';
-import { Category } from '../../../categories/models/category.model';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CategoryService} from '../../../categories/services/category.service';
+import {Category} from '../../../categories/models/category.model';
 import * as _ from 'lodash';
-import { filter, map, mergeMap, switchMap, takeUntil, tap, shareReplay } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { Dictionary } from '@ngrx/entity';
-import { TransactionService } from '../../services/transaction.service';
-import { Transaction, TransactionUpdate } from '../../entities/transaction.model';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import {filter, map, mergeMap, switchMap, takeUntil, tap, shareReplay} from 'rxjs/operators';
+import {Observable, EMPTY, of} from 'rxjs';
+import {TransactionService} from '../../services/transaction.service';
+import {Transaction, TransactionUpdate} from '../../entities/transaction.model';
+import {untilDestroyed} from 'ngx-take-until-destroy';
+import {IsLoadingService} from '@service-work/is-loading';
 
 @Component({
   selector: 'app-transaction-create-or-edit',
@@ -18,25 +18,27 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   styleUrls: ['./transaction-create-or-edit.component.scss']
 })
 export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('content', { static: false }) modalContent: any;
+  @ViewChild('content', {static: false}) modalContent: any;
+  private readonly saveTransactionButtonText = 'transactionCreateOrEdit.saveTransactionButton';
+  private readonly createCategoryButtonText = 'transactionCreateOrEdit.createCategoryButton';
 
   public modal: NgbModalRef;
   public isCategoryCreationVisible: boolean;
+  public saveButtonText = this.saveTransactionButtonText;
+  public transaction: Transaction;
 
-  public categories$: Observable<Category[]> = this.categoryService.getAll().pipe(shareReplay(1));
+  public categories$: Observable<Category[]> = this.categoryService.categories$;
   public hasNoCategories$ = this.categories$.pipe(
-    map((categories: Category[]) => categories.length === 0)
+    map((categories: Category[]) => categories.length === 0 && !this.selectedCategory)
   );
 
   public transactionForm = this.formBuilder.group({
-    id: [null],
-    payee: [null],
-    memo: [null],
-    categoryId: []
+    id: [null, Validators.required],
+    category: [null, Validators.required]
   });
 
-  public get selectedCategoryId(): string {
-    return this.transactionForm.get('categoryId').value;
+  public get selectedCategory(): Category {
+    return this.transactionForm.get('category').value;
   }
 
   constructor(
@@ -45,8 +47,10 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     private transactionService: TransactionService,
     private modalService: NgbModal,
     private router: Router,
-    private activeRoute: ActivatedRoute
-  ) {}
+    private activeRoute: ActivatedRoute,
+    private loadingService: IsLoadingService
+  ) {
+  }
 
   ngOnInit() {
     this.listenToIdChanges();
@@ -60,11 +64,10 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
         untilDestroyed(this)
       )
       .subscribe((transaction: Transaction) => {
+        this.transaction = transaction;
         this.transactionForm.setValue({
           id: transaction.id,
-          payee: transaction.payee,
-          memo: transaction.memo,
-          categoryId: transaction.category ? transaction.category.id : null
+          category: transaction.category || null
         });
       });
   }
@@ -76,36 +79,89 @@ export class TransactionCreateOrEditComponent implements OnInit, AfterViewInit, 
     });
 
     this.modal.result
-      .then(result => {}, reason => {})
+      .then(result => {
+      }, reason => {
+      })
       .finally(() => {
         this.router.navigate(['transactions']);
       });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 
   public update(): void {
     if (this.isCategoryCreationVisible) {
       return;
     }
 
-    const updateValues = this.transactionForm.value as TransactionUpdate;
+    const formValue = this.transactionForm.value;
+    const updateValues = {
+      id: formValue.id,
+      categoryId: formValue.category.id
+    } as TransactionUpdate;
     this.transactionService.update(updateValues).subscribe(() => {
+      this.transactionService.loadTransactions();
       this.modal.close();
       this.router.navigate(['transactions']);
     });
   }
 
-  public selectCategory(id: string): void {
-    this.transactionForm.get('categoryId').setValue(id);
+  public selectCategory(category: Category): void {
+    this.transactionForm.get('category').setValue(category);
   }
 
   public toggleCreateCategory() {
     this.isCategoryCreationVisible = !this.isCategoryCreationVisible;
+
+    if (this.isCategoryCreationVisible) {
+      this.transactionForm.get('category').setValue(null);
+      this.saveButtonText = this.createCategoryButtonText;
+    } else {
+      this.saveButtonText = this.saveTransactionButtonText;
+    }
   }
 
   public handleCategoryCreated(categoryCreated: Category) {
-
+    this.isCategoryCreationVisible = false;
+    this.selectCategory(categoryCreated);
   }
 
+  public handleSave(): void {
+    if (this.transactionForm.invalid) {
+      return;
+    }
+
+    if (this.isCategoryCreationVisible) {
+      this.toggleCreateCategory();
+      return;
+    }
+
+    const categoryCreateCall =
+      this.selectedCategory.id == null
+        ? this.categoryService.create(this.selectedCategory)
+        : of(null as Category);
+
+    this.loadingService.add(categoryCreateCall
+      .pipe(
+        mergeMap((category: Category) => {
+          const formValue = this.transactionForm.value;
+          const transactionToUpdate = {
+            id: formValue.id,
+            categoryId: formValue.category ? formValue.category.id : null
+          } as TransactionUpdate;
+
+          if (category) {
+            this.categoryService.loadCategories();
+            transactionToUpdate.categoryId = category.id;
+          }
+
+          return this.transactionService.update(transactionToUpdate);
+        })
+      )
+      .subscribe(() => {
+        this.transactionService.loadTransactions();
+        this.modal.close('Save click');
+      }), {key: 'transaction-update'});
+  }
 }

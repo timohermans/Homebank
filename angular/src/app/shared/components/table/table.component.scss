@@ -8,3 +8,27 @@
     vertical-align: middle;
   }
 }
+
+.is-loading {
+}
+
+.is-loading-skeleton {
+  background-color: #eee;
+  height: 100%;
+  width: 100%;
+  animation-name: color;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes color {
+  0% {
+    background-color: #ddd;
+  }
+  50% {
+    background-color: #eee;
+  }
+  100% {
+    background-color: #ddd;
+  }
+}

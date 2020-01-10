@@ -43,6 +43,8 @@ export class TableComponent implements AfterViewInit {
     });
   }
 
+  @Input() loadingKey: string;
+
   public areItemsAsync = false;
   public items: any[] = [];
   public page = 1;

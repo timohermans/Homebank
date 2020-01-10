@@ -1,0 +1,8 @@
+<div class="icon-container d-flex flex-wrap">
+  <app-category-list-item
+    *ngFor="let icon of icons"
+    (iconSelectChange)="selectedIconChange.emit($event)"
+    [isSelected]="selectedIcon === icon"
+    [icon]="icon"
+  ></app-category-list-item>
+</div>

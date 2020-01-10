@@ -1,4 +1,4 @@
-<app-table [data]="transactions">
+<app-table [data]="transactions" loadingKey="transactions">
   <app-table-date-column
     labelTranslationKey="transaction.date"
     property="date"
@@ -16,7 +16,7 @@
   ></app-table-column>
   <app-table-column
     labelTranslationKey="transaction.category"
-    property="category"
+    property="category.name"
     width="10"
     [columnType]="columnType.String"
   ></app-table-column>
