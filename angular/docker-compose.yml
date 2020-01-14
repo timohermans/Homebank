@@ -1,0 +1,13 @@
+# IMPORTANT: The version must match the version of docker-compose.yml
+---
+version: '2.3'
+
+services:
+  angular:
+    build: .
+    # Ensure the chosen ports are not occupied on the host system
+    ports:
+      - 4200:4200
+    volumes:
+      - ./:/app
+      - /app/node_modules

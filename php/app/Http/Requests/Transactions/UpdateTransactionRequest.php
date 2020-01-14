@@ -32,11 +32,10 @@ class UpdateTransactionRequest extends FormRequest implements CommandInterface
     }
 
     /**
-     * @return UploadTransactionCommand
+     * @return UpdateCommand
      */
     public function getDto(): UpdateCommand
     {
-        return null;
-//        return new UpdateCommand($this->all());
+        return new UpdateCommand($this->all());
     }
 }

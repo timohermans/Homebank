@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://php.test/api'
+  apiUrl: 'http://php.loc/api'
 };
 
 /*

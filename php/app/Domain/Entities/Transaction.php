@@ -3,6 +3,7 @@
 namespace App\Domain\Entities;
 
 use App\Domain\Entities\Category;
+use App\Domain\Entities\Category;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
 use Carbon\Carbon;
@@ -37,7 +38,8 @@ class Transaction extends Entity
         string $inflow,
         bool $isInflowForBudgeting,
         bool $isBankTransaction
-    ) {
+    )
+    {
         Assertion::notEmpty($payee); // https://github.com/beberlei/assert
         Assertion::notEmpty($memo);
         Assertion::numeric($outflow);
@@ -127,6 +129,15 @@ class Transaction extends Entity
     }
 
     /**
+     * @return \App\Domain\Entities\Category
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+
+    /**
      * @param $other Transaction
      * @return bool
      */
@@ -140,11 +151,9 @@ class Transaction extends Entity
             $this->outflow === $other->getOutflow();
     }
 
-    /**
-     * @return \App\Domain\Entities\Category
-     */
-    public function getCategory(): ?Category
+    public function isSimilarTo(?Transaction $transactionToMatch): bool
     {
-        return $this->category;
+//        return isset($transactionToMatch) &&
+        return [];
     }
 }

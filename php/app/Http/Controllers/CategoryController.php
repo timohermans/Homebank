@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Entities\Category;
-use App\Http\Requests\Transactions\CreateCategoryFormRequest;
+use App\Http\Requests\CreateCategoryFormRequest;
 use App\Infrastructure\JobAdapterInterface;
 use App\Jobs\Categories\Create\CreateJob;
 use App\Jobs\Categories\Get\GetJob;

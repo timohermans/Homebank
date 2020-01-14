@@ -113,7 +113,33 @@ class TransactionController extends Controller
      */
     public function getSimilar(string $id)
     {
+        /** @var Transaction[] $transactions */
+        $transactions = $this->repository->findAll();
 
+        if (!isset($transactions)) {
+            return response(null, 404);
+        }
+
+        $transactionToMatch = null;
+        foreach ($transactions as $transaction) {
+            if ($transaction->getId() === $id) {
+                $transactionToMatch = $transaction;
+                break;
+            }
+        }
+
+        if ($transactionToMatch === null) {
+            return response(null, 404);
+        }
+
+        $similarTransactions = [];
+        foreach ($transactions as $transaction) {
+            if ($transaction->isSimilarTo($transactionToMatch)) {
+                $similarTransactions[] = $transaction;
+            }
+        }
+
+        $this->toEntityResponse($similarTransactions);
     }
 
     /**
