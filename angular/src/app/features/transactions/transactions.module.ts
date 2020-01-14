@@ -19,6 +19,8 @@ import { CategoriesModule } from '../categories/categories.module';
 import { TransactionUploadActionComponent } from './components/transaction-upload-action/transaction-upload-action.component';
 import { ImportFileModalComponent } from './components/import-file-modal/import-file-modal.component';
 import { FileItemComponent } from './components/import-file-modal/file-item/file-item.component';
+import { TransactionViewSwitchComponent } from './pages/transaction-overview/transaction-view-switch/transaction-view-switch.component';
+import { TransactionTableComponent } from './pages/transaction-overview/transaction-table/transaction-table.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { FileItemComponent } from './components/import-file-modal/file-item/file
     ImportFileModalComponent,
     FileItemComponent,
     TransactionCreateOrEditComponent,
-    TransactionUploadActionComponent
+    TransactionUploadActionComponent,
+    TransactionViewSwitchComponent,
+    TransactionTableComponent
   ],
   entryComponents: [ImportFileModalComponent],
   imports: [

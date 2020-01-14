@@ -13,14 +13,16 @@ import {TableDateColumnComponent} from './components/table/table-date-column/tab
 import {IsLoadingModule} from '@service-work/is-loading';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {RouterModule} from "@angular/router";
+import { PrettyDatePipe } from './pipes/pretty-date.pipe';
 
-const sharedModules = [CommonModule, TranslateModule, FontAwesomeModule, IsLoadingModule, ReactiveFormsModule, FormsModule, HttpClientModule];
-const pipes = [MapPipe, ToCurrencyPipe, IsEmptyPipe];
+const sharedModules = [CommonModule, TranslateModule, FontAwesomeModule, IsLoadingModule, ReactiveFormsModule, FormsModule, HttpClientModule, RouterModule];
+const pipes = [MapPipe, ToCurrencyPipe, IsEmptyPipe, PrettyDatePipe];
 const components = [TableComponent, TableActionComponent];
 const entryComponents = [TableColumnComponent, TableDateColumnComponent];
 
 @NgModule({
-  declarations: [...pipes, ...components, ...entryComponents],
+  declarations: [...pipes, ...components, ...entryComponents, PrettyDatePipe],
   imports: [...sharedModules, NgbPaginationModule],
   exports: [...sharedModules, ...pipes, ...components, ...entryComponents],
   entryComponents: [...entryComponents]

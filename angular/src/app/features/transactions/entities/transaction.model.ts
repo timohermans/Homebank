@@ -13,8 +13,8 @@ export interface Transaction {
   date: Date;
   payee: string;
   memo: string;
-  outFlow: number;
-  inFlow: number;
+  outflow: string;
+  inflow: string;
   isBankTransaction: boolean;
   isInflowForBudgeting: boolean;
   category: Category;

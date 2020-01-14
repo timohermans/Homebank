@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './core/layout/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/budgets', pathMatch: 'full' }
+  { path: '', redirectTo: '/transactions', pathMatch: 'full' }
   // { path: '**', component: PageNotFoundComponent }
 ];
 

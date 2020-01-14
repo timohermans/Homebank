@@ -1,38 +1,12 @@
-<app-table [data]="transactions" loadingKey="transactions">
-  <app-table-date-column
-    labelTranslationKey="transaction.date"
-    property="date"
-  ></app-table-date-column>
-  <app-table-column
-    labelTranslationKey="transaction.payee"
-    property="payee"
-    [columnType]="columnType.String"
-  ></app-table-column>
-  <app-table-column
-    labelTranslationKey="transaction.memo"
-    property="memo"
-    width="40"
-    [columnType]="columnType.String"
-  ></app-table-column>
-  <app-table-column
-    labelTranslationKey="transaction.category"
-    property="category.name"
-    width="10"
-    [columnType]="columnType.String"
-  ></app-table-column>
-  <app-table-column
-    labelTranslationKey="transaction.inflow"
-    property="inflow"
-    [columnType]="columnType.Money"
-  ></app-table-column>
-  <app-table-column
-    labelTranslationKey="transaction.outflow"
-    property="outflow"
-    [columnType]="columnType.Money"
-  ></app-table-column>
-  <app-table-action
-    [actionType]="actionType.Edit"
-    labelTranslationKey="transaction.edit"
-    (actionClick)="goToEdit($event)"
-  ></app-table-action>
-</app-table>
+<ul class="list-group">
+  <li class="list-group-item d-flex" *ngFor="let transaction of transactions; let index = index">
+    <div class="mr-2" style="flex: 1;">
+      <ng-container *ngIf="transaction.date !== transactions[index - 1]?.date">
+        {{transaction.date | prettyDate | translate}}
+      </ng-container>
+    </div>
+    <div style="flex: 6;">{{transaction.payee}}</div>
+    <div class="text-success" *ngIf="transaction.inflow !== '0.00'">+{{transaction.inflow}}</div>
+    <div *ngIf="transaction.outflow !== '0.00'">-{{transaction.outflow}}</div>
+  </li>
+</ul>

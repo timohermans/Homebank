@@ -1,0 +1,18 @@
+$upload-color: #fd6400;
+
+.icon {
+  width: 40px;
+  height: 40px;
+  color: var(--white);
+  background-color: $upload-color;
+}
+
+.action:hover {
+  cursor: pointer;
+
+  .icon {
+    background-color: lighten($upload-color, 10%);
+  }
+}
+
+

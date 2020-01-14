@@ -1,0 +1,10 @@
+.mode {
+  color: var(--dark);
+  padding: 1rem 2rem;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+.mode.active, .mode:hover {
+  opacity: 1;
+}

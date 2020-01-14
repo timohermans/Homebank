@@ -1,0 +1,4 @@
+<div class="d-flex">
+  <button type="button" class="btn btn-link mode" [class.active]="viewModeActive === viewMode.List" (click)="select(viewMode.List)">List</button>
+  <button type="button" class="btn btn-link mode" [class.active]="viewModeActive === viewMode.Table" (click)="select(viewMode.Table)">Table</button>
+</div>

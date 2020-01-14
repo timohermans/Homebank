@@ -1,27 +1,41 @@
-# Thuisbank
+# Homebank
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
+Hobby project for testing out several frameworks and languages.
+ 
+The aim of the apps are to be able to upload transactions, automatically assign a category when one has already been assigned to a similar transaction and show it in a nice overview.
 
-## Development server
+ ![angular app screenshot](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Structure
+There are two client side project and two backend projects:
 
-## Code scaffolding
+### Clients
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular
+  - Run it with `yarn start` or `docker-compose up`
+- React
+  - Run it with `yarn start`
+  
+### Apis
 
-## Build
+- Laravel (php)
+  - See the combination section for how I run it
+  - Architecture: Vertical slice (with Laravel Jobs)
+  - Using a proper Domain model (with Doctrine)
+- Dotnet Core
+  - Run it with 
+  - Architecture: Vertical slide (with Mediatr)
+  - Using plain (old) Entity Framework core
+  
+### Full stack combinations
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- Angular and Laravel
+  - To make it run, clone [devilbox](https://devilbox.readthedocs.io/en/latest/) first
+  - Then use the `env` and `docker-compose.override.yml` files in the `angular/.devilbox` folder
+  - Navigate to the `devilbox` local repo and run `docker-compose up angular httpd mysql`
+  - Happy coding (hot reload works too)
+- React and C#
+  - Run both project seperately. Haven't tried to make these full stack in one command
+  
+## Future projects
+The next project will be a Django API with a Vue frontend.

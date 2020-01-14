@@ -1,5 +1,10 @@
-<div class="action-bar__import">
-  <button id="uploadTransactions" class="btn btn-primary" data-test-id="import" (click)="openImportModal()">
-    <fa-icon icon="file-csv"></fa-icon>Import
-  </button>
+<div class="d-flex action-bar__import">
+
+  <div class="d-flex action" data-test-id="import" (click)="openImportModal()">
+    <div class="d-flex justify-content-center align-items-center icon rounded-circle mr-2">
+      <fa-icon icon="file-csv"></fa-icon>
+    </div>
+    <div class="align-self-center">Import</div>
+  </div>
+
 </div>

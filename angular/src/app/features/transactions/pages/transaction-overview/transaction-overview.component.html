@@ -1,9 +1,15 @@
 <div class="container">
-  <app-transaction-header class="transaction-overview__header"></app-transaction-header>
+  <!--  <app-transaction-header class="transaction-overview__header"></app-transaction-header>-->
   <app-transaction-action-bar class="transaction-overview__actions"></app-transaction-action-bar>
-  <app-transaction-list
+  <app-transaction-view-switch [(viewModeActive)]="activeViewMode"></app-transaction-view-switch>
+  <app-transaction-table
+    *ngIf="activeViewMode === viewMode.Table"
     [transactions]="transactions$ | async"
     class="transaction-overview__list"
-  ></app-transaction-list>
+  ></app-transaction-table>
+  <app-transaction-list
+    *ngIf="activeViewMode === viewMode.List"
+    [transactions]="transactions$ | async">
+  </app-transaction-list>
   <router-outlet></router-outlet>
 </div>
