@@ -4,7 +4,7 @@ Hobby project for testing out several frameworks and languages.
  
 The aim of the apps are to be able to upload transactions, automatically assign a category when one has already been assigned to a similar transaction and show it in a nice overview.
 
- ![angular app screenshot](https://github.com/timohermans/Homebank/blob/master/angular/screenshots/angular.png)
+ ![angular app screenshot](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
 
 ## Structure
 There are two client side project and two backend projects:
