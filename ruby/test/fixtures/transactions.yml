@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2020-02-15
+  payee: MyString
+  memo: MyString
+  inflow: 9.99
+
+two:
+  date: 2020-02-15
+  payee: MyString
+  memo: MyString
+  outflow: 9.99

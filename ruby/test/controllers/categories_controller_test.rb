@@ -6,43 +6,33 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get categories_url
+    get categories_url, as: :json
     assert_response :success
   end
 
-  test "should get new" do
-    get new_category_url
-    assert_response :success
+  test "should create category" do
+    assert_difference('Category.count') do
+      post categories_url, params: { category: { icon_name: @category.icon_name, name: "#{@category.name}.new" } }, as: :json
+    end
+
+    assert_response 201
   end
-
-  # test "should create category" do
-  #   assert_difference('Category.count') do
-  #     post categories_url, params: { category: { name: @category.name, user_id: @category.user_id } }
-  #   end
-
-  #   assert_redirected_to category_url(Category.last)
-  # end
 
   test "should show category" do
-    get category_url(@category)
+    get category_url(@category), as: :json
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_category_url(@category)
-    assert_response :success
+  test "should update category" do
+    patch category_url(@category), params: { category: { icon_name: @category.icon_name, name: @category.name } }, as: :json
+    assert_response 200
   end
-
-  # test "should update category" do
-  #   patch category_url(@category), params: { category: { name: @category.name, user_id: @category.user_id } }
-  #   assert_redirected_to category_url(@category)
-  # end
 
   test "should destroy category" do
     assert_difference('Category.count', -1) do
-      delete category_url(@category)
+      delete category_url(@category), as: :json
     end
 
-    assert_redirected_to categories_url
+    assert_response 204
   end
 end
