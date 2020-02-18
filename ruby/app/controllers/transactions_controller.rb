@@ -51,7 +51,7 @@ class TransactionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def transaction_params
-      params.require(:transaction).permit(:date, :payee, :memo, :outflow, :inflow)
+      params.require(:transaction).permit(:to_account_number, :date, :payee, :memo, :outflow, :inflow)
     end
 
   def transaction_file_params

@@ -1,12 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  to_account_number: NL20RABO0104949499
   date: 2020-02-15
   payee: MyString
   memo: MyString
   inflow: 9.99
 
 two:
+  to_account_number: NL20RABO0104949499
   date: 2020-02-15
   payee: MyString
   memo: MyString

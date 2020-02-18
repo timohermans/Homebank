@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class TransactionsControllerTest < ActionDispatch::IntegrationTest
@@ -5,30 +7,32 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     @transaction = transactions(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get transactions_url, as: :json
     assert_response :success
   end
 
-  test "should create transaction" do
+  test 'should create transaction' do
     assert_difference('Transaction.count') do
-      post transactions_url, params: { transaction: { date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee } }, as: :json
+      transaction_params = {transaction: {to_account_number: @transaction.to_account_number, date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee}}
+
+      post transactions_url, params: transaction_params, as: :json
     end
 
     assert_response 201
   end
 
-  test "should show transaction" do
+  test 'should show transaction' do
     get transaction_url(@transaction), as: :json
     assert_response :success
   end
 
-  test "should update transaction" do
-    patch transaction_url(@transaction), params: { transaction: { date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee } }, as: :json
+  test 'should update transaction' do
+    patch transaction_url(@transaction), params: {transaction: {to_account_number: @transaction.to_account_number, date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee}}, as: :json
     assert_response 200
   end
 
-  test "should destroy transaction" do
+  test 'should destroy transaction' do
     assert_difference('Transaction.count', -1) do
       delete transaction_url(@transaction), as: :json
     end

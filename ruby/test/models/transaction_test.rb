@@ -2,13 +2,14 @@ require 'test_helper'
 
 class TransactionTest < ActiveSupport::TestCase
   test 'must have date, payee, memo, inflow' do
-    transaction = Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld', inflow: 0)
+    transaction = transactions(:one)
 
     assert transaction.valid?
   end
 
   test 'must have either inflow or outflow' do
-    transaction = Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld')
+    transaction = transactions(:one)
+    transaction.inflow = nil
 
     transaction.outflow = 10
 
@@ -28,20 +29,35 @@ class TransactionTest < ActiveSupport::TestCase
   end
 
   test 'in- and outflow are numbers' do
-    assert Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld', inflow: 'tien').invalid?
-    assert Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld', outflow: 'tien').invalid?
+    transaction = transactions(:one)
+    transaction.inflow = 'tien'
+    assert transaction.invalid?
 
-    assert Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld', inflow: 10.50).valid?
-    assert Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld', outflow: 10.50).valid?
+    transaction.inflow = nil
+    transaction.outflow = 'tien'
+    assert transaction.invalid?
+
+    transaction.outflow = 10.50
+    assert transaction.valid?
+
+    transaction.outflow = nil
+    transaction.inflow = 10.50
+    assert transaction.valid?
   end
 
   test 'date must be valid' do
-    assert Transaction.new(date: 'date', payee: 'Finn', memo: 'verjaardagsgeld', outflow: 10.50).invalid?
-    assert Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld', inflow: 10.50).valid?
+    transaction = transactions(:one)
+    transaction.date = 'date'
+
+    assert transaction.invalid?
+
+    transaction.date = Date.new(2019, 10, 5)
+
+    assert transaction.valid?
   end
 
   test 'assign a category to a transaction' do
-    transaction = Transaction.new(date: Date.new(2019, 10, 5), payee: 'Finn', memo: 'verjaardagsgeld', inflow: 10.50)
+    transaction = transactions(:one)
     transaction.category = Category.new(name: 'Category', icon_name: 'Danger')
 
     assert transaction.valid?

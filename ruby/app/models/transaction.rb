@@ -1,6 +1,7 @@
 class Transaction < ApplicationRecord
   belongs_to :category, optional: true, autosave: true
 
+  validates :to_account_number, presence: true
   validates :memo, presence: true
   validates :payee, presence: true
   validates :outflow, numericality: true, allow_nil: true

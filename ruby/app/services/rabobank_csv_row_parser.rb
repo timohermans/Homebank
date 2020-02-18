@@ -1,8 +1,6 @@
-require 'csv'
-
-class TransactionsUploader
-  def initialize(file)
-    @file = file
+class RabobankCsvRowParser
+  def initialize
+    @to_account_number_index = 0
     @date_index = 4
     @amount_index = 6
     @payee_index = 9
@@ -11,23 +9,7 @@ class TransactionsUploader
     @positive_amount_character = '+'
   end
 
-  def upload
-    extracted_transactions = extract_transactions
-    save_transactions extracted_transactions
-  end
-
-  private
-
-  def extract_transactions
-    transactions = []
-    CSV.foreach @file.open, headers: true do |row|
-      transactions << (create_transaction_from row)
-    end
-
-    transactions
-  end
-
-  def create_transaction_from(row)
+  def parse(row)
     date = DateTime.parse(row[@date_index])
     payee = row[@payee_index]
 
@@ -36,21 +18,17 @@ class TransactionsUploader
     memo = "#{row[@memo_index]}#{incasso_text}"
 
     amount_string = row[@amount_index]
+    amount_string = amount_string.gsub(',', '.')
     is_positive_amount = amount_string[0] == @positive_amount_character
     amount = amount_string.to_d
 
     Transaction.new(
+        to_account_number: row[@to_account_number_index],
         date: date,
         payee: payee,
         memo: memo,
         inflow: is_positive_amount ? amount : nil,
         outflow: !is_positive_amount ? amount : nil,
-    )
-  end
-
-  def save_transactions(transactions)
-    transactions.each do |transaction|
-      transaction.save
-    end
+        )
   end
 end
