@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RabobankCsvRowParser
   def initialize
     @to_account_number_index = 0
@@ -10,25 +12,45 @@ class RabobankCsvRowParser
   end
 
   def parse(row)
-    date = DateTime.parse(row[@date_index])
-    payee = row[@payee_index]
+    Transaction.new(
+      to_account_number: row[@to_account_number_index],
+      date: DateTime.parse(row[@date_index]),
+      payee: row[@payee_index],
+      memo: parse_memo_text_from(row),
+      inflow: parse_inflow_from(row),
+      outflow: parse_outflow_from(row)
+    )
+  rescue TypeError
+    nil
+  end
 
+  private
+
+  def parse_memo_text_from(row)
     incasso_id = row[@automatic_incasso_id_index]
-    incasso_text = incasso_id.strip.blank? ? '' : " (Incasso: #{incasso_id})";
-    memo = "#{row[@memo_index]}#{incasso_text}"
+    incasso_text = incasso_id.strip.blank? ? '' : " (Incasso: #{incasso_id})"
 
+    "#{row[@memo_index]}#{incasso_text}"
+  end
+
+  def parse_inflow_from(row)
+    amount = parse_amount_from row
+
+    @is_positive_amount ? amount : nil
+  end
+
+  def parse_outflow_from(row)
+    amount = parse_amount_from row
+
+    !@is_positive_amount ? amount : nil
+  end
+
+  def parse_amount_from(row)
     amount_string = row[@amount_index]
     amount_string = amount_string.gsub(',', '.')
-    is_positive_amount = amount_string[0] == @positive_amount_character
-    amount = amount_string.to_d
+    @is_positive_amount = amount_string[0] == @positive_amount_character
+    parseable_amount_string = amount_string[1..-1]
 
-    Transaction.new(
-        to_account_number: row[@to_account_number_index],
-        date: date,
-        payee: payee,
-        memo: memo,
-        inflow: is_positive_amount ? amount : nil,
-        outflow: !is_positive_amount ? amount : nil,
-        )
+    parseable_amount_string.to_d
   end
 end

@@ -40,13 +40,13 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     assert_response 204
   end
 
-  # test "should process a file of transactions" do
-  #   assert_difference('Transaction.count', 3) do
-  #     csv = fixture_file_upload('files/dummy.csv')
-  #
-  #     post upload_transactions_url, params: { file: csv }
-  #   end
-  #
-  #   assert_response 200
-  # end
+  test "should process a file of transactions" do
+    assert_difference('Transaction.count', 3) do
+      csv = fixture_file_upload('files/dummy.csv')
+
+      post upload_transactions_url, params: { file: csv }
+    end
+
+    assert_response 201
+  end
 end

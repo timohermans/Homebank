@@ -6,9 +6,11 @@ class TransactionsFilePersister
     @parser = parser
   end
 
-  def upload
+  def persist
     extracted_transactions = extract_transactions
     save_transactions extracted_transactions
+
+    extracted_transactions
   end
 
   private

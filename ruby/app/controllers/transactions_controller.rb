@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: [:show, :update, :destroy]
+  before_action :set_transaction, only: %i[show update destroy]
 
   # GET /transactions
   def index
@@ -40,21 +42,20 @@ class TransactionsController < ApplicationController
 
   # POST /transactions/upload
   def upload
-    puts
+    persister = TransactionsFilePersister.new params[:file], RabobankCsvRowParser.new
+
+    render json: persister.persist, status: :created
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_transaction
-      @transaction = Transaction.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def transaction_params
-      params.require(:transaction).permit(:to_account_number, :date, :payee, :memo, :outflow, :inflow)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_transaction
+    @transaction = Transaction.find(params[:id])
+  end
 
-  def transaction_file_params
-    params.require(:file)
+  # Only allow a trusted parameter "white list" through.
+  def transaction_params
+    params.require(:transaction).permit(:to_account_number, :date, :payee, :memo, :outflow, :inflow)
   end
 end

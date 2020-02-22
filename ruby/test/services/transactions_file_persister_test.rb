@@ -9,7 +9,7 @@ class TransactionsFilePersisterTest < ActiveSupport::TestCase
     uploader = TransactionsFilePersister.new csv, RabobankCsvRowParser.new
 
     assert_difference 'Transaction.count', 3 do
-      uploader.upload
+      uploader.persist
     end
   end
 end
