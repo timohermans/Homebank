@@ -14,5 +14,4 @@ class CategoryTest < ActiveSupport::TestCase
     assert_not category_fail.save
     assert_includes category_fail.errors.messages[:name], 'has already been taken'
   end
-
 end

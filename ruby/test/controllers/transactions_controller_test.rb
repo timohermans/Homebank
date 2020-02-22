@@ -14,7 +14,7 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create transaction' do
     assert_difference('Transaction.count') do
-      transaction_params = {transaction: {to_account_number: @transaction.to_account_number, date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee}}
+      transaction_params = { transaction: { to_account_number: @transaction.to_account_number, date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee } }
 
       post transactions_url, params: transaction_params, as: :json
     end
@@ -28,7 +28,7 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update transaction' do
-    patch transaction_url(@transaction), params: {transaction: {to_account_number: @transaction.to_account_number, date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee}}, as: :json
+    patch transaction_url(@transaction), params: { transaction: { to_account_number: @transaction.to_account_number, date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee } }, as: :json
     assert_response 200
   end
 
