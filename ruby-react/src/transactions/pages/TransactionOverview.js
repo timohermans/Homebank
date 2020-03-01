@@ -5,6 +5,8 @@ import TransactionHeader from "../components/TransactionHeader";
 
 import "./TransactionOverview.css";
 import UploadIconButton from "../components/UploadIconButton";
+import TransactionActionBar from "../components/TransactionActionBar";
+import TransactionList from "../components/TransactionList";
 
 export default function TransactionOverview() {
   const [transactions, setTransactions] = useState([]);
@@ -28,18 +30,8 @@ export default function TransactionOverview() {
       <TransactionHeader />
 
       <div className="container">
-        <div className="is-flex">
-          <UploadIconButton onClick={() => alert('hallo')} />
-        </div>
-
-        <div>
-          {transactions.map(transaction => (
-            <div>
-              <div>{transaction.memo}</div>
-              <div>{transaction.inflow}</div>
-            </div>
-          ))}
-        </div>
+       <TransactionActionBar/>
+       <TransactionList/>
       </div>
 
       {error}
