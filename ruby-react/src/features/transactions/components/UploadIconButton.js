@@ -1,5 +1,5 @@
 import * as React from "react";
-import IconButton from "../../shared/IconButton";
+import IconButton from "../../../common/IconButton";
 import { faDownload } from "@fortawesome/free-solid-svg-icons/faDownload";
 
 import "./UploadIconButton.css";

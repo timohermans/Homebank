@@ -1,14 +1,14 @@
 import * as React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TransactionHeader from "../components/TransactionHeader";
 
 import "./TransactionOverview.css";
-import UploadIconButton from "../components/UploadIconButton";
 import TransactionActionBar from "../components/TransactionActionBar";
 import TransactionList from "../components/TransactionList";
+import { connect } from "react-redux";
+import { hideUploadModal, showUploadModal } from "../transactionsDuck";
 
-export default function TransactionOverview() {
+function TransactionOverview() {
   const [transactions, setTransactions] = useState([]);
   const [error, setError] = useState(null);
 
@@ -30,11 +30,15 @@ export default function TransactionOverview() {
       <TransactionHeader />
 
       <div className="container">
-       <TransactionActionBar/>
-       <TransactionList/>
+        <TransactionActionBar />
+        <TransactionList transactions={transactions} />
       </div>
 
       {error}
     </div>
   );
 }
+
+export default connect(null, { showUploadModal, hideUploadModal })(
+  TransactionOverview
+);

@@ -1,8 +1,7 @@
 import React from "react";
 import "bulma/css/bulma.min.css";
-import "./App.css";
-import "./theme/utilities.css";
-import TransactionOverview from "./transactions/pages/TransactionOverview";
+import "../common/utilities.css";
+import TransactionOverview from "../features/transactions/containers/TransactionOverview";
 
 function App() {
   return (
