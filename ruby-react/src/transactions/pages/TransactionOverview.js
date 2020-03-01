@@ -1,33 +1,45 @@
 import * as React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import TransactionHeader from "../components/TransactionHeader";
+
+import "./TransactionOverview.css";
+import UploadIconButton from "../components/UploadIconButton";
 
 export default function TransactionOverview() {
   const [transactions, setTransactions] = useState([]);
   const [error, setError] = useState(null);
 
+  async function getTransactions() {
+    try {
+      const response = await fetch("http://localhost:4000/transactions");
+      setTransactions(await response.json());
+    } catch {
+      setError(<div>Getting the transactions didn't go as planned :(</div>);
+    }
+  }
+
   useEffect(() => {
-    fetch("http://localhost:4000/transactions")
-      .then(res => res.json())
-      .then(transactions => {
-        setTransactions(transactions);
-      })
-      .catch(error => {
-        setError(<div>Getting the transactions didn't go as planned :(</div>);
-      });
+    getTransactions();
   }, []);
 
   return (
     <div>
-      <h1>Transaction overview works as a beast!</h1>
+      <TransactionHeader />
 
-      <div>
-        {transactions.map(transaction => (
-          <div>
-            <div>{transaction.memo}</div>
-            <div>{transaction.inflow}</div>
-          </div>
-        ))}
+      <div className="container">
+        <div className="is-flex">
+          <UploadIconButton onClick={() => alert('hallo')} />
+        </div>
+
+        <div>
+          {transactions.map(transaction => (
+            <div>
+              <div>{transaction.memo}</div>
+              <div>{transaction.inflow}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {error}

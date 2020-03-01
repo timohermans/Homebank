@@ -1,0 +1,15 @@
+.has-content-center-justified {
+  justify-content: center;
+}
+
+.has-items-center-aligned {
+  align-items: center;
+}
+
+.is-round {
+  border-radius: 50%;
+}
+
+.has-margin-right {
+  margin-right: 1.2rem;
+}

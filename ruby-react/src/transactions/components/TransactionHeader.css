@@ -1,0 +1,15 @@
+.navbar-brand {
+  font-style: italic;
+  font-weight: bolder;
+  font-size: 1.75rem;
+  color: #563d7c;
+  margin-right: 3rem;
+}
+
+.navbar-brand .navbar-item {
+  color: #563d7c;
+}
+
+.nav-item {
+  margin-right: 1.5rem;
+}

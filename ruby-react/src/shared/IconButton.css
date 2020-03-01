@@ -1,0 +1,18 @@
+.icon-button {
+  align-items: center;
+  display: flex;
+}
+
+.icon-button-icon {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  margin-right: 0.75rem;
+  width: 40px;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+}
