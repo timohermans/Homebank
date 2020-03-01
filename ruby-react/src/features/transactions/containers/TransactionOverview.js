@@ -15,6 +15,7 @@ function TransactionOverview() {
   async function getTransactions() {
     try {
       const response = await fetch("http://localhost:4000/transactions");
+      console.log(`derp ${await response.json()}`);
       setTransactions(await response.json());
     } catch {
       setError(<div>Getting the transactions didn't go as planned :(</div>);
