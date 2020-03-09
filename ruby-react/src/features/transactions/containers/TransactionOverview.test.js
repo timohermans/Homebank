@@ -1,9 +1,7 @@
 import React from "react";
 import TransactionOverview from "./TransactionOverview";
 import { renderWithRedux } from "../../../common/testing/renderUtilities";
-import { act } from "@testing-library/react";
-import { disableFetch, mockFetch } from "../../../common/testing/mockUtilities";
-import { wait } from "@testing-library/dom";
+import { disableFetch } from "../../../common/testing/mockUtilities";
 
 beforeEach(() => {
   disableFetch();
@@ -17,7 +15,7 @@ test("has a header with a header", () => {
 
 test("has a button to open the modal", () => {
   const { getByText } = renderWithRedux(<TransactionOverview />);
-  const uploadButtonElement = getByText(/upload/i);
+  const uploadButtonElement = getByText(/add transactions/i);
 
   expect(uploadButtonElement).toBeInTheDocument();
 });
@@ -27,15 +25,8 @@ test("opens a modal when clicking the upload button", () => {
     <TransactionOverview />
   );
 
-  getByText(/upload/i).click();
+  getByText(/add transactions/i).click();
 
   const fileElement = getByLabelText(/select/i);
   expect(fileElement).toBeInTheDocument();
-});
-
-test("uploads a file to the API when selected and saved", () => {
-  const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
-  const imageInput = getByLabelText("choose image");
-  imageInput.dispatchEvent(new Event("change", { target: { files: [file] } }));
-  // Simulate.change(imageInput, { target: { files: [file] } });
 });
