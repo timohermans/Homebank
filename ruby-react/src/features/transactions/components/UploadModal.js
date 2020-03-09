@@ -1,27 +1,28 @@
 import * as React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { hideUploadModal } from "../transactionsDuck";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  hideUploadModal,
+  requestTransactionFileUpload
+} from "../transactionsDuck";
+import { useEffect } from "react";
 
 export default function UploadModal() {
-  const dispatch = useDispatch();
   const [file, setFile] = useState(null);
-
-  async function uploadFile() {
-    const form = new FormData();
-    form.append("file", file);
-
-    await fetch({
-      url: "http://localhost:4000/transactions/upload",
-      method: "POST",
-      body: form
-    });
-
-    dispatch(hideUploadModal());
-  }
+  const dispatch = useDispatch();
+  const isUploadingFile = useSelector(
+    ({ transactionState }) => transactionState.isUploadingFile
+  );
+  useEffect(() => {
+    console.log(isUploadingFile);
+  }, [isUploadingFile]);
 
   function fileChange(event) {
     setFile(event.target.files[0]);
+  }
+
+  function uploadFile() {
+    dispatch(requestTransactionFileUpload(file));
   }
 
   return (
