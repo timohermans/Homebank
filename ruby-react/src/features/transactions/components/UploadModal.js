@@ -10,12 +10,6 @@ import { useEffect } from "react";
 export default function UploadModal() {
   const [file, setFile] = useState(null);
   const dispatch = useDispatch();
-  const isUploadingFile = useSelector(
-    ({ transactionState }) => transactionState.isUploadingFile
-  );
-  useEffect(() => {
-    console.log(isUploadingFile);
-  }, [isUploadingFile]);
 
   function fileChange(event) {
     setFile(event.target.files[0]);

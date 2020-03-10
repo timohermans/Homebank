@@ -1,11 +1,12 @@
 export function mockFetch(dataAsJsonResponse) {
-  const mockJsonPromise = Promise.resolve(dataAsJsonResponse);
   const mockFetchPromise = Promise.resolve({
-    json: () => mockJsonPromise
+    json: () => Promise.resolve(dataAsJsonResponse)
   });
-  jest.spyOn(global, "fetch").mockImplementation(async () => mockFetchPromise);
+  jest.spyOn(global, "fetch").mockImplementation(() => mockFetchPromise);
 }
 
 export function disableFetch() {
-  jest.spyOn(global, "fetch").mockImplementation(() => new Promise());
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(() => new Promise((resolve, reject) => {}));
 }

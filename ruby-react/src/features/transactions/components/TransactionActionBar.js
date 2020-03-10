@@ -9,6 +9,7 @@ export default function TransactionActionBar() {
   const isModalVisible = useSelector(
     ({ transactionState }) => transactionState.isUploadModalVisible
   );
+
   const uploadModal = isModalVisible ? <UploadModal /> : null;
 
   return (

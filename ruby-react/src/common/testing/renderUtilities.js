@@ -1,16 +1,12 @@
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "../../app/rootReducer";
 import React from "react";
+import { store } from "../../app/store";
 
 // this is a handy function that I normally make available for all my tests
 // that deal with connected components.
 // you can provide initialState for the entire store that the ui is rendered with
-export function renderWithRedux(
-  ui,
-  { initialState, store = createStore(rootReducer, initialState) } = {}
-) {
+export function renderWithRedux(ui, { initialState } = {}) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
     // adding `store` to the returned utilities to allow us

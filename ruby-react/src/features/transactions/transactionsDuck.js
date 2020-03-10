@@ -82,6 +82,7 @@ export function* uploadTransactionFile(action) {
   try {
     const uploadResult = yield call(uploadFile, action.payload);
     yield put(transactionFileUploadSucceeded(uploadResult));
+    yield put(hideUploadModal());
   } catch (e) {
     yield put(transactionFileUploadFailed(e.message));
   }

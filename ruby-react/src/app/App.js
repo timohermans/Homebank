@@ -1,6 +1,6 @@
 import React from "react";
-import "bulma/css/bulma.min.css";
-import "../common/utilities.css";
+import "./App.css";
+import "../common/css/utilities.css";
 import TransactionOverview from "../features/transactions/containers/TransactionOverview";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 

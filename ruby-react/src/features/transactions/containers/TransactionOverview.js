@@ -5,10 +5,8 @@ import TransactionHeader from "../components/TransactionHeader";
 import "./TransactionOverview.css";
 import TransactionActionBar from "../components/TransactionActionBar";
 import TransactionList from "../components/TransactionList";
-import { connect } from "react-redux";
-import { hideUploadModal, showUploadModal } from "../transactionsDuck";
 
-function TransactionOverview() {
+export default function TransactionOverview() {
   const [transactions, setTransactions] = useState([]);
   const [error, setError] = useState(null);
 
@@ -38,7 +36,3 @@ function TransactionOverview() {
     </div>
   );
 }
-
-export default connect(null, { showUploadModal, hideUploadModal })(
-  TransactionOverview
-);
