@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import TransactionHeader from "../components/TransactionHeader";
-
-import "./TransactionOverview.css";
 import TransactionActionBar from "../components/TransactionActionBar";
 import TransactionList from "../components/TransactionList";
+import { PageContainer } from "../../../layout/container";
+import TransactionTitle from "../components/transactionTitle";
 
 export default function TransactionOverview() {
   const [transactions, setTransactions] = useState([]);
@@ -25,12 +24,11 @@ export default function TransactionOverview() {
 
   return (
     <div>
-      <TransactionHeader />
-
-      <div className="container">
+      <PageContainer>
+        <TransactionTitle>Overzicht</TransactionTitle>
         <TransactionActionBar />
         <TransactionList transactions={transactions} />
-      </div>
+      </PageContainer>
 
       {error}
     </div>

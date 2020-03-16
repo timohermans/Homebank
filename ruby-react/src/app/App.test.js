@@ -5,7 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 import { waitForElement } from "@testing-library/react";
 import { mockFetch } from "../common/testing/mockUtilities";
 
-jest.mock("../features/transactions/containers/TransactionOverview", () => ({
+jest.mock("../features/transactions/pages/TransactionOverview", () => ({
   __esModule: true,
   default: () => <div>Transaction overview</div>
 }));

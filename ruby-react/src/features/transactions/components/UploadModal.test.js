@@ -1,6 +1,6 @@
-import { renderWithRedux } from "../../../common/testing/renderUtilities";
+import {renderWithRedux} from "../../../common/testing/renderUtilities";
 import React from "react";
-import { mockFetch } from "../../../common/testing/mockUtilities";
+import {mockFetch} from "../../../common/testing/mockUtilities";
 import UploadModal from "./UploadModal";
 
 beforeEach(() => {
@@ -9,9 +9,9 @@ beforeEach(() => {
 
 test("uploads a file to the API when selected and saved", async () => {
   // arrange
-  const { getByText, getByLabelText, store } = renderWithRedux(<UploadModal />);
+  const { getByText, getByLabelText } = renderWithRedux(<UploadModal />);
 
-  jest.spyOn(global, "fetch");
+  mockFetch({});
   const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
   const fileInput = getByLabelText(/select/i);
 
@@ -23,10 +23,10 @@ test("uploads a file to the API when selected and saved", async () => {
   const formData = new FormData();
   formData.append("file", file);
   expect(global.fetch).toHaveBeenCalledWith(
-    expect.objectContaining({
-      url: expect.stringContaining("/transactions/upload"),
+    expect.stringContaining("/transactions/upload"),
+    {
       method: "POST",
       body: formData
-    })
+    }
   );
 });
