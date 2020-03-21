@@ -14,6 +14,16 @@ beforeEach(() => {
   mockFetch({});
 });
 
+test("has a header with a header", () => {
+  const { getByText } = renderWithRedux(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+  const headerElement = getByText(/homebank/i);
+  expect(headerElement).toBeInTheDocument();
+});
+
 test("Can go to different pages", async () => {
   const { getByText } = renderWithRedux(
     <MemoryRouter>

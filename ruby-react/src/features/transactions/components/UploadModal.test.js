@@ -22,11 +22,13 @@ test("uploads a file to the API when selected and saved", async () => {
   // assert
   const formData = new FormData();
   formData.append("file", file);
+
   expect(global.fetch).toHaveBeenCalledWith(
     expect.stringContaining("/transactions/upload"),
     {
       method: "POST",
-      body: formData
+      body: expect.any(FormData)
     }
   );
+  expect(global.fetch.mock.calls[0][1].body.has('file')).toEqual(true);
 });

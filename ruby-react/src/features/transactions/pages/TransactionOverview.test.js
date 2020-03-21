@@ -7,12 +7,6 @@ beforeEach(() => {
   disableFetch();
 });
 
-test("has a header with a header", () => {
-  const { getByText } = renderWithRedux(<TransactionOverview />);
-  const headerElement = getByText(/homebank/i);
-  expect(headerElement).toBeInTheDocument();
-});
-
 test("has a button to open the modal", () => {
   const { getByText } = renderWithRedux(<TransactionOverview />);
   const uploadButtonElement = getByText(/add transactions/i);
