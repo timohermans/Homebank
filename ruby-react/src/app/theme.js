@@ -12,7 +12,8 @@ export const theme = {
     border: "#e3e3e3",
     dark: "#141240",
     secondary2: "#000099",
-    section: "#fff"
+    section: "#fff",
+    shadow: "rgba(0, 0, 0, 0.3)"
   },
   background: "#f6f6f6",
   primary: "#fd6400",
@@ -22,7 +23,8 @@ export const theme = {
   heading5: "#666666",
   rounded: "5px",
   activeFontWeight: "700",
-  shadow: "rgba(0, 0, 0, 0.3) 0px 1px 2px 0px",
+  roundedSm: "0.25rem",
+  shadow: `rgba(0, 0, 0, 0.3) 0px 1px 2px 0px`,
   size: size,
   device: device,
   spacing: {

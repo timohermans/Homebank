@@ -13,10 +13,3 @@ export default function IconButton(props) {
     </div>
   );
 }
-
-// <div class="d-flex action" data-test-id="import" (click)="openImportModal()">
-//     <div class="d-flex justify-content-center align-items-center icon rounded-circle mr-2">
-//     <fa-icon icon="file-csv"></fa-icon>
-// </div>
-// <div class="align-self-center">Import</div>
-// </div>

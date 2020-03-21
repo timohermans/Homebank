@@ -3,6 +3,15 @@ import React from "react";
 import {mockFetch} from "../../../common/testing/mockUtilities";
 import UploadModal from "./UploadModal";
 
+jest.mock('react-spring', () => ({
+  useTransition: jest.fn().mockImplementation((isVisible) => ([{item: true, key: '1'}])),  
+  useChain: jest.fn(),  
+  animated: {
+    path: () => <path data-testid="ANIMATED-COMPONENT" />,
+    div: (props) => <div data-testid="ANIMATED-COMPONENT">{props.children}</div>
+  }
+}));
+
 beforeEach(() => {
   mockFetch({});
 });
