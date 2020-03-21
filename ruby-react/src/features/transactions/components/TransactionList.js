@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useTrail } from "react-spring";
+import TransactionListItem from "./TransactionListItem";
 
 const StyledTransactionList = styled.div`
   margin-top: ${props => props.theme.spacing.s};
@@ -8,43 +10,17 @@ const StyledTransactionList = styled.div`
   box-shadow: ${props => props.theme.shadow};
 `;
 
-const StyledTransactionItem = styled.div`
-  color: ${props => props.theme.colors.secondary2};
-  display: flex;
-  padding: ${props => props.theme.spacing.s};
+export default function TransactionList({ transactions }) {
+  const transitions = useTrail(transactions.length, {
+    from: { opacity: 0, transform: "translate(10px, 0)" },
+    opacity: 1,
+    transform: "translate(0, 0)"
+  });
 
-  &:hover {
-    cursor: pointer;
-  }
-
-  > *:not(:first-child):not(:last-child) {
-    margin: 0 ${props => props.theme.spacing.s};
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid ${props => props.theme.colors.border};
-  }
-
-  .main {
-    flex: 1;
-  }
-
-  .date {
-    color: ${props => props.theme.colors.dark};
-  }
-`;
-
-export default function TransactionList(props) {
   return (
     <StyledTransactionList>
-      {props.transactions.map(transaction => (
-        <StyledTransactionItem key={transaction.id}>
-          <div className="date">{transaction.date}</div>
-          <div className="main">{transaction.payee}</div>
-          <div>
-            {transaction.inflow ? transaction.inflow : transaction.outflow}
-          </div>
-        </StyledTransactionItem>
+      {transitions.map((props, index) => (
+        <TransactionListItem transition={props} transaction={transactions[index]} />
       ))}
     </StyledTransactionList>
   );
