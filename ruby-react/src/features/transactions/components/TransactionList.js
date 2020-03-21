@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledTransactionList = styled.div`
   margin-top: ${props => props.theme.spacing.s};
-  background-color: ${props => props.theme.section};
+  background-color: ${props => props.theme.colors.section};
   border-radius: ${props => props.theme.rounded};
   box-shadow: ${props => props.theme.shadow};
 `;

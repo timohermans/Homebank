@@ -11,7 +11,8 @@ export const theme = {
   colors: {
     border: "#e3e3e3",
     dark: "#141240",
-    secondary2: "#000099"
+    secondary2: "#000099",
+    section: "#fff"
   },
   background: "#f6f6f6",
   primary: "#fd6400",
@@ -19,7 +20,6 @@ export const theme = {
   secondary: "#19197c",
   link: "#19197c",
   heading5: "#666666",
-  section: "#fff",
   rounded: "5px",
   activeFontWeight: "700",
   shadow: "rgba(0, 0, 0, 0.3) 0px 1px 2px 0px",
