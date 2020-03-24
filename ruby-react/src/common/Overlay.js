@@ -9,16 +9,13 @@ const StyledOverlay = styled(animated.div)`
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: ${props => props.theme.zIndex.overlay}
 `;
 
 export default function Overlay({ hide, transition, children }) {
-  function preventBubbling(e) {
-    e.stopPropagation();
-  }
-
   return (
     <StyledOverlay style={transition} onClick={hide}>
-      <div onClick={preventBubbling}>{children}</div>
+      {children}
     </StyledOverlay>
   );
 }

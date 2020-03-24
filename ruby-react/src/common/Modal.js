@@ -8,6 +8,7 @@ const StyledModal = styled(animated.div)`
   border-radius: ${props => props.theme.roundedSm};
   box-shadow: ${props => props.theme.shadow};
   padding: 15px;
+  z-index: ${props => props.theme.zIndex.modal}
 
   @media ${props => props.theme.device.desktop} {
     max-width: 500px;
@@ -27,6 +28,10 @@ export default function Modal({
   hideModal,
   ...props
 }) {
+  function preventBubbling(e) {
+    e.stopPropagation();
+  }
+
   const overlayRef = useRef();
   const overlayTransitions = useTransition(isModalVisible, null, {
     from: { opacity: 0 },
@@ -60,8 +65,10 @@ export default function Modal({
             modalTransition =>
               modalTransition.item && (
                 <StyledModal
+                  role="modal"
                   style={modalTransition.props}
                   key={modalTransition.key}
+                  onClick={preventBubbling}
                 >
                   {props.children}
                 </StyledModal>

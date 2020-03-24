@@ -31,5 +31,9 @@ export const theme = {
     s: "1rem",
     m: "2rem",
     l: "4rem"
+  },
+  zIndex: {
+    modal: "9000",
+    overlay: "8000"    
   }
 };
