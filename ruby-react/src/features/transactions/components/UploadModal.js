@@ -5,6 +5,7 @@ import {
   hideUploadModal
 } from "../transactionsDuck";
 import Modal from "../../../common/Modal";
+import FileInput from "../../../common/FileInput";
 
 export default function UploadModal() {
   const isModalVisible = useSelector(
@@ -26,9 +27,8 @@ export default function UploadModal() {
   }
 
   return (
-    <Modal hideModal={hideModal} isModalVisible={isModalVisible}>
-      <label htmlFor="uploadFile">select</label>
-      <input id="uploadFile" type="file" onChange={fileChange} />
+    <Modal hideModal={hideModal} isModalVisible={isModalVisible}>      
+      <FileInput id="uploadFile" type="file" onChange={fileChange} />
       <button type="button" onClick={uploadFile}>
         Upload
       </button>

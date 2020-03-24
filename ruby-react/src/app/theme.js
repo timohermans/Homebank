@@ -24,6 +24,7 @@ export const theme = {
   rounded: "5px",
   activeFontWeight: "700",
   roundedSm: "0.25rem",
+  roundedM: "0.5rem",
   shadow: `rgba(0, 0, 0, 0.3) 0px 1px 2px 0px`,
   size: size,
   device: device,

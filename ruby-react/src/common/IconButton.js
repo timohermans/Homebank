@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as React from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
@@ -28,7 +29,7 @@ export const StyledButtonIcon = styled.div`
   }
 `;
 
-export default function IconButton(props) {
+function IconButton(props) {
   return (
     <StyledIconButton className="icon-button" onClick={props.onClick}>
       <StyledButtonIcon
@@ -42,3 +43,11 @@ export default function IconButton(props) {
     </StyledIconButton>
   );
 }
+
+IconButton.propTypes = {
+  backgroundColor: PropTypes.string,
+  backgroundHoverColor: PropTypes.string,
+  icon: PropTypes.object
+}
+
+export default IconButton;

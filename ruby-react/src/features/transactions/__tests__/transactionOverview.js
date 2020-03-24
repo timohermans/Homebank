@@ -20,7 +20,7 @@ async function renderOverview() {
     ...util,
     uploadButton: () => util.getByText(/add transactions/i),
     modal: () => util.getByRole('modal'),
-    fileInput: () => util.getByLabelText(/select/i),
+    fileInput: () => util.getByLabelText(/add file/i),
     submitFileButton: () => util.getByText(/upload/i)
   };
 }
