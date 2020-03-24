@@ -1,5 +1,5 @@
 import React from "react";
-import { renderWithRedux } from "../common/testing/renderUtilities";
+import { renderWithReduxAndTheme } from "../common/testing/renderUtilities";
 import App from "./App";
 import { MemoryRouter } from "react-router-dom";
 import { waitForElement } from "@testing-library/react";
@@ -15,7 +15,7 @@ beforeEach(() => {
 });
 
 test("has a header with a header", () => {
-  const { getByText } = renderWithRedux(
+  const { getByText } = renderWithReduxAndTheme(
     <MemoryRouter>
       <App />
     </MemoryRouter>
@@ -25,7 +25,7 @@ test("has a header with a header", () => {
 });
 
 test("Can go to different pages", async () => {
-  const { getByText } = renderWithRedux(
+  const { getByText } = renderWithReduxAndTheme(
     <MemoryRouter>
       <App />
     </MemoryRouter>

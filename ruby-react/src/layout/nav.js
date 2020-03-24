@@ -27,7 +27,7 @@ const StyledNavBrand = styled.div`
 const StyledNavItem = styled(Link)`
   color: ${props => props.theme.colors.dark};
   &:hover {
-    color: ${props => props.theme.primary};
+    color: ${props => props.theme.colors.primary};
   }
 
   &:not(:first-child):not(:last-child) {

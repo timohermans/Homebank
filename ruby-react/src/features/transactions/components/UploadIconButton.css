@@ -1,8 +1,0 @@
-.upload-icon-button .icon-button-icon {
-  background-color: var(--primary);
-  color: #fff;
-}
-
-.upload-icon-button:hover .icon-button-icon {
-  background-color: var(--primary-light);
-}

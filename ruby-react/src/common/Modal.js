@@ -8,12 +8,11 @@ const StyledModal = styled(animated.div)`
   border-radius: ${props => props.theme.roundedSm};
   box-shadow: ${props => props.theme.shadow};
   padding: 15px;
-  z-index: ${props => props.theme.zIndex.modal}
 
   @media ${props => props.theme.device.desktop} {
     max-width: 500px;
     margin: 1.75rem auto;
-    width: auto;
+    width: 500px;
   }
 
   @media ${props => props.theme.device.mobile} {

@@ -1,9 +1,17 @@
 import * as React from "react";
 import IconButton from "../../../common/IconButton";
 import { faDownload } from "@fortawesome/free-solid-svg-icons/faDownload";
-
-import "./UploadIconButton.css";
+import { theme } from "../../../app/theme";
 
 export default function UploadIconButton(props) {
-  return <IconButton onClick={props.onClick} className="upload-icon-button" icon={faDownload}>Add transactions</IconButton>
+  return (
+    <IconButton
+      onClick={props.onClick}
+      icon={faDownload}
+      backgroundColor={theme.colors.primary}
+      backgroundHoverColor={theme.colors.primary2}
+    >
+      Add transactions
+    </IconButton>
+  );
 }

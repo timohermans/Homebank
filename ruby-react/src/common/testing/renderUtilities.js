@@ -8,7 +8,7 @@ import { theme } from "../../app/theme";
 // this is a handy function that I normally make available for all my tests
 // that deal with connected components.
 // you can provide initialState for the entire store that the ui is rendered with
-export function renderWithRedux(ui, { __ } = {}) {
+export function renderWithReduxAndTheme(ui, { __ } = {}) {
   return {
     ...render(
       <ThemeProvider theme={theme}>
@@ -20,4 +20,8 @@ export function renderWithRedux(ui, { __ } = {}) {
     // this to test implementation details).
     store
   };
+}
+
+export function renderWithTheme(ui) {
+  return render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>);
 }

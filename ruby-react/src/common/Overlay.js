@@ -14,7 +14,7 @@ const StyledOverlay = styled(animated.div)`
 
 export default function Overlay({ hide, transition, children }) {
   return (
-    <StyledOverlay style={transition} onClick={hide}>
+    <StyledOverlay role="overlay" style={transition} onClick={hide}>
       {children}
     </StyledOverlay>
   );

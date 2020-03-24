@@ -17,11 +17,12 @@ jest.mock("react-spring", () => ({
     .mockImplementation((number, options) => new Array(number)),
   animated: {
     path: () => <path data-testid="ANIMATED-COMPONENT" />,
-    div: props => (
-      <div role={props.role} data-testid="ANIMATED-COMPONENT">
+    div: props => {
+      return (
+      <div {...props} data-testid="ANIMATED-COMPONENT">
         {props.children}
       </div>
-    )
+    );}
   }
 }));
 jest.mock("react-use-measure");

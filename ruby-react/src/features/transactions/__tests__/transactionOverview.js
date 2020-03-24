@@ -1,6 +1,6 @@
 import React from "react";
 import TransactionOverview from '../pages/TransactionOverview';
-import { renderWithRedux } from "../../../common/testing/renderUtilities";
+import { renderWithReduxAndTheme } from "../../../common/testing/renderUtilities";
 import { getTransactions, uploadFile } from "../transactionsApi";
 import { act } from "react-dom/test-utils";
 import { waitForElementToBeRemoved } from "@testing-library/react";
@@ -14,7 +14,7 @@ beforeEach(() => {
 async function renderOverview() {
   let util;
 
-  await act(async () => util = renderWithRedux(<TransactionOverview />));
+  await act(async () => util = renderWithReduxAndTheme(<TransactionOverview />));
 
   return {
     ...util,
