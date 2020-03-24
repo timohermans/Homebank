@@ -4,22 +4,23 @@ import TransactionActionBar from "../components/TransactionActionBar";
 import TransactionList from "../components/TransactionList";
 import { PageContainer } from "../../../layout/container";
 import TransactionTitle from "../components/transactionTitle";
+import { getTransactions } from "../transactionsApi";
 
 export default function TransactionOverview() {
   const [transactions, setTransactions] = useState([]);
   const [error, setError] = useState(null);
 
-  async function getTransactions() {
+  async function getApiTransactions() {
     try {
-      const response = await fetch("http://localhost:4000/transactions");
-      setTransactions(await response.json());
+      const transactions = await getTransactions();
+      setTransactions(transactions);
     } catch {
       setError(<div>Getting the transactions didn't go as planned :(</div>);
     }
   }
 
   useEffect(() => {
-    getTransactions();
+    getApiTransactions();
   }, []);
 
   return (

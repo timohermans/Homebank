@@ -1,4 +1,5 @@
 import { call, put } from "redux-saga/effects";
+import { uploadFile } from "./transactionsApi";
 
 // Actions
 const SHOW_UPLOAD_MODAL = "homebank/transactions/SHOW_UPLOAD_MODAL";
@@ -86,14 +87,4 @@ export function* uploadTransactionFile(action) {
   } catch (e) {
     yield put(transactionFileUploadFailed(e.message));
   }
-}
-
-async function uploadFile(file) {
-  const form = new FormData();
-  form.append("file", file);
-
-  await fetch("http://localhost:4000/transactions/upload", {
-    method: "POST",
-    body: form
-  });
 }
