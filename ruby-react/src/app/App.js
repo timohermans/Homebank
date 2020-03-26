@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import "../common/css/utilities.css";
 import TransactionOverview from "../features/transactions/pages/TransactionOverview";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Nav } from "../layout/nav";
@@ -9,6 +8,7 @@ import { theme } from "./theme";
 import styled from "styled-components";
 
 const StyledApp = styled.div`
+  background-color: ${props => props.theme.colors.background};
   color: ${props => props.theme.colors.dark};
 `;
 

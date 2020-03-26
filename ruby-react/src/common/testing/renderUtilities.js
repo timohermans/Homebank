@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import React from "react";
-import { store } from "../../app/store";
+import { createNewStore } from "../../app/store";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../../app/theme";
 
@@ -9,6 +9,7 @@ import { theme } from "../../app/theme";
 // that deal with connected components.
 // you can provide initialState for the entire store that the ui is rendered with
 export function renderWithReduxAndTheme(ui, { __ } = {}) {
+  const store = createNewStore();
   return {
     ...render(
       <ThemeProvider theme={theme}>

@@ -1,15 +1,19 @@
 import { call, put } from "redux-saga/effects";
 import { uploadFile } from "./transactionsApi";
+import filter from "lodash/filter";
 
 // Actions
 const SHOW_UPLOAD_MODAL = "homebank/transactions/SHOW_UPLOAD_MODAL";
 const HIDE_UPLOAD_MODAL = "homebank/transactions/HIDE_UPLOAD_MODAL";
+const FILE_ADDED = "homebank/transactions/FILE_ADDED";
+const FILE_REMOVED = "homebank/transactions/FILE_REMOVED";
 export const FILE_UPLOAD_REQUESTED =
   "homebank/transactions/FILE_UPLOAD_REQUESTED";
 const FILE_UPLOAD_SUCCEEDED = "homebank/transactions/FILE_UPLOAD_SUCCEEDED";
 const FILE_UPLOAD_FAILED = "homebank/transactions/FILE_UPLOAD_FAILED";
 
 const initialState = {
+  filesToUpload: [],
   isUploadModalVisible: false,
   isUploadingFile: false,
   uploadResult: null,
@@ -17,8 +21,30 @@ const initialState = {
 };
 
 // Reducer
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(
+  state = {
+    filesToUpload: [],
+    isUploadModalVisible: false,
+    isUploadingFile: false,
+    uploadResult: null,
+    errorMessage: null
+  },
+  action = {}
+) {
   switch (action.type) {
+    case FILE_ADDED:
+      return (state = {
+        ...state,
+        filesToUpload: [...state.filesToUpload, action.file]
+      });
+    case FILE_REMOVED:
+      return (state = {
+        ...state,
+        filesToUpload: filter(
+          state.filesToUpload,
+          file => file.id !== action.file.id
+        )
+      });
     case SHOW_UPLOAD_MODAL:
       return (state = {
         ...state,
@@ -38,7 +64,17 @@ export default function reducer(state = initialState, action = {}) {
       return (state = {
         ...state,
         isUploadingFile: false,
-        uploadResult: action.result
+        uploadResult: action.payload.result,
+        filesToUpload: state.filesToUpload.map(file => {
+          if (file.id !== action.payload.file.id) {
+            return file;
+          }
+
+          return {
+            ...file,
+            isUploaded: true
+          };
+        })
       });
     case FILE_UPLOAD_FAILED:
       return (state = {
@@ -52,6 +88,14 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
+export function addFile(file) {
+  return { type: FILE_ADDED, file };
+}
+
+export function removeFile(file) {
+  return { type: FILE_REMOVED, file };
+}
+
 export function showUploadModal() {
   return { type: SHOW_UPLOAD_MODAL };
 }
@@ -61,11 +105,11 @@ export function hideUploadModal() {
 }
 
 export function requestTransactionFileUpload(file) {
-  return { type: FILE_UPLOAD_REQUESTED, payload: file };
+  return { type: FILE_UPLOAD_REQUESTED, file };
 }
 
-function transactionFileUploadSucceeded(result) {
-  return { type: FILE_UPLOAD_SUCCEEDED, result };
+function transactionFileUploadSucceeded({ result, file }) {
+  return { type: FILE_UPLOAD_SUCCEEDED, payload: { result, file } };
 }
 
 function transactionFileUploadFailed(message) {
@@ -80,11 +124,19 @@ function transactionFileUploadFailed(message) {
 // }
 
 export function* uploadTransactionFile(action) {
+  let uploadResult;
+
   try {
-    const uploadResult = yield call(uploadFile, action.payload);
-    yield put(transactionFileUploadSucceeded(uploadResult));
-    yield put(hideUploadModal());
+    uploadResult = yield call(uploadFile, action.file.file);
   } catch (e) {
     yield put(transactionFileUploadFailed(e.message));
+    return;
   }
+
+  yield put(
+    transactionFileUploadSucceeded({
+      result: uploadResult,
+      file: action.file
+    })
+  );
 }

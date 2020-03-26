@@ -3,7 +3,7 @@ import TransactionOverview from '../pages/TransactionOverview';
 import { renderWithReduxAndTheme } from "../../../common/testing/renderUtilities";
 import { getTransactions, uploadFile } from "../transactionsApi";
 import { act } from "react-dom/test-utils";
-import { waitForElementToBeRemoved } from "@testing-library/react";
+import { waitForElementToBeRemoved, fireEvent } from "@testing-library/react";
 
 jest.mock("../transactionsApi");
 
@@ -19,27 +19,45 @@ async function renderOverview() {
   return {
     ...util,
     uploadButton: () => util.getByText(/add transactions/i),
-    modal: () => util.getByRole('modal'),
+    closeModal: () => util.getByText(/close/i),
+    modal: () => util.queryByRole('modal'),
     fileInput: () => util.getByLabelText(/add file/i),
-    submitFileButton: () => util.getByText(/upload/i)
+    fileUploadingLabel: () => util.getByText(/uploading/i),
+    fileDoneUploadingLabel: () => util.getByText(/success/i)
   };
 }
 
-test("uploads a file to the server and closes modal", async () => {
-  uploadFile.mockReturnValue(Promise.resolve({}));
+test("opens the modal and closes it when clicking on cancel", async () => {
+  const { uploadButton, closeModal, modal } = await renderOverview();
 
-  const { uploadButton, modal, fileInput, submitFileButton } = await renderOverview();
+  uploadButton().click();
+  closeModal().click();
+
+  expect(modal()).not.toBeInTheDocument();
+});
+
+test("uploads a file to the server and closes modal", async () => {
+  let isUploadDoneResolve;
+  uploadFile.mockReturnValue(new Promise((resolve) => isUploadDoneResolve = resolve));
+
+  const { uploadButton, modal, fileInput, closeModal, fileUploadingLabel, fileDoneUploadingLabel } = await renderOverview();
 
   uploadButton().click();
 
   expect(modal()).toBeInTheDocument();
 
-  fileInput().dispatchEvent(
-    new Event("change", { target: { files: [new File([], "f")] } })
-  );
+  fireEvent.change(fileInput(), { target: { files: [new File([], "f")] } });
 
-  submitFileButton().click();
+  expect(uploadFile).toHaveBeenCalled();
 
-  await waitForElementToBeRemoved(() => modal());
+  // expect(fileUploadingLabel()).toBeInTheDocument();
+  
+  isUploadDoneResolve();
+  
+  // expect(fileDoneUploadingLabel()).toBeInTheDocument();
+
+  closeModal().click();
+
+  expect(modal()).not.toBeInTheDocument();
 });
 

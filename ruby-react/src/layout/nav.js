@@ -6,7 +6,7 @@ export const navbarHeightPx = 104;
 
 const StyledNav = styled.div`
   align-items: center;
-  background-color: ${props => props.theme.background};
+  background-color: ${props => props.theme.colors.background};
   display: flex;
   height: ${navbarHeightPx}px;
   left: 0;
@@ -14,6 +14,7 @@ const StyledNav = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: ${props => props.theme.zIndex.navbar}
 `;
 
 const StyledNavBrand = styled.div`
