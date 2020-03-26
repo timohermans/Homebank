@@ -46,12 +46,12 @@ test("Show an uploading status label for files", async () => {
   await wait(() => fileDoneUploadingLabel());
 });
 
-// test("can remove the file that was added", () => {
-//   const { fileInput, fileItem, removeButton } = renderUploadModal();
+test("Can remove the file that was added", () => {
+  const { fileInput, fileItem, removeButton } = renderUploadModal();
 
-//   selectFile(fileInput(), new File([], "transactie 1.csv"));
+  selectFile(fileInput(), new File([], "transactie 1.csv"));
 
-//   removeButton("remove-file-0").click();
+  removeButton("remove-file-0").click();
 
-//   expect(fileItem("transactie 1.csv")).not.toBeInTheDocument();
-// });
+  expect(fileItem("transactie 1.csv")).not.toBeInTheDocument();
+});
