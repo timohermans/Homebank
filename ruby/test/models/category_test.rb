@@ -1,14 +1,14 @@
 require 'test_helper'
 
 class CategoryTest < ActiveSupport::TestCase
-  test 'must at least have a name and icon name' do
-    assert Category.new(name: 'verplicht').invalid?
+  test 'must at least have a name' do
+    assert Category.new(name: 'verplicht').valid?
     assert Category.new.invalid?
     assert Category.new(name: 'verplicht', icon_name: 'danger').valid?
   end
 
   test 'The category name is unique' do
-    Category.new(name: 'verplicht', icon_name: 'danger').save
+    Category.create(name: 'verplicht', icon_name: 'danger')
 
     category_fail = Category.new(name: 'Verplicht', icon_name: 'person')
     assert_not category_fail.save

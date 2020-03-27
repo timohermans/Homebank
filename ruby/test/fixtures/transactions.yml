@@ -2,6 +2,7 @@
 
 one:
   to_account_number: NL20RABO0104949499
+  code: abcdefg
   date: 2020-02-15
   payee: MyString
   memo: MyString
@@ -9,6 +10,7 @@ one:
 
 two:
   to_account_number: NL20RABO0104949499
+  code: abcdefz
   date: 2020-02-15
   payee: MyString
   memo: MyString

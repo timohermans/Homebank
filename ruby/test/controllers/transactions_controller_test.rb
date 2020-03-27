@@ -11,17 +11,7 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     get transactions_url, as: :json
     assert_response :success
   end
-
-  test 'should create transaction' do
-    assert_difference('Transaction.count') do
-      transaction_params = { transaction: { to_account_number: @transaction.to_account_number, date: @transaction.date, inflow: @transaction.inflow, memo: @transaction.memo, payee: @transaction.payee } }
-
-      post transactions_url, params: transaction_params, as: :json
-    end
-
-    assert_response 201
-  end
-
+  
   test 'should show transaction' do
     get transaction_url(@transaction), as: :json
     assert_response :success

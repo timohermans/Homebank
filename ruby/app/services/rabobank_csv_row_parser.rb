@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require 'digest/md5'
 
 class RabobankCsvRowParser
   def initialize
@@ -12,13 +12,22 @@ class RabobankCsvRowParser
   end
 
   def parse(row)
+    to_account_number = row[@to_account_number_index]
+    date = DateTime.parse(row[@date_index])
+    payee = row[@payee_index]
+    memo = parse_memo_text_from(row)
+    inflow = parse_inflow_from(row)
+    outflow = parse_outflow_from(row)
+    code = generate_code(to_account_number, date, payee, memo, inflow, outflow)
+    
     Transaction.new(
-      to_account_number: row[@to_account_number_index],
-      date: DateTime.parse(row[@date_index]),
-      payee: row[@payee_index],
-      memo: parse_memo_text_from(row),
-      inflow: parse_inflow_from(row),
-      outflow: parse_outflow_from(row)
+      to_account_number: to_account_number, 
+      code: code,
+      date: date, 
+      payee: payee, 
+      memo: memo, 
+      inflow: inflow, 
+      outflow: outflow
     )
   rescue TypeError
     nil
@@ -52,5 +61,10 @@ class RabobankCsvRowParser
     parseable_amount_string = amount_string[1..-1]
 
     parseable_amount_string.to_d
+  end
+
+  def generate_code(*transaction_params)
+    variables = transaction_params.join("|")
+    Digest::MD5.hexdigest(variables)
   end
 end

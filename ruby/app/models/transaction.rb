@@ -4,6 +4,7 @@ class Transaction < ApplicationRecord
   validates :to_account_number, presence: true
   validates :memo, presence: true
   validates :payee, presence: true
+  validates :code, presence: true, uniqueness: true
   validates :outflow, numericality: true, allow_nil: true
   validates :inflow, numericality: true, allow_nil: true
   validates :date, date: true # gem date_validator

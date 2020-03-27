@@ -62,4 +62,23 @@ class TransactionTest < ActiveSupport::TestCase
 
     assert transaction.valid?
   end
+
+  test 'cannot be added twice' do
+    transaction_one = transactions(:one)
+    
+    assert transaction_one.valid?
+    
+    transaction_one.save
+
+    transaction_two = Transaction.new(
+      to_account_number: 'NL20RABO0104949499',
+      code: 'abcdefg',
+      date: '2020-02-15',
+      payee: 'MyString',
+      memo: 'MyString',
+      inflow: 9.99
+    )
+
+    assert transaction_two.invalid?
+  end
 end

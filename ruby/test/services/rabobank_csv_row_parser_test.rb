@@ -20,6 +20,14 @@ class RabobankCsvRowParserTest < ActiveSupport::TestCase
     assert_equal 'Spotify', transaction.memo
   end
 
+  test 'generates an unique identifier based on the row values' do
+    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '+2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', '']
+
+    transaction = @parser.parse csv_row
+
+    assert_equal '3df7f43bdd25eaf3438e755649b118c0', transaction.code
+  end
+
   test 'parses outflow transaction' do
     csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '-2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', '']
 

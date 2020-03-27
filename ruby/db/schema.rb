@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_18_203718) do
+ActiveRecord::Schema.define(version: 2020_03_26_163327) do
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.string "icon_name"
@@ -29,7 +30,9 @@ ActiveRecord::Schema.define(version: 2020_02_18_203718) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "category_id"
     t.string "to_account_number"
+    t.string "code"
     t.index ["category_id"], name: "index_transactions_on_category_id"
+    t.index ["code"], name: "index_unique_transaction", unique: true
   end
 
   create_table "users", force: :cascade do |t|
