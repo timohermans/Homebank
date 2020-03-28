@@ -29,8 +29,6 @@ class RabobankCsvRowParser
       inflow: inflow, 
       outflow: outflow
     )
-  rescue TypeError
-    nil
   end
 
   private

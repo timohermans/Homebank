@@ -78,7 +78,7 @@ class TransactionTest < ActiveSupport::TestCase
       memo: 'MyString',
       inflow: 9.99
     )
-
+    
     assert transaction_two.invalid?
   end
 end

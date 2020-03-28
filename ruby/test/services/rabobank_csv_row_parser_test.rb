@@ -8,7 +8,7 @@ class RabobankCsvRowParserTest < ActiveSupport::TestCase
   end
 
   test 'parses inflow transaction' do
-    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '+2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', '']
+    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '+2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', ''] # rubocop:disable Layout/LineLength
 
     transaction = @parser.parse csv_row
 
@@ -21,7 +21,7 @@ class RabobankCsvRowParserTest < ActiveSupport::TestCase
   end
 
   test 'generates an unique identifier based on the row values' do
-    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '+2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', '']
+    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '+2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', '']  # rubocop:disable Layout/LineLength
 
     transaction = @parser.parse csv_row
 
@@ -29,7 +29,7 @@ class RabobankCsvRowParserTest < ActiveSupport::TestCase
   end
 
   test 'parses outflow transaction' do
-    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '-2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', '']
+    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '-2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', '', '', '', 'Spotify', ' ', '', '', '', '', '']  # rubocop:disable Layout/LineLength
 
     transaction = @parser.parse csv_row
 
@@ -40,13 +40,13 @@ class RabobankCsvRowParserTest < ActiveSupport::TestCase
   test 'fails parsing a transaction' do
     csv_row = [0, 0, 0, 0, nil]
 
-    transaction = @parser.parse csv_row
-
-    assert_nil transaction
+    assert_raises TypeError do
+      @parser.parse csv_row
+    end
   end
 
   test 'incasso ID get appended to the memo' do
-    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '-2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', 'abc-def-ghi', '', '', 'Sport abo', ' ', '', '', '', '', '']
+    csv_row = ['NL11RABO0104955555', 'EUR', 'RABONL2U', '000000000000007213', '2019-09-01', '2019-09-01', '-2,50', '+1868,12', 'NL42RABO0114164838', 'J.M.G. Kerkhoffs eo', '', '', 'RABONL2U', 'cb', '', '', 'abc-def-ghi', '', '', 'Sport abo', ' ', '', '', '', '', ''] # rubocop:disable Layout/LineLength
 
     transaction = @parser.parse csv_row
 
