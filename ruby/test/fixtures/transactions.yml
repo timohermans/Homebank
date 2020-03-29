@@ -15,3 +15,4 @@ two:
   payee: MyString
   memo: MyString
   outflow: 9.99
+  category: expenses

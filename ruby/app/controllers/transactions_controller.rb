@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Transactions are all the things you did with you bank account
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[show update destroy]
 
@@ -12,7 +13,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1
   def show
-    render json: @transaction
+    render TransactionBlueprint.render(@transaction)
   end
 
   # PATCH/PUT /transactions/1
@@ -45,6 +46,14 @@ class TransactionsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def transaction_params
-    params.require(:transaction).permit(:to_account_number, :date, :payee, :memo, :outflow, :inflow)
+    params.require(:transaction).permit(
+      :to_account_number,
+      :date,
+      :payee,
+      :memo,
+      :outflow,
+      :inflow,
+      :category_id
+    )
   end
 end

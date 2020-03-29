@@ -6,6 +6,7 @@ require 'json'
 class TransactionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @transaction = transactions(:one)
+    @transaction_with_category = transactions(:two)
   end
 
   test 'should get index' do
@@ -68,5 +69,27 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
       amount_duplicate: 1,
       amount_faulty: 1
     }.to_json, response.body)
+  end
+
+  test 'assigns a category to a transaction' do
+    category = Category.create(name: 'New Category')
+
+    patch transaction_url(@transaction), params: {
+      transaction: {
+        category_id: category.id
+      }
+    }, as: :json
+
+    assert_response 200
+    assert_equal category.id, Transaction.find(@transaction.id).category_id
+  end
+
+  test 'always sends back category with transaction' do
+    get transaction_url(@transaction_with_category), as: :json
+    transaction = JSON.parse(response.body)
+
+    byebug
+
+    assert_equal categories(:expenses).id, transaction[:category][:id]
   end
 end
