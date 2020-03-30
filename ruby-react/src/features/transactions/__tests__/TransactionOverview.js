@@ -5,6 +5,7 @@ import { getTransactions, uploadFile } from "../transactionsApi";
 import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import * as faker from 'faker';
+import { createTransaction } from "../../../common/testing/data/transactionData";
 
 jest.mock("../transactionsApi");
 
@@ -12,15 +13,6 @@ jest.mock("../transactionsApi");
 beforeEach(() => {
   getTransactions.mockReturnValue(Promise.resolve([]));
 });
-
-function createTransaction() {
-  return { 
-    id: faker.random.uuid(), 
-    date: faker.date.recent().toDateString(),
-    payee: faker.random.words(5),
-    inflow: faker.finance.amount(0, 100, 2)
-   };
-}
 
 async function renderOverview() {
   let util;
