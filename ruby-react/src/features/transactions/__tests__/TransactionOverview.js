@@ -16,7 +16,7 @@ beforeEach(() => {
 function createTransaction() {
   return { 
     id: faker.random.uuid(), 
-    date: faker.date.recent(),
+    date: faker.date.recent().toDateString(),
     payee: faker.random.words(5),
     inflow: faker.finance.amount(0, 100, 2)
    };
@@ -35,7 +35,8 @@ async function renderOverview() {
     fileInput: () => util.getByLabelText(/add file/i),
     fileUploadingLabel: () => util.getByText(/uploading/i),
     fileDoneUploadingLabel: () => util.getByText(/success/i),
-    noTransactionsMessage: () => util.queryByText(/no transactions yet/i)
+    noTransactionsMessage: () => util.queryByText(/no transactions yet/i),
+    transactionListItems: () => util.getAllByTestId("transaction-list-item")
   };
 }
 
@@ -80,4 +81,11 @@ test('Does not show a message when there are transactions', async () => {
   const { noTransactionsMessage } = await renderOverview();
 
   expect(noTransactionsMessage()).not.toBeInTheDocument();
+});
+
+test('shows a list of transactions', async () => {
+  getTransactions.mockReturnValue(Promise.resolve([createTransaction(), createTransaction()]));
+  const { transactionListItems } = await renderOverview();
+
+  expect(transactionListItems().length).toBe(2);
 });

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import IconButton from "../common/IconButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import isEmpty from "lodash/isEmpty";
-import FileToUpload from "./models/file-to-upload";
 import uniqueId from "lodash/uniqueId";
 
 const StyledFileInput = styled.input.attrs(props => ({ type: "file" }))`

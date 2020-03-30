@@ -21,16 +21,7 @@ const initialState = {
 };
 
 // Reducer
-export default function reducer(
-  state = {
-    filesToUpload: [],
-    isUploadModalVisible: false,
-    isUploadingFile: false,
-    uploadResult: null,
-    errorMessage: null
-  },
-  action = {}
-) {
+export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FILE_ADDED:
       return (state = {

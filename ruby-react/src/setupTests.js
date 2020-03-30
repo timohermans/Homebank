@@ -14,15 +14,25 @@ jest.mock("react-spring", () => ({
   useSpring: jest.fn(),
   useTrail: jest
     .fn()
-    .mockImplementation((number, options) => new Array(number)),
+    .mockImplementation((number, options) => {
+      let items = new Array(number)
+
+      for (let i = 0; i < items.length; i++) {
+        items[i] = { itemIndex: i };
+      }
+      
+      return items;
+    }),
   animated: {
     path: () => <path data-testid="ANIMATED-COMPONENT" />,
     div: props => {
-      return (
-      <div {...props} data-testid="ANIMATED-COMPONENT">
-        {props.children}
-      </div>
-    );}
+      const testId = props['data-testid'] || "ANIMATED-COMPONENT";
+      return (        
+        <div {...props} data-testid={testId}>
+          {props.children}
+        </div>
+      );
+    }
   }
 }));
 jest.mock("react-use-measure");

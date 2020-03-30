@@ -30,7 +30,7 @@ const StyledTransactionItem = styled(animated.div)`
 
 
 export default function TransactionListItem({transaction, transition}) {
-    return (<StyledTransactionItem style={transition} key={transaction.id}>
+    return (<StyledTransactionItem style={transition} key={transaction.id} data-testid="transaction-list-item">
         <div className="date">{transaction.date}</div>
         <div className="main">{transaction.payee}</div>
         <div>
