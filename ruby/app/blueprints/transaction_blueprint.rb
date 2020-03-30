@@ -3,7 +3,10 @@
 class TransactionBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :memo,
+  fields :to_account_number,
+         :memo,
+         :payee,
+         :date,
          :inflow,
          :outflow
 

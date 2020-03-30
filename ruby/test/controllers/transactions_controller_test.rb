@@ -88,8 +88,6 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     get transaction_url(@transaction_with_category), as: :json
     transaction = JSON.parse(response.body)
 
-    byebug
-
-    assert_equal categories(:expenses).id, transaction[:category][:id]
+    assert_equal categories(:expenses).id, transaction['category']['id']
   end
 end

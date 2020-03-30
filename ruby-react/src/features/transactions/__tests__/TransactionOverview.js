@@ -3,13 +3,24 @@ import TransactionOverview from '../pages/TransactionOverview';
 import { renderWithReduxAndTheme } from "../../../common/testing/renderUtilities";
 import { getTransactions, uploadFile } from "../transactionsApi";
 import { act } from "react-dom/test-utils";
-import { waitForElementToBeRemoved, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
+import * as faker from 'faker';
 
 jest.mock("../transactionsApi");
+
 
 beforeEach(() => {
   getTransactions.mockReturnValue(Promise.resolve([]));
 });
+
+function createTransaction() {
+  return { 
+    id: faker.random.uuid(), 
+    date: faker.date.recent(),
+    payee: faker.random.words(5),
+    inflow: faker.finance.amount(0, 100, 2)
+   };
+}
 
 async function renderOverview() {
   let util;
@@ -23,7 +34,8 @@ async function renderOverview() {
     modal: () => util.queryByRole('modal'),
     fileInput: () => util.getByLabelText(/add file/i),
     fileUploadingLabel: () => util.getByText(/uploading/i),
-    fileDoneUploadingLabel: () => util.getByText(/success/i)
+    fileDoneUploadingLabel: () => util.getByText(/success/i),
+    noTransactionsMessage: () => util.queryByText(/no transactions yet/i)
   };
 }
 
@@ -40,7 +52,7 @@ test("uploads a file to the server and closes modal", async () => {
   let isUploadDoneResolve;
   uploadFile.mockReturnValue(new Promise((resolve) => isUploadDoneResolve = resolve));
 
-  const { uploadButton, modal, fileInput, closeModal, fileUploadingLabel, fileDoneUploadingLabel } = await renderOverview();
+  const { uploadButton, modal, fileInput, closeModal } = await renderOverview();
 
   uploadButton().click();
 
@@ -50,14 +62,22 @@ test("uploads a file to the server and closes modal", async () => {
 
   expect(uploadFile).toHaveBeenCalled();
 
-  // expect(fileUploadingLabel()).toBeInTheDocument();
-  
   isUploadDoneResolve();
   
-  // expect(fileDoneUploadingLabel()).toBeInTheDocument();
-
   closeModal().click();
 
   expect(modal()).not.toBeInTheDocument();
 });
 
+test('Shows a message that there are no transactions yet', async () => {
+  const { noTransactionsMessage } = await renderOverview();
+
+  expect(noTransactionsMessage()).toBeInTheDocument();
+});
+
+test('Does not show a message when there are transactions', async () => {
+  getTransactions.mockReturnValue(Promise.resolve([createTransaction()]))
+  const { noTransactionsMessage } = await renderOverview();
+
+  expect(noTransactionsMessage()).not.toBeInTheDocument();
+});

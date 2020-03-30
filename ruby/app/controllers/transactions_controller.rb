@@ -8,18 +8,18 @@ class TransactionsController < ApplicationController
   def index
     @transactions = Transaction.all
 
-    render json: @transactions
+    render json: TransactionBlueprint.render(@transactions)
   end
 
   # GET /transactions/1
   def show
-    render TransactionBlueprint.render(@transaction)
+    render json: transaction_json
   end
 
   # PATCH/PUT /transactions/1
   def update
     if @transaction.update(transaction_params)
-      render json: @transaction
+      render json: transaction_json
     else
       render json: @transaction.errors, status: :unprocessable_entity
     end
@@ -55,5 +55,9 @@ class TransactionsController < ApplicationController
       :inflow,
       :category_id
     )
+  end
+
+  def transaction_json
+    TransactionBlueprint.render(@transaction)
   end
 end

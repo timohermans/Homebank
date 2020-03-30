@@ -5,6 +5,7 @@ import TransactionList from "../components/TransactionList";
 import { PageContainer } from "../../../layout/container";
 import TransactionTitle from "../components/transactionTitle";
 import { getTransactions } from "../transactionsApi";
+import isEmpty from "lodash/isEmpty";
 
 export default function TransactionOverview() {
   const [transactions, setTransactions] = useState([]);
@@ -12,8 +13,13 @@ export default function TransactionOverview() {
 
   async function getApiTransactions() {
     try {
-      const transactions = await getTransactions();
-      setTransactions(transactions);
+      const transactionsFetched = await getTransactions();
+      setTransactions(transactionsFetched);
+
+      if(isEmpty(transactionsFetched)) {
+        setError(<div>No transactions yet</div>);
+      }
+      
     } catch {
       setError(<div>Getting the transactions didn't go as planned :(</div>);
     }
@@ -24,14 +30,11 @@ export default function TransactionOverview() {
   }, []);
 
   return (
-    <div>
-      <PageContainer>
-        <TransactionTitle>Overzicht</TransactionTitle>
-        <TransactionActionBar />
-        <TransactionList transactions={transactions} />
-      </PageContainer>
-
+    <PageContainer>
+      <TransactionTitle>Overzicht</TransactionTitle>
+      <TransactionActionBar />
+      <TransactionList transactions={transactions} />
       {error}
-    </div>
+    </PageContainer>
   );
 }
