@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  user_id: 1
+  icon_name: MyString
 
-two:
-  name: MyString
-  user_id: 1
+expenses:
+  name: Expenses
+  icon_name: Wallet

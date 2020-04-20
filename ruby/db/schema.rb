@@ -10,20 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_03_084418) do
+ActiveRecord::Schema.define(version: 2020_03_26_163327) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
+    t.string "icon_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.date "date"
+    t.string "payee"
+    t.string "memo"
+    t.decimal "outflow"
+    t.decimal "inflow"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "category_id"
+    t.string "to_account_number"
+    t.string "code"
+    t.index ["category_id"], name: "index_transactions_on_category_id"
+    t.index ["code"], name: "index_unique_transaction", unique: true
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
     t.string "email"
+    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "transactions", "categories"
 end
