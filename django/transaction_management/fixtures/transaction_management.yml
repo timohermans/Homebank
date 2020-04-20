@@ -1,0 +1,11 @@
+-   model: transaction_management.transaction
+    pk: 1
+    fields:
+        code: 6a25f09148bead1f64212179d61f9c37
+        to_account_number: NL11RABO0104955555
+        date: 2019-09-01
+        payee: J.M.G. Kerkhoffs eo
+        memo: Spotify
+        outflow: null
+        inflow: '2.50'
+        category: null

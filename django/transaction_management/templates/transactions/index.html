@@ -1,0 +1,16 @@
+<html lang="en">
+<head>
+    <title>Homebank</title>
+</head>
+<body>
+{% if transaction_list %}
+    <ul>
+        {% for transaction in transaction_list %}
+            <li><a href="{% url 'transactions:detail' transaction.id %}">{{ transaction }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No transactions are available</p>
+{% endif %}
+</body>
+</html>
