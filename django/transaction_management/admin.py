@@ -1,20 +1,15 @@
 from django.contrib import admin
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
-from django import forms
 
 # Register your models here.
 from django.urls import path
 
 from .models import Transaction
 from .models import Category
+from .forms import CsvImportForm
 
 admin.site.register(Category)
-
-
-class CsvImportForm(forms.Form):
-    name = forms.CharField(max_length=5)
-    csv_file = forms.FileField()
 
 
 class TransactionAdmin(admin.ModelAdmin):
@@ -33,6 +28,8 @@ class TransactionAdmin(admin.ModelAdmin):
     def import_csv(self, request: HttpRequest):
         if request.method == 'POST':
             form = CsvImportForm(request.POST)
+            file = request.FILES["csv_file"]
+            form.execute(file)
 
             # do something here
             self.message_user(request, "Your csv file has been imported.. Well, not yet")

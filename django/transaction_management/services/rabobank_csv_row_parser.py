@@ -1,21 +1,7 @@
-from datetime import datetime
 from decimal import Decimal
-from hashlib import md5
-
 from transaction_management.models import Transaction
-
-
-class TransactionFilePersister:
-
-    def __init__(self, file, parser):
-        self.file = file
-        self.parser = parser
-
-    def persist(self):
-        extracted_transactions = self.extract_transactions()
-        self.save(extracted_transactions)
-
-        return "todo"
+from datetime import datetime
+from hashlib import md5
 
 
 class RabobankCsvRowParser:
@@ -49,7 +35,8 @@ class RabobankCsvRowParser:
     def _parse_memo_text_from(self, row) -> str:
         memo = row[self.memo_index]
         incasso_id = row[self.automatic_incasso_id_index]
-        incasso_text = '' if not incasso_id.strip() else f" (Incasso: {incasso_id})"
+        incasso_text = '' if not incasso_id.strip(
+        ) else f" (Incasso: {incasso_id})"
 
         return f"{memo}{incasso_text}"
 
@@ -68,5 +55,6 @@ class RabobankCsvRowParser:
             transaction.payee,
             transaction.memo)
 
-        attrs_joined = '|'.join([str(attr) for attr in attrs if attr is not None])
+        attrs_joined = '|'.join([str(attr)
+                                 for attr in attrs if attr is not None])
         return md5('|'.join(attrs_joined).encode('utf-8')).hexdigest()
