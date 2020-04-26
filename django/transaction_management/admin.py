@@ -34,10 +34,11 @@ class TransactionAdmin(admin.ModelAdmin):
                 uploaded_file = request.FILES['csv_file']
 
                 file = TextIOWrapper(uploaded_file.file, encoding=request.encoding)
-                form.execute(file)
+                result = form.execute(file)
 
                 # do something here
-                self.message_user(request, "Your csv file has been imported.. Well, not yet")
+                self.message_user(request,
+                                  f"Import result: {result.amount_successful} successful, {result.amount_duplicate} duplicate(s), {result.amount_faulty} failed")
                 return redirect("..")
         else:
             form = CsvImportForm()
