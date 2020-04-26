@@ -3,8 +3,10 @@ from decimal import InvalidOperation
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 
 from transaction_management.services.rabobank_csv_row_parser import RabobankCsvRowParser
+from utils import FileValidator, csv_content_types_allowed
 
 
 class FilePersistResult:
@@ -16,7 +18,7 @@ class FilePersistResult:
 
 class CsvImportForm(forms.Form):
     name = forms.CharField(max_length=5)
-    csv_file = forms.FileField()
+    csv_file = forms.FileField(validators=[FileValidator(content_types=csv_content_types_allowed)])
     parser = RabobankCsvRowParser()
     amount_success = 0
     amount_duplicate = 0

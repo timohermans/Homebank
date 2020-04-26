@@ -1,3 +1,4 @@
+from io import TextIOWrapper
 from django.contrib import admin
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
@@ -27,13 +28,17 @@ class TransactionAdmin(admin.ModelAdmin):
 
     def import_csv(self, request: HttpRequest):
         if request.method == 'POST':
-            form = CsvImportForm(request.POST)
-            file = request.FILES["csv_file"]
-            form.execute(file)
+            form = CsvImportForm(request.POST, request.FILES)
 
-            # do something here
-            self.message_user(request, "Your csv file has been imported.. Well, not yet")
-            return redirect("..")
+            if form.is_valid():
+                uploaded_file = request.FILES['csv_file']
+
+                file = TextIOWrapper(uploaded_file.file, encoding=request.encoding)
+                form.execute(file)
+
+                # do something here
+                self.message_user(request, "Your csv file has been imported.. Well, not yet")
+                return redirect("..")
         else:
             form = CsvImportForm()
 

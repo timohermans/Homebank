@@ -10,17 +10,12 @@ import os
 from django.test import TestCase
 from transaction_management.forms import CsvImportForm
 from transaction_management.models import Transaction
+from transaction_management.tests.utils import open_file
 
 
 class CsvImportFileTestCase(TestCase):
-    def setUp(self):
-        self.data_dir = os.path.dirname(__file__)
-
-    def open_file(self, file_path):
-        return open(os.path.join(self.data_dir, file_path))
-
     def test_process_single_transaction_file(self):
-        file = self.open_file('./data/single_dummy.csv')
+        file = open_file('./data/single_dummy.csv')
         csv_form = CsvImportForm({'name': 'rabobank'}, {'csv_file': file})
 
         result = csv_form.execute(file)
@@ -30,7 +25,7 @@ class CsvImportFileTestCase(TestCase):
         self.assertEqual(1, len(transactions))
 
     def test_process_multiple_transactions_file(self):
-        file = self.open_file('./data/bad-dummy.csv')
+        file = open_file('./data/bad-dummy.csv')
         csv_form = CsvImportForm({'name': 'rabobank'}, {'csv_file': file})
 
         result = csv_form.execute(file)
