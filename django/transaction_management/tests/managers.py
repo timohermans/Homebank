@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from transaction_management.services.rabobank_csv_row_parser import RabobankCsvRowParser
+from transaction_management.managers import RabobankCsvRowParser
 
 
 class RabobankCsvRowParserTest(TestCase):

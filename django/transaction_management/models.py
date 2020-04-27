@@ -1,9 +1,9 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import DecimalValidator
 from django.db import models
 
 
 # Create your models here.
+from transaction_management.managers import TransactionManager
 
 
 class Category(models.Model):
@@ -17,6 +17,8 @@ class Category(models.Model):
 
 
 class Transaction(models.Model):
+    objects = TransactionManager()
+
     code = models.CharField(unique=True, max_length=50, editable=False)
     to_account_number = models.CharField(max_length=34)
     date = models.DateField()

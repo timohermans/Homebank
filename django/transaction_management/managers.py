@@ -1,7 +1,44 @@
-from decimal import Decimal
-from transaction_management.models import Transaction
+import csv
 from datetime import datetime
+from decimal import InvalidOperation, Decimal
 from hashlib import md5
+
+from django.core.exceptions import ValidationError
+from django.db import models
+
+
+class FileParseResult:
+    def __init__(self):
+        self.amount_successful = 0
+        self.amount_duplicate = 0
+        self.amount_faulty = 0
+
+
+class TransactionManager(models.Manager):
+    def create_from_file(self, file_stream) -> FileParseResult:
+        result = FileParseResult()
+        parser = RabobankCsvRowParser()
+        csv_reader = csv.reader(file_stream, delimiter=',', quotechar='"')
+        next(csv_reader)  # skip header
+
+        for row in csv_reader:
+            self._process_row(row, result, parser)
+
+        return result
+
+    def _process_row(self, row, result, parser):
+        try:
+            transaction = parser.parse(row)
+            transaction.full_clean()
+            transaction.save()
+            result.amount_successful += 1
+        except ValidationError as error:
+            if 'code' in error.message_dict:
+                result.amount_duplicate += 1
+            else:
+                result.amount_faulty += 1
+        except (InvalidOperation, IndexError, ValueError):
+            result.amount_faulty += 1
 
 
 class RabobankCsvRowParser:
@@ -13,7 +50,9 @@ class RabobankCsvRowParser:
     automatic_incasso_id_index = 16
     positive_amount_character = '+'
 
-    def parse(self, row: list) -> Transaction:
+    def parse(self, row: list):
+        from transaction_management.models import Transaction
+
         amount_str = self._get_amount_str(row)
         is_positive_amount = amount_str[0] == self.positive_amount_character
         amount = Decimal(amount_str[1:])
