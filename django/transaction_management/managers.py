@@ -6,6 +6,8 @@ from hashlib import md5
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from transaction_management.utils import create_unique_code
+
 
 class FileParseResult:
     def __init__(self):
@@ -15,20 +17,24 @@ class FileParseResult:
 
 
 class TransactionManager(models.Manager):
-    def create_from_file(self, file_stream) -> FileParseResult:
+    def for_user(self, user):
+        return super(TransactionManager, self).get_queryset().filter(user=user)
+
+    def create_from_file(self, file_stream, user) -> FileParseResult:
         result = FileParseResult()
         parser = RabobankCsvRowParser()
         csv_reader = csv.reader(file_stream, delimiter=',', quotechar='"')
         next(csv_reader)  # skip header
 
         for row in csv_reader:
-            self._process_row(row, result, parser)
+            self._process_row(row, result, parser, user)
 
         return result
 
-    def _process_row(self, row, result, parser):
+    def _process_row(self, row, result, parser, user):
         try:
             transaction = parser.parse(row)
+            transaction.user = user
             transaction.full_clean()
             transaction.save()
             result.amount_successful += 1
@@ -65,7 +71,7 @@ class RabobankCsvRowParser:
             outflow=self._parse_outflow_from(amount, is_positive_amount),
         )
 
-        transaction.code = self._create_unique_code(transaction)
+        transaction.code = create_unique_code(transaction)
         return transaction
 
     def _get_amount_str(self, row):
@@ -84,16 +90,3 @@ class RabobankCsvRowParser:
 
     def _parse_outflow_from(self, amount, is_positive_amount):
         return amount if not is_positive_amount else None
-
-    def _create_unique_code(self, transaction):
-        attrs = (
-            transaction.date,
-            transaction.to_account_number,
-            transaction.inflow,
-            transaction.outflow,
-            transaction.payee,
-            transaction.memo)
-
-        attrs_joined = '|'.join([str(attr)
-                                 for attr in attrs if attr is not None])
-        return md5('|'.join(attrs_joined).encode('utf-8')).hexdigest()

@@ -2,8 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.test import TestCase
 
-from transaction_management.tests import open_file
-
+from transaction_management.tests.utils import open_file
 
 class TransactionAdminTestCase(TestCase):
     def setUp(self) -> None:
@@ -43,3 +42,4 @@ class TransactionAdminTestCase(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), 'Import result: 1 successful, 1 duplicate(s), 2 failed')
+
