@@ -1,7 +1,8 @@
+const { gql } = require('apollo-server');
+
 const typeDefs = gql`
     # Your schema will go here
     scalar Date
-    scalar Upload
 
     type Query {
         categories: [Category!]!
