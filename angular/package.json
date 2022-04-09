@@ -54,7 +54,7 @@
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.0",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ngx-build-plus": "^9.0.2",
     "ngx-take-until-destroy": "^5.4.0",
     "rxjs": "~6.5.4",
